@@ -61,8 +61,8 @@ textarea {
    ========================================================================== */
 
 body {
-    /*font: 16px/26px Helvetica, Helvetica Neue, Arial;*/
-    font: 16px/26px "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    /*font: 16px/26px "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;*/
 }
 
 .wrapper {
@@ -116,11 +116,6 @@ nav a {
     background: #336699;
 }
 
-nav a:hover,
-nav a:visited {
-    color: white;
-}
-
 nav a:hover {
     text-decoration: underline;
 }
@@ -164,6 +159,13 @@ a:visited,
 a:hover,
 a:active {
     color: #336699;
+}
+
+nav a:link,
+nav a:hover,
+nav a:active,
+nav a:visited {
+    color: white;
 }
 
 h1, h2, h3, h4, h5, h6  {
