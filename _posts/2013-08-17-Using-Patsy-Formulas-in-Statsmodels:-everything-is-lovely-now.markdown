@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Using Patsy Formulas in Statsmodels everything is lovely now"
+title: "Using Patsy Formulas in Statsmodels: everything is lovely now"
 date: 2013-08-17 18:33:00
 ---
 Statsmodels, the Python [toolkit for statistical
