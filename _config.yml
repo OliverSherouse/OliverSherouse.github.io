@@ -1,5 +1,7 @@
 name: Oliver Sherouse
-markdown: redcarpet
+markdown: rdiscount
+rdiscount:
+    extensions: ["smart"]
 pygments: true
 paginate: 5
 url: http://www.oliversherouse.com
