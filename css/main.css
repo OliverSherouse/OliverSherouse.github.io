@@ -226,6 +226,10 @@ iframe {
     min-height: 300px;
 }
 
+article img {
+    max-width: 100%;
+}
+
 .twitter-timeline {
     width:100%;
     padding:0;
