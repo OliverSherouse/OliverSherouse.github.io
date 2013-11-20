@@ -1,0 +1,63 @@
+---
+layout: post
+title: Is Walmart's Charity Bad?
+date: 2013-11-19
+---
+
+Jacob Weissmann at *The Atlantic* flags a news story from Ohio about a Walmart
+that's running a food drive for some of it's own employees who fallen on
+particularly hard times.  Moreover, he notes that the company runs a similar
+charity throughout its stores aimed at helping "Associates in Need"---employees
+who have come across unexpected expenses or hardships, "including homelessness,
+serious medical illnesses, and major repairs to primary vehicles.
+
+Weissmann reads this situation as a rich company trying to make themselves feel
+better by encouraging charity to the workers they exploit. His subtitle says
+that the program is "proof that some Walmart employees can barely afford to
+eat." The final paragraph of his piece runs as follows:
+
+> Again, it's nice that Walmart has set up a charity so that its workers can
+> lend a hand to their homeless colleagues. It'd be nicer if the company paid
+> enough to make sure that wasn't a concern in the first place. 
+
+I'll give Weissmann enough credit to assume that he knows that no company can
+pay its employees more than they make for the company, and that these decisions
+have to be made on a marginal basis. His story seems to be that Walmart chooses
+to pay significantly less than marginal value, because otherwise you wouldn't
+have employees who were one disaster away from destitution.
+
+The problem with that story is that real wages for unskilled service employees
+are relatively high right now:
+
+![Real wages of service-providers are
+high](http://research.stlouisfed.org/fredgraph.png?g=oCD "Real wages for
+non-supervisor service providers are high")
+
+If Walmart's workers are getting severely underpaid right now, they can easily
+improve themselves by getting a better paying job somewhere else.  But they
+aren't doing that.
+
+So here's a story that makes more sense: Walmart does a good job of taking
+potential employees other companies don't want, and making them productive 
+enough to earn a low wage.  It's hard to get a job if you struggle with
+periodic homelessness, for example.  But you can get one at Walmart, and now
+you're earning something.  How does Walmart pull this off? Some mix of
+management and the nature of the work, I'd imagine.
+
+But the point is, if you're pulling folks on or over the brink of poverty into
+your workforce, your workforce is going to have a lot of people on the brink of
+poverty.  Only now those people are earning a living as respectable,
+productive members of society.
+
+Where would these people be without Walmart? Unemployed. And if Walmart raised
+its wages, they would probably be unemployed as well, [at least over
+time][tam] (PDF).  Since those who are most vulnerable to economic distress
+are likely to be those who add the least marginal value, you'll end up hurting
+precisely the people you're trying to help.  Instead of working, they'll be
+dependent on a mix of welfare benefits and private assistance.
+
+Weissmann wants Walmart to pay people more than they're getting so that they
+don't need to be as reliant on charity. I guess he doesn't realize that that's
+what they're already doing.
+
+[tam]: http://econweb.tamu.edu/jmeer/Meer_West_Minimum_Wage.pdf
