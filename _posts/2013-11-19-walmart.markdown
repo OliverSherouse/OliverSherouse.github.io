@@ -4,8 +4,8 @@ title: Is Walmart's Charity Bad?
 date: 2013-11-19
 ---
 
-Jacob Weissmann at *The Atlantic* flags a news story from Ohio about a Walmart
-that's running a food drive for some of it's own employees who fallen on
+Jacob Weissmann at *The Atlantic* flags a news story from Ohio about a [Walmart
+that's running a food drive][og] for some of it's own employees who fallen on
 particularly hard times.  Moreover, he notes that the company runs a similar
 charity throughout its stores aimed at helping "Associates in Need"---employees
 who have come across unexpected expenses or hardships, "including homelessness,
@@ -60,4 +60,5 @@ Weissmann wants Walmart to pay people more than they're getting so that they
 don't need to be as reliant on charity. I guess he doesn't realize that that's
 what they're already doing.
 
+[og]: http://www.theatlantic.com/business/archive/2013/11/photo-this-ohio-walmart-is-running-a-food-drive-for-its-own-workers/281610/
 [tam]: http://econweb.tamu.edu/jmeer/Meer_West_Minimum_Wage.pdf
