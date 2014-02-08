@@ -84,7 +84,7 @@ enough to turn what we’re seeing into standard post-recession behavior.
 [fedpost]: http://libertystreeteconomics.newyorkfed.org/2014/02/a-mis-leading-labor-market-indicator.html
 [ogtweet]: https://twitter.com/dmarron/status/430391508739448833
 [empopgraph]: http://research.stlouisfed.org/fredgraph.png?g=rSW "Ahhhhhhhhh"
-[estep]: /img/estimated-empop.jpg "Kapon and Tracy's estimated E/P"
-[quadfit1]: /img/quad-fit-emratio-kapontracy.png "Quadratic fit of E/P ratio"
-[quadfit2]: /img/quad-fit-emratio-kapontracy2.png "Quadratic fit of E/P ratio through 2009"
-[quadfit3]: /img/quad-fit-emratio-kapontracy3.png "Difference between predicted and actual E/P ratio using two fits"
+[estep]: {{site.url}}/img/estimated-empop.jpg "Kapon and Tracy's estimated E/P"
+[quadfit1]: {{site.url}}/img/quad-fit-emratio-kapontracy.png "Quadratic fit of E/P ratio"
+[quadfit2]: {{site.url}}/img/quad-fit-emratio-kapontracy2.png "Quadratic fit of E/P ratio through 2009"
+[quadfit3]: {{site.url}}/img/quad-fit-emratio-kapontracy3.png "Difference between predicted and actual E/P ratio using two fits"
