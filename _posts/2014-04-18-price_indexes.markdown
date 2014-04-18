@@ -1,6 +1,7 @@
 ---
 title: "Comparing Price Indexes"
 layout: post
+date: 2014-04-18 10:00:00
 ---
 
 FRED, the excellent [Federal Reserve Internet Database][FRED] has a new
