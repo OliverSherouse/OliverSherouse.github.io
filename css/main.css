@@ -293,10 +293,6 @@ blockquote {
         margin-right: 0;
     }
 
-    .title h1 {
-        font-size: 3em;
-    }
-
 /* ========================
     INTERMEDIATE: IE Fixes
    ======================== */
@@ -317,7 +313,7 @@ blockquote {
    ============ */
 
     .title h1 {
-        font-size: 5em;
+        font-size: 3em;
     }
 
     .title h2{
