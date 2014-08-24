@@ -1,7 +1,5 @@
 name: Oliver Sherouse Writes Occasionally
-markdown: rdiscount
-rdiscount:
-    extensions: ["smart"]
+markdown: kramdown
 highlighter: pygments
 paginate: 5
 url: http://www.oliversherouse.com
