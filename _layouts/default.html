@@ -10,12 +10,13 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link href='http://fonts.googleapis.com/css?family=Merriweather+Sans|Merriweather:400,400italic,700,700italic|Inconsolata:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/css/normalize.min.css">
         <link rel="stylesheet" href="/css/main.css">
         <link rel="stylesheet" href="/css/syntax.css">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/OliverSherouse">
 
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({showProcessingMessages: false});</script>
         <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script>
     </head>
@@ -23,38 +24,29 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
-        <div class="header-container">
+        <div id="container">
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
             <header class="wrapper clearfix">
                 <hgroup class="title">
                     <h1><a href="/">{{ site.name }}</a></h1>
-                    <h2>On Public Policy and Python Programming</h2>
+                    <h2>on Public Policy<br />and Python Programming</h2>
                 </hgroup>
-                <nav>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about.html">About</a></li>
-                    </ul>
-                </nav>
             </header>
-        </div>
-
-        <div class="main-container">
-            <div class="main wrapper clearfix">
-                <section class="article-container">
-                {{ content }}
-                </section>
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
-
-        <div class="footer-container">
-            <footer class="wrapper">
+            <section id="article-container">
+            {{ content }}
+            </section>
+            <footer class="page-footer clearfix">
                 <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
                 <p>Hosted by <a href="http://pages.github.com/">GitHub Pages</a>.</p>
             </footer>
-        </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        </div>  <!-- container -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
         <script src="/js/main.js"></script>
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

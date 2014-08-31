@@ -1,20 +1,27 @@
 /*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+/*$serif: 'Merriweather', serif;*/
+/*$serif: "Palatino Linotype", "Book Antiqua", Palatino, serif;*/
+/*$sans: 'Merriweather Sans', sans;*/
+/*$sans: "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
 html, button, input, select, textarea {
   color: #222; }
 
 html {
-  font-size: 1em;
-  line-height: 1.4; }
+  font-size: .8em;
+  /*line-height: 1.4;*/
+  background-color: white;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-family: "Georgia", serif; }
 
 ::-moz-selection, ::selection {
-  background: #b3d4fc;
   text-shadow: none; }
 
 hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #222;
   margin: 1em 0;
   padding: 0; }
 
@@ -31,19 +38,140 @@ textarea {
 
 .browsehappy {
   margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
+  color: white;
+  background: #555;
   padding: 0.2em 0; }
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+a, a:hover, a:visited, a:active {
+  color: #336699;
+  text-decoration: none; }
+
+h1 {
+  font-size: 1.3em; }
+
+h2 {
+  font-size: 1.118em; }
+
+h3 {
+  font-size: 1.027em; }
+
+h4 {
+  font-size: 0.936em; }
+
+h5 {
+  font-size: 0.845em; }
+
+h6 {
+  font-size: 0.754em; }
+
+h1, h2, h3, h4, h5, h6 {
+  display: block;
+  font-style: italic;
+  color: #555; }
+  h1 a, h1 a:hover, h1 a:visited, h1 a:active, h2 a, h2 a:hover, h2 a:visited, h2 a:active, h3 a, h3 a:hover, h3 a:visited, h3 a:active, h4 a, h4 a:hover, h4 a:visited, h4 a:active, h5 a, h5 a:hover, h5 a:visited, h5 a:active, h6 a, h6 a:hover, h6 a:visited, h6 a:active {
+    text-decoration: none;
+    color: #555; }
+
+#container {
+  min-width: 25em;
+  max-width: 60em;
+  margin-left: auto;
+  margin-right: auto; }
+
+nav ul {
+  padding: 0; }
+nav li {
+  display: inline; }
+  nav li a {
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-right: 1em;
+    font-variant: small-caps;
+    text-decoration: none; }
+
+.title {
+  min-width: 25em;
+  padding-bottom: 2em;
+  border-bottom: 1px dotted #555; }
+  .title h1, .title h2 {
+    font-size: 1.5em;
+    font-style: normal;
+    font-variant: small-caps;
+    font-family: "Verdana", sans;
+    margin-bottom: 0em;
+    margin-top: 0em; }
+
+/*.page-footer{*/
+/*border-top: $borderstyle;*/
+/*margin-top: 1em;*/
+/*}*/
+img {
+  width: 100%; }
+
+article {
+  margin-top: 2em;
+  max-width: 35em;
+  position: relative;
+  padding-bottom: 1em;
+  border-bottom: 1px dotted #555; }
+
+pre {
+  font-family: mono; }
+
+.date {
+  font-style: italic; }
+
+.simpletable td {
+  text-align: right; }
+
+.simpletable th, .simpletable td {
+  border: 1px solid #555;
+  border-collapse: collapse;
+  width: 100%;
+  padding: 0 3px; }
+
+.simpletable {
+  margin-bottom: 1em;
+  font-family: mono; }
+
+.simpletable {
+  font-size: .8em; }
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
+@media only screen and (min-width: 28em) {
+  html {
+    font-size: 1em; }
+
+  .large {
+    width: 90vw;
+    max-width: 60em; }
+
+  .title h1 {
+    font-size: 2.5em; }
+  .title h2 {
+    font-size: 2em; } }
+@media only screen and (min-width: 60em) {
+  /*article{*/
+  /*padding-right: 1em;*/
+  /*border-right: $borderstyle;*/
+  /*}*/
+  .small, .footnotes ol li {
+    position: absolute;
+    left: 39em;
+    width: 21em; }
+
+  .footnotes ol li {
+    position: absolute;
+    left: 40em;
+    width: 20em; }
+
+  .reversefootnote {
+    display: none; } }
 .ir {
   background-color: transparent;
   border: 0;
