@@ -1,4 +1,3 @@
-/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 $color1: #555;
 $color2: white;
 $textcolor: #222;
@@ -11,14 +10,10 @@ $guttersep: 4em;
 $gutterwidth: $fullwidth - $textwidth - $guttersep;
 $gutterleft: $textwidth + $guttersep;
 $borderstyle: 1px dotted $color1;
-/*$serif: 'Merriweather', serif;*/
-$serif: 'Georgia', serif;
-/*$serif: "Palatino Linotype", "Book Antiqua", Palatino, serif;*/
-/*$sans: 'Merriweather Sans', sans;*/
-$sans: 'Verdana', sans;
-/*$sans: "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
-$mono: mono;
-
+$serif: 'Merriweather', serif;
+$sans: 'Merriweather Sans', sans-serif;
+$mono: 'Inconsolata', monospace;
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,700,400italic,700italic|Merriweather+Sans|Inconsolata:400,700);
 @mixin headers_size($h1){
     h1 {font-size: $h1;}
     h2 {font-size: (1 - (2 * $header-step)) * $h1;}
@@ -34,7 +29,6 @@ html, button, input, select, textarea {
 
 html {
   font-size: .8em;
-  /*line-height: 1.4;*/
   background-color:$color2;
   padding-left: 1em;
   padding-right: 1em;
@@ -131,12 +125,6 @@ nav{
     }
 }
 
-
-/*.page-footer{*/
-    /*border-top: $borderstyle;*/
-    /*margin-top: 1em;*/
-/*}*/
-
 img {
     width: 100%;
 }
@@ -199,10 +187,6 @@ pre{
 }
 
 @media only screen and (min-width: $fullwidth){
-    /*article{*/
-        /*padding-right: 1em;*/
-        /*border-right: $borderstyle;*/
-    /*}*/
     .small, .footnotes ol li {
         position: absolute;
         left: $gutterleft;

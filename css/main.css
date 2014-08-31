@@ -1,18 +1,13 @@
-/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
-/*$serif: 'Merriweather', serif;*/
-/*$serif: "Palatino Linotype", "Book Antiqua", Palatino, serif;*/
-/*$sans: 'Merriweather Sans', sans;*/
-/*$sans: "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,700,400italic,700italic|Merriweather+Sans|Inconsolata:400,700);
 html, button, input, select, textarea {
   color: #222; }
 
 html {
   font-size: .8em;
-  /*line-height: 1.4;*/
   background-color: white;
   padding-left: 1em;
   padding-right: 1em;
-  font-family: "Georgia", serif; }
+  font-family: "Merriweather", serif; }
 
 ::-moz-selection, ::selection {
   text-shadow: none; }
@@ -100,14 +95,10 @@ nav li {
     font-size: 1.5em;
     font-style: normal;
     font-variant: small-caps;
-    font-family: "Verdana", sans;
+    font-family: "Merriweather Sans", sans-serif;
     margin-bottom: 0em;
     margin-top: 0em; }
 
-/*.page-footer{*/
-/*border-top: $borderstyle;*/
-/*margin-top: 1em;*/
-/*}*/
 img {
   width: 100%; }
 
@@ -119,7 +110,7 @@ article {
   border-bottom: 1px dotted #555; }
 
 pre {
-  font-family: mono; }
+  font-family: "Inconsolata", monospace; }
 
 .date {
   font-style: italic; }
@@ -135,7 +126,7 @@ pre {
 
 .simpletable {
   margin-bottom: 1em;
-  font-family: mono; }
+  font-family: "Inconsolata", monospace; }
 
 .simpletable {
   font-size: .8em; }
@@ -156,10 +147,6 @@ pre {
   .title h2 {
     font-size: 2em; } }
 @media only screen and (min-width: 60em) {
-  /*article{*/
-  /*padding-right: 1em;*/
-  /*border-right: $borderstyle;*/
-  /*}*/
   .small, .footnotes ol li {
     position: absolute;
     left: 39em;
