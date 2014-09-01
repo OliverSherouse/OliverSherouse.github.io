@@ -97,9 +97,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 nav{
-    ul{
-        padding:0;
-    }
+    ul{padding:0;}
     li{
         display:inline;
         a {
@@ -127,16 +125,18 @@ nav{
     }
 }
 
+#article-container{
+    max-width: $textwidth;
+}
+
 article {
     margin-top: 2em;
-    max-width: $textwidth;
     position: relative;
     padding-bottom: 1em;
     border-bottom: $borderstyle;
     footer {
         border-top: $borderstyle;
-        margin-top: 2em;
-        padding-top: 1em;
+        margin-top: 1em;
     }
 }
 
@@ -146,20 +146,16 @@ article {
     padding:0;
     margin-bottom:2em;
     li {display: inline;}
-
     a {
         float: left;
         width: 33%;
         text-align: center;
     }
-
     li:first-child a {margin-left: 0;}
     li:last-child a {margin-right: 0;}
-
     a, a:visited, a:hover, a:active {
         font-style: italic;
-        color: $textcolor;
-        text-decoration: underline;
+        color: $color1;
     }
 }
 
@@ -171,6 +167,8 @@ img {
 pre{font-family: $mono}
 
 .date {font-style: italic;}
+
+#previous_page{float: right;}
 
 .simpletable td{text-align: right;}
 

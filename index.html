@@ -10,9 +10,11 @@ layout: default
     {{ post.content }}
 </article>
 {% endfor %}
+<footer>
 {% if paginator.next_page %}
 <a id="next_page" href={{paginator.next_page_path}}>&laquo;older posts</a>
 {% endif %}
 {% if paginator.previous_page %}
 <a id="previous_page" href={{paginator.previous_page_path}}>newer posts&raquo;</a>
 {% endif %}
+</footer>

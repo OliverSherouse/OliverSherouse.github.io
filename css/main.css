@@ -99,16 +99,17 @@ nav li {
     margin-bottom: 0em;
     margin-top: 0em; }
 
+#article-container {
+  max-width: 35em; }
+
 article {
   margin-top: 2em;
-  max-width: 35em;
   position: relative;
   padding-bottom: 1em;
   border-bottom: 1px dotted #555; }
   article footer {
     border-top: 1px dotted #555;
-    margin-top: 2em;
-    padding-top: 1em; }
+    margin-top: 1em; }
 
 .share-links {
   list-style-type: none;
@@ -127,8 +128,7 @@ article {
     margin-right: 0; }
   .share-links a, .share-links a:visited, .share-links a:hover, .share-links a:active {
     font-style: italic;
-    color: #222;
-    text-decoration: underline; }
+    color: #555; }
 
 img {
   width: 100%;
@@ -139,6 +139,9 @@ pre {
 
 .date {
   font-style: italic; }
+
+#previous_page {
+  float: right; }
 
 .simpletable td {
   text-align: right; }
