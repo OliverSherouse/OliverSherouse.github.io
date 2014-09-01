@@ -212,6 +212,7 @@ pre{font-family: $mono}
         position: absolute;
         left: $gutterleft + 1em;
         width: $gutterwidth - 1em;
+        p{font-size: small;}
     }
     .reversefootnote{display: none;}
 
