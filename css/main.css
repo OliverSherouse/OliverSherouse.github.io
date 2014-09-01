@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
     color: #555; }
 
-#container {
+.container {
   min-width: 25em;
   max-width: 60em;
   margin-left: auto;
@@ -99,15 +99,40 @@ nav li {
     margin-bottom: 0em;
     margin-top: 0em; }
 
-img {
-  width: 100%; }
-
 article {
   margin-top: 2em;
   max-width: 35em;
   position: relative;
   padding-bottom: 1em;
   border-bottom: 1px dotted #555; }
+  article footer {
+    border-top: 1px dotted #555;
+    margin-top: 2em;
+    padding-top: 1em; }
+
+.share-links {
+  list-style-type: none;
+  list-style-image: none;
+  padding: 0;
+  margin-bottom: 2em; }
+  .share-links li {
+    display: inline; }
+  .share-links a {
+    float: left;
+    width: 33%;
+    text-align: center; }
+  .share-links li:first-child a {
+    margin-left: 0; }
+  .share-links li:last-child a {
+    margin-right: 0; }
+  .share-links a, .share-links a:visited, .share-links a:hover, .share-links a:active {
+    font-style: italic;
+    color: #222;
+    text-decoration: underline; }
+
+img {
+  width: 100%;
+  min-width: 25em; }
 
 pre {
   font-family: "Inconsolata", monospace; }
@@ -126,10 +151,8 @@ pre {
 
 .simpletable {
   margin-bottom: 1em;
+  font-size: .8em;
   font-family: "Inconsolata", monospace; }
-
-.simpletable {
-  font-size: .8em; }
 
 /* ==========================================================================
    Media Queries
@@ -150,12 +173,12 @@ pre {
   .small, .footnotes ol li {
     position: absolute;
     left: 39em;
-    width: 21em; }
+    width: 20em; }
 
   .footnotes ol li {
     position: absolute;
     left: 40em;
-    width: 20em; }
+    width: 19em; }
 
   .reversefootnote {
     display: none; } }

@@ -2,18 +2,20 @@ $color1: #555;
 $color2: white;
 $textcolor: #222;
 $linkcolor: #336699;
-$min-width: 25em;
+$minwidth: 25em;
 $textwidth: 35em;
 $fullwidth: 60em;
 $header-step: 0.07;
 $guttersep: 4em;
-$gutterwidth: $fullwidth - $textwidth - $guttersep;
+$gutterwidth: $fullwidth - $textwidth - $guttersep - 1;
 $gutterleft: $textwidth + $guttersep;
 $borderstyle: 1px dotted $color1;
 $serif: 'Merriweather', serif;
 $sans: 'Merriweather Sans', sans-serif;
 $mono: 'Inconsolata', monospace;
+
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700,400italic,700italic|Merriweather+Sans|Inconsolata:400,700);
+
 @mixin headers_size($h1){
     h1 {font-size: $h1;}
     h2 {font-size: (1 - (2 * $header-step)) * $h1;}
@@ -87,8 +89,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-#container {
-    min-width: $min-width;
+.container {
+    min-width: $minwidth;
     max-width: $fullwidth;
     margin-left: auto;
     margin-right: auto;
@@ -111,7 +113,7 @@ nav{
 }
 
 .title {
-    min-width: $min-width;
+    min-width: $minwidth;
     padding-bottom: 2em;
     border-bottom: $borderstyle;
     h1, h2{
@@ -125,27 +127,52 @@ nav{
     }
 }
 
-img {
-    width: 100%;
-}
-
 article {
-    margin-top:2em;
+    margin-top: 2em;
     max-width: $textwidth;
     position: relative;
     padding-bottom: 1em;
     border-bottom: $borderstyle;
+    footer {
+        border-top: $borderstyle;
+        margin-top: 2em;
+        padding-top: 1em;
+    }
 }
 
-pre{
-    font-family: $mono
+.share-links {
+    list-style-type: none;
+    list-style-image: none;
+    padding:0;
+    margin-bottom:2em;
+    li {display: inline;}
+
+    a {
+        float: left;
+        width: 33%;
+        text-align: center;
+    }
+
+    li:first-child a {margin-left: 0;}
+    li:last-child a {margin-right: 0;}
+
+    a, a:visited, a:hover, a:active {
+        font-style: italic;
+        color: $textcolor;
+        text-decoration: underline;
+    }
 }
+
+img {
+    width: 100%;
+    min-width: $minwidth
+}
+
+pre{font-family: $mono}
 
 .date {font-style: italic;}
 
-.simpletable td{
-    text-align: right;
-}
+.simpletable td{text-align: right;}
 
 .simpletable th,.simpletable td {
     border: 1px solid $color1;
@@ -156,11 +183,8 @@ pre{
 
 .simpletable{
     margin-bottom: 1em;
-    font-family: $mono;
-}
-
-.simpletable {
     font-size: .8em;
+    font-family: $mono;
 }
 
 
@@ -169,20 +193,14 @@ pre{
    ========================================================================== */
 
 @media only screen and (min-width: .8 * $textwidth) {
-    html{
-        font-size: 1em;
-    }
+    html{font-size: 1em;}
     .large{
         width: 90vw;
         max-width: $fullwidth
     }
     .title{
-        h1{
-            font-size: 2.5em;
-        }
-        h2{
-            font-size: 2em;
-        }
+        h1{font-size: 2.5em;}
+        h2{font-size: 2em;}
     }
 }
 
@@ -197,9 +215,7 @@ pre{
         left: $gutterleft + 1em;
         width: $gutterwidth - 1em;
     }
-    .reversefootnote{
-        display: none;
-    }
+    .reversefootnote{display: none;}
 
 }
 @import 'helpers';
