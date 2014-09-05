@@ -27,11 +27,9 @@ to pay significantly less than marginal value, because otherwise you wouldn't
 have employees who were one disaster away from destitution.
 
 The problem with that story is that real wages for unskilled service employees
-are relatively high right now:
+are relatively high right now:[^update]
 
-![Real wages of service-providers are
-high](http://research.stlouisfed.org/fredgraph.png?g=oCD "Real wages for
-non-supervisor service providers are high")
+![Real wages of service-providers are high][fredwages]
 
 If Walmart's workers are getting severely underpaid right now, they can easily
 improve themselves by getting a better paying job somewhere else.  But they
@@ -60,5 +58,9 @@ Weissmann wants Walmart to pay people more than they're getting so that they
 don't need to be as reliant on charity. I guess he doesn't realize that that's
 what they're already doing.
 
+[^updates]: I realized I originally had slightly the wrong graph here, and 
+    updated on 4 September 2014
+
 [og]: http://www.theatlantic.com/business/archive/2013/11/photo-this-ohio-walmart-is-running-a-food-drive-for-its-own-workers/281610/
 [tam]: http://econweb.tamu.edu/jmeer/Meer_West_Minimum_Wage.pdf
+[fredwages]: http://research.stlouisfed.org/fred2/graph/fredgraph.png?g=Jnc
