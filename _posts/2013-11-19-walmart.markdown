@@ -59,7 +59,7 @@ don't need to be as reliant on charity. I guess he doesn't realize that that's
 what they're already doing.
 
 [^update]: I realized I originally had slightly the wrong graph here, and 
-updated on 4 September 2014
+    updated on 4 September 2014
 
 [og]: http://www.theatlantic.com/business/archive/2013/11/photo-this-ohio-walmart-is-running-a-food-drive-for-its-own-workers/281610/
 [tam]: http://econweb.tamu.edu/jmeer/Meer_West_Minimum_Wage.pdf
