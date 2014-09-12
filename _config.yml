@@ -3,3 +3,5 @@ markdown: kramdown
 highlighter: pygments
 paginate: 5
 url: http://www.oliversherouse.com
+sass:
+    style: compressed
