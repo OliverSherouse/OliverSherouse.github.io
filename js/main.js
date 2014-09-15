@@ -2,6 +2,7 @@ $(document).ready(pageinit);
 
 function pageinit(){
     footnotes();
+    $(window).resize(footnotes);
 }
 
 function footnotes(){
