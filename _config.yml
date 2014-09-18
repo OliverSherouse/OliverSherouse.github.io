@@ -1,6 +1,6 @@
 name: Oliver Sherouse Writes Occasionally
 markdown: kramdown
-highlighter: pygments
+highlighter: true
 paginate: 5
 url: http://www.oliversherouse.com
 sass:
