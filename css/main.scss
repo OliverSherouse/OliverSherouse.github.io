@@ -9,7 +9,7 @@ $textwidth: 35em;
 $fullwidth: 60em;
 $header-step: 0.07;
 $guttersep: 4em;
-$gutterwidth: $fullwidth - $textwidth - $guttersep - 1;
+$gutterwidth: $fullwidth - $textwidth - $guttersep;
 $gutterleft: $textwidth + $guttersep;
 $borderstyle: 1px dotted $color1;
 $serif: 'Merriweather', serif;
@@ -163,10 +163,15 @@ article {
 
 img {
     width: 100%;
-    min-width: $minwidth
+    min-width: $minwidth;
 }
 
-pre{font-family: $mono}
+pre{font-family: $mono;}
+
+blockquote cite{
+    display:block;
+    text-align: right;
+}
 
 .date {font-style: italic;}
 
@@ -205,10 +210,11 @@ pre{font-family: $mono}
 }
 
 @media only screen and (min-width: $fullwidth){
-    .small, .footnotes ol li {
+    .small {
         position: absolute;
         left: $gutterleft;
         width: $gutterwidth;
+        min-width: 0;
     }
     .footnotes ol li{
         position: absolute;
