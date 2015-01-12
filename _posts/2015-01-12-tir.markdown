@@ -1,8 +1,9 @@
 ---
 title: Afternoon Links
 layout: post
-category: ppe
+date: 2015-01-12
 category: culture
+category: ppe
 ---
 Today I'm reading a few papers from NBER:
 
