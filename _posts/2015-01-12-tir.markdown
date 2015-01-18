@@ -1,0 +1,35 @@
+---
+title: Afternoon Links
+layout: post
+date: 2015-01-12
+category: culture
+category: ppe
+---
+Today I'm reading a few papers from NBER:
+
+* [Cognitive Economics](http://www.nber.org/papers/w20834):
+
+    "Cognitive Economics is the economics of what is in people’s minds. It is a
+    vibrant area of research (much of it within Behavioral Economics, Labor
+    Economics and the Economics of Education) that brings into play novel types
+    of data—especially novel types of survey data. Such data highlight the
+    importance of heterogeneity across individuals and highlight thorny issues
+    for Welfare Economics. A key theme of Cognitive Economics is finite
+    cognition (often misleadingly called “bounded rationality”), which poses
+    theoretical challenges that call for versatile approaches. Cognitive
+    Economics brings a rich toolbox to the task of understanding a complex
+    world."
+
+* [Austerity in 2009-2013](http://www.nber.org/papers/w20827), ungated version
+  [here](http://didattica.unibocconi.it/mypage/upload/48751_20141110_105228_AUSTERITY-ALESINABARBIEROFAVEROGIAVAZZIPARADISI_SEPT.PDF):
+
+    "The conventional wisdom is (i) that fiscal austerity was the main culprit
+    for the recessions experienced by many countries, especially in Europe,
+    since 2010 and (ii) that this round of fiscal consolidation was much more
+    costly than past ones. The contribution of this paper is a clarification of
+    the first point and, if not a clear rejection, at least it raises doubts on
+    the second."
+
+    I'm hoping that this paper on austerity will be a little more illumating
+    than the fly-by analysis I was talking about
+    [earlier](/ppe/2015/01/12/austerity.html)
