@@ -1,0 +1,89 @@
+---
+layout: post
+title: The Metric System vs. the Soul
+date: 2015-02-26
+---
+
+I found [this article][fahernheit] on Facebook[^hattip], which argues that the
+Fahrenheit system is better for everyday use than the Celsius scale because it
+corresponds to a human range of hot and cold, rather than to the scientific but
+arbitrary freezing and boiling points of water. I find this argument obviously
+correct.
+
+But in fact, the Celsius scale is only the tip of the 32-degree iceberg. I hold
+that the whole metric system dehumanizes us, when we use it out of its proper
+context.
+
+That's not me being funny to make a point: I actually believe that using the
+metric system for everything cheapens the human experience. Some people use
+this map, with countries that use the metric system in green and those that do
+not in gray, to mock the United States as a hopeless yokel of a
+nation:[^mapcredit]
+
+![Map showing that the US is almost alone in not adopting the metic system][worldmap]
+
+To me, that map shows the US as a lone holdout of common sense and
+civilization.
+
+The metric system was developed to accomplish a few specific goals. It
+simplifies calculating higher or lower by its omnipresent powers of ten. It
+aligns, where possible, different kinds of measurement; a cubic centimeter of
+water is also one milliliter, and at four degrees Celsius it has a mass of one
+gram. In the laboratory, say, or in large scale manufacturing, these properties
+are no doubt desirable, because the extreme precision required comes most
+easily when unencumbered by factors purely human.
+
+And it is for the exact same reason that the metric system ruins the glory and
+splendor and even romance of every day life. 
+
+A meter, for example, is the length light travels in about one three-hundred
+millionth of a second. That is a very precise definition, but to any person who
+does not go around noting the precise locations of photons, it is a useless
+definition. A foot, on the other hand, is about the length of a man's foot when
+he wears a shoe.
+
+A liter is the volume of a container 10 centimeters long, wide, and high. A cup
+is about as much as you get in a cup. A pint is two of those; the perfect size
+for a serving of beer.
+
+The metric system has no connection to humanity as such. You can see this just
+by looking at the arts.
+
+When Shylock demands a pound of flesh, we shudder; if he demanded a kilogram,
+we would laugh. When Falstaff says "Peace, good pint-pot" to the hostess, he is
+a having a good time; if he said "Peace, good point-five-liter-pot," he would
+be a pedant.
+
+No-one would be much moved if Frost sighed "But I have promises to keep and
+kilometers to go before I sleep, and kilometers to go before I sleep."
+
+I do not say that no-one has ever or will ever write a poem about a kilometer;
+only that I doubt that anyone has or will write a good one.
+
+It does no good to say that measurement has nothing to do with art. That answer
+proves my point; it loses that part of the human experience that sees the
+romance in the mile of a thousand steps, that perceives the  relationship of
+man to the cosmos.
+
+The imposition of the metric system on the public first occurred during the
+French Revolution. If it was the most minor atrocity of the Jacobin's bloody
+and merciless rationalism, it was also the most lasting. It embodies the
+Revolution's determination to cram the majestic complexity of the world into a
+human mechanical design.
+
+When someone says that we should give up our old miles for kilometers or pounds
+for kilograms, what they are really saying is that our everyday life were more
+like a machine, or a laboratory, or a mass production facility; that it would
+be less like humanity, and less like life.
+
+I prefer humanity to machinery, and I value art over easy convertibility. And
+if I am the last man to measure my journeys in miles, I will probably be the
+man who enjoys them most along the way.
+
+[^hattip]: Hat tip to Nancy vander Veer
+
+[^mapcredit]: [Source](http://en.wikipedia.org/wiki/Metric_system#mediaviewer/File:Metric_system_adoption_map.svg)
+
+[fahernheit]: http://isomorphism.es/post/3767526267/fahrenheit-versus-celsius
+<!--[worldmap]: {{site.url}}/img/metric_system/map.svg-->
+[worldmap]: /img/metric_system/map.svg
