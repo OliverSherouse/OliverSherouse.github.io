@@ -166,7 +166,12 @@ img {
     min-width: $minwidth;
 }
 
-pre{font-family: $mono;}
+pre{
+    font-family: $mono;
+    min-width: 80ch;
+    max-width: 80ch;
+
+}
 
 blockquote.cite{
     display:block;
