@@ -169,7 +169,9 @@ pre{
     font-family: $mono;
     min-width: 80ch;
     max-width: 80ch;
-
+    border: 1px solid rgba($textcolor, 0.15);
+    padding: 1em;
+    margin-left: -1em;
 }
 
 blockquote.cite{
