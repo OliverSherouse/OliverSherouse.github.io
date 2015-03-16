@@ -12,11 +12,10 @@ $guttersep: 4em;
 $gutterwidth: $fullwidth - $textwidth - $guttersep;
 $gutterleft: $textwidth + $guttersep;
 $borderstyle: 1px dotted $color1;
-$serif: 'Merriweather', serif;
-$sans: 'Merriweather Sans', sans-serif;
+$sans: 'Noto Sans', sans-serif;
 $mono: 'Inconsolata', monospace;
 
-@import url(http://fonts.googleapis.com/css?family=Merriweather:400,700,400italic,700italic|Merriweather+Sans|Inconsolata:400,700);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic|Inconsolata:400,700);
 
 @mixin headers_size($h1){
     h1 {font-size: $h1;}
@@ -36,7 +35,7 @@ html {
   background-color:$color2;
   padding-left: 1em;
   padding-right: 1em;
-  font-family: $serif;
+  font-family: $sans;
 }
 
 ::-moz-selection, ::selection {text-shadow: none;}
@@ -83,7 +82,7 @@ a, a:hover, a:visited, a:active {
 
 h1, h2, h3, h4, h5, h6 {
     display: block;
-    font-style: italic;
+    /*font-style: italic;*/
     color: $color1;
     a, a:hover, a:visited, a:active {
         text-decoration:none;
