@@ -1,0 +1,17 @@
+---
+layout: page
+title: Blog
+---
+<section>
+{%for post in paginator.posts%}
+<article class="blog-article">
+    <h1><a href="{{post.url | prepend:site.baseurl}}">{{post.title}}</a></h1>
+    <p class="postdate">{{post.date | date: "%d %B %Y"}}</p>
+    {{post.content}}
+</article>
+{%endfor%}
+</section>
+<div id="paginator">
+  {% if paginator.next_page %}<p id="older"><a href="{{ paginator.next_page_path }}"> <span class="fa fa-arrow-left"></span>&nbsp;Older Posts</a></p>{%endif%}
+  {% if paginator.previous_page %}<p id="newer"><a href="{{ paginator.previous_page_path }}"> <span class="fa fa-arrow-right"></span>&nbsp;Newer Posts</a></p>{%endif%}
+</div>

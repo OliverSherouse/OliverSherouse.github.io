@@ -1,0 +1,15 @@
+---
+title:  Redesign and Missing Posts
+layout: post
+date:   2015-07-26
+---
+
+I've redesigned the site because I felt it was looking a little stale. For anyone interested this site is hosted on [Github Pages], using the [Jekyll site generator][jekyll]. I use the [Pure CSS framework][pure], the [jQuery javasript][jquery] library, and [Modernizr].
+
+Part of the redesign means that my older posts have to be reformatted a bit. There are few enough of them that I've decided just to pull them all off and then go through them by hand. Some old posts I don't care for enough to bring back, but I doubt anyone will miss them.
+
+[Github Pages]: https://pages.github.com/
+[jekyll]: http://jekyllrb.com/
+[pure]: http://purecss.io/
+[jQuery]: https://jquery.com/
+[Modernizr]: http://modernizr.com/

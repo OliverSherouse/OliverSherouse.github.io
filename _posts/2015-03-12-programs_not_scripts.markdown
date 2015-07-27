@@ -94,9 +94,8 @@ Now of course, you still want to put your specific filepaths for the specific pr
 This, of course, is nothing but bringing the [Unix Philosophy][unix] to data work:
 
 > This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
-
-> ---Doug McIlroy
-{:.cite}
+>
+> <cite>---Doug McIlroy</cite>
 
 Well, OK, I didn't get to text streams. But one thing at a time.
 

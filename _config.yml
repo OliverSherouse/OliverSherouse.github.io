@@ -1,7 +1,12 @@
-name: Oliver Sherouse Writes Occasionally
-markdown: kramdown
-highlighter: pygments
-paginate: 5
-url: http://www.oliversherouse.com
-sass:
-    style: compressed
+# Site settings
+title: Oliver Sherouse
+email: oliver.sherouse@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Oliver Sherouse writes on Data, Python, and Culture
+baseurl: "" # the subpath of your site, e.g. /blog/
+
+url: "http://www.oliversherouse.com" # the base hostname & protocol for your site
+kramdown:
+    syntax_highlighter: rouge
+paginate: 10
+paginate_path: "/blog/page:num/"

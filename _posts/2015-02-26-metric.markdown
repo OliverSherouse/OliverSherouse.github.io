@@ -85,5 +85,4 @@ man who enjoys them most along the way.
 [^mapcredit]: [Source](http://en.wikipedia.org/wiki/Metric_system#mediaviewer/File:Metric_system_adoption_map.svg)
 
 [fahernheit]: http://isomorphism.es/post/3767526267/fahrenheit-versus-celsius
-<!--[worldmap]: {{site.url}}/img/metric_system/map.svg-->
 [worldmap]: /img/metric_system/map.svg
