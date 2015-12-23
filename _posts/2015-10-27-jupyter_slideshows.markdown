@@ -10,15 +10,15 @@ Pandoc is a document converter that can read a good number of formats and turn t
 
 Here's the one liner:
 
-{% highlight bash %}
+``` bash
 nbconvert --to markdown --stdout path/to/notebook.ipynb | pandoc -Ss -t revealjs -o slides.html
-{% endhighlight %}
+```
 
 The `-Ss` handles smart quotes and produces a standalone file. You can change the `-t` format to whatever slide engine you want. If you would like your lists to appear incrementally, add the `-i` flag to the `pandoc` command, like so:
 
-{% highlight bash %}
+``` bash
 nbconvert --to markdown --stdout path/to/notebook.ipynb | pandoc -Ssi -t revealjs -o slides.html
-{% endhighlight %}
+```
 
 This works well for me with images and code blocks. You do have to keep in mind [the way Pandoc parses markdown for slides][sliderules], but it's pretty simple. The thing to keep in mind is that the highest-level header that is followed by non-header content is the slide-level title, the level above that becomes the section-level title, and levels below that are in-slide headers. You can actually get a fair amount of customization with Pandoc options, like the location of the slide libraries or slide themes, but I'll leave that as an exercise for the reader.
 
