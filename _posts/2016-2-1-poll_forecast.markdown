@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Knock-Off Nate Silver: the 430 Election Forecast Model"
+title: "How to Knock Off Nate Silver: the 430 Election Forecast Model"
 date: 2016-02-01
 ---
 
