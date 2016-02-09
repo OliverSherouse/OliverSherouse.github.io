@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Donald Trump's Tax Plan in Two Charts"
 date: 2015-10-01
 ---

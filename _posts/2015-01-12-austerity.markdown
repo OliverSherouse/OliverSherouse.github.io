@@ -1,7 +1,6 @@
 ---
 title: "Austerity Arguments are a Mess (Chart Fight!)"
 date: 2015-01-12
-layout: post
 category: ppe
 ---
 

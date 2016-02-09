@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Review: The Book of Strange New Things"
 date: 2015-09-28
 ---

@@ -1,11 +1,10 @@
 ---
-layout: post
 title: For Data Projects, Write Programs not Scripts
 date: 2015-03-12 10:24:44
 ---
 One thing I see a lot in data work is scripts that look something like this:
 
-{% highlight python %}
+```python
 
 """
 Some Data Analysis
@@ -19,7 +18,7 @@ data = data.select(["this", "that", "the other"])
 some_library.write_file(data, "output.csv")
 some_library.make_pretty_chart(data, "chart.png")
 
-{% endhighlight %}
+```
 
 Sometimes you'll get a few functions in there, and sometimes even a main function, but the central driving idea is that you write a script to do the specific task at hand.
 
@@ -29,7 +28,7 @@ The whole point of computers is that they do repetition better than we do, and t
 
 A better solution is to write every script as if you intended it to be a stand-alone program.  For example, we could make the above pseudo-script look like this:
 
-{% highlight python %}
+```python
 
 """
 Do some data analysis
@@ -83,7 +82,7 @@ def create_output_from_file(
     if __name__ == "__main__":
         main()
 
-{% endhighlight %}
+```
 
 You would just run this script using `python script_name.py input.csv output.csv output.png` to get the same result as the original. The difference is, this version of the script is completely portable; you can take it and drop it into any project where you need the functionality.
 

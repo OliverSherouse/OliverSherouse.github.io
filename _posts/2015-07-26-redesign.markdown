@@ -1,6 +1,5 @@
 ---
 title:  Redesign and Missing Posts
-layout: post
 date:   2015-07-26
 ---
 

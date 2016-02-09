@@ -1,6 +1,5 @@
 ---
 title: A Boilerplate for Python Data Scripts
-layout: post
 date: 2015-08-21
 ---
 
@@ -8,7 +7,7 @@ Most of the data scripts I write follow a pretty basic pattern. Since I try to w
 
 So, in the name of not repeating work, and because other people might find it helpful, I've put together a boilerplate for data scripts. I've put up commented and uncommented versions on [GitHub],  But for discussion purposes, here's the commented version:
 
-{% highlight python %}
+```python
 #!/usr/bin/env python
 """A boilerplate script to be customized for data projects.
 
@@ -106,7 +105,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-{% endhighlight %}
+```
 
 The comments explain a what's going on, but the basic idea is to follow Doug McIlroy's version of the [Unix Philosophy]:
 

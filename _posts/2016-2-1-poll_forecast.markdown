@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "How to Knock Off Nate Silver: the 430 Election Forecast Model"
 date: 2016-02-01
 ---
@@ -12,7 +11,7 @@ But it's actually pretty easy to build a simple poll-based model yourself using 
 Everything below is available in a Jupyter notebook [here][notebook]
 Let's start with a little setup:
 
-{% highlight python %}
+```python
 import collections
 import datetime
 
@@ -23,11 +22,11 @@ import requests
 API_ENDPOINT = "http://elections.huffingtonpost.com/pollster/api/polls"
 
 np.random.seed(2016)
-{% endhighlight %}
+```
 
 So, first, let's get our polling data, which we can do using the [Pollster API]:
 
-{% highlight python %}
+```python
 def get_all_results(state='US', party='gop', start_date='2015-6-1'):
     topic = '2016-president-{}-primary'.format(party)
     params = {'state': state,
@@ -63,7 +62,7 @@ def get_polls(state='US', party='gop', start_date='2015-6-1'):
                                          start_date=start_date))
     polls['date'] = pd.to_datetime(polls['date'])
     return polls
-{% endhighlight %}
+```
 
 Those two functions will allow us to specify a state, a party (either 'gop' or 'dem', per Pollster),  and how far back in time we want to go. What we get back is a Pandas DataFrame where each row has the result for one candidate for one poll, plus some metadata about the poll. All we really need for this model is the date, result, and number of observations, but I've also included the population screen in case you want to, say, restrict to only likely voters.
 
@@ -71,7 +70,7 @@ Now we want to combine those poll results for a point-in-time estimate of the me
 
 We're going to be lazy, and just weight based on recency. For each poll, we'll set a weight of one over the square of the age of the poll plus one (the plus one is so that we don't divide by zero). Then we can create a super-poll, in which we pool all the folks who said they'd vote for each candidate in any poll, multiplied by the weight of that poll. This allows us to calculate both the weighted estimate of the mean and the standard deviation of the estimate:
 
-{% highlight python %}
+```python
 def get_distribution_for_date(polls, target_date=None, window=30):
     if target_date is None:
         target_date = datetime.datetime.today()
@@ -89,13 +88,13 @@ def get_distribution_for_date(polls, target_date=None, window=30):
     weighted['std'] = np.sqrt(
         (weighted['mean'] * (1 - weighted['mean'])) / weighted['n'])
     return weighted[['mean', 'std']].query('mean > 0').copy()
-{% endhighlight %}
+```
 
 This function allows us to specify a target date, in case we want a snapshot from earlier in the campaign, and also a window that gives us a maximum age of polls. That's so Scott Walker doesn't show up in our results even though he's already dropped out of the race.
 
 Now we can run simulations! All we have to do is a draw from the normal distribution for each candidate, and see who got the highest percent of the vote:
 
-{% highlight python %}
+```python
 def run_simulation(dists, trials=10000):
     runs = pd.DataFrame(
         [np.random.normal(dists['mean'], dists['std'])
@@ -103,12 +102,12 @@ def run_simulation(dists, trials=10000):
         columns=dists.index)
     results = pd.Series(collections.Counter(runs.T.idxmax()))
     return results / results.sum()
-{% endhighlight python %}
+```
 
 
 Finally, here's a little function to automate all the steps and print out results:
 
-{% highlight python %}
+```python
 def predict(state='us', party='gop', window=30, trials=10000,
             target_date=None):
     polls = get_polls(state=state, party=party)
@@ -122,7 +121,7 @@ def predict(state='us', party='gop', window=30, trials=10000,
     print(run_simulation(dists, trials=trials)
           .sort_values(ascending=False)
           .map(lambda x: '{:.1%}'.format(x)))
-{% endhighlight %}
+```
 
 
 So, now for the fun part, who wins? Here's the superpoll results on the Republican side:

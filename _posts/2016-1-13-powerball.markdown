@@ -1,6 +1,5 @@
 ---
 title: Ignore Expected Value, Don't Play Powerball
-layout: post
 date: 2016-01-13
 ---
 

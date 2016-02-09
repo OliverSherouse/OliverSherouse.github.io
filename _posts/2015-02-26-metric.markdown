@@ -1,5 +1,4 @@
 ---
-layout: post
 title: The Metric System vs. the Soul
 date: 2015-02-26
 ---
