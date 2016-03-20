@@ -8,8 +8,8 @@ The Powerball lottery is in the news because the jackpot is up to about \$1.5 bi
 Expected value is sum of the value of each possible outcome times the odds of that possible outcome. In this case, it's the sum of the value times the odds of the [9 ways to win][outcomes]. 
 
 Outcome        | Odds
---------------:|:-------------------
-$1,400,000,000 | 1 in 292,201,338.00
+--------------:|-------------------:
+$1,500,000,000 | 1 in 292,201,338.00
 $1,000,000     | 1 in 11,688,053.52
 $50,000        | 1 in 913,129.18
 $100           | 1 in 36,525.17
@@ -23,7 +23,7 @@ $4             | 1 in 38.32
 Now there's also an optional add-on called "PowerPlay", which will multiply your winnings by a randomly-selected multiplier (except the jackpot, which remains the same, and the \$1 million prize, which doubles to \$2 million). The odds for the multiplier are:
 
 Multiplier | Odds
-----------:|:----------
+----------:|----------:
 5          | 1 in 21.00
 4          | 1 in 14.00
 3          | 1 in 3.23

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: nonpost
 title: Consulting
 permalink: "/consulting/"
 ---
@@ -10,4 +10,4 @@ I provide data science and business intelligence services on a consulting basis.
 * Introductory programming concepts using Python, and
 * Python for data analysis.
 
-I am located in the Washington, DC area, and am available remotely. For availability and rates, email me at [oliver.sherouse@gmail.com](mailto:oliver.sherouse@gmail.com?subject=[Consulting Inquiry]).
+I am located in the Washington, DC area, and am available remotely. For availability and rates, email me at [consulting@oliversherouse.com](mailto:consulting@oliversherouse.com?subject=[Consulting Inquiry]).

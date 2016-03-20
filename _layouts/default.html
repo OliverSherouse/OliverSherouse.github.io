@@ -8,19 +8,13 @@
       <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
       <meta name="description" content="{{ site.description }}">
       <link rel="icon" type="image/png" href="/favicon.png">
-      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-      <!--[if lte IE 8]>
-          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-      <![endif]-->
-      <!--[if gt IE 8]><!-->
-          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-      <!--<![endif]-->
-      <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-      <!-- <link rel="stylesheet" href="{{ "/css/syntax/github.css" | prepend: site.baseurl }}"> -->
-      <link rel="stylesheet" href="{{ "/css/syntax/friendly.css" | prepend: site.baseurl }}">
-      <!-- <link rel="stylesheet" href="{{ "/css/syntax/default.css" | prepend: site.baseurl }}"> -->
-      <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+      <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,700|Inconsolata:400,700">
+      <link rel="stylesheet" href="{{ "/css/main.css" }}">
+      <link rel="stylesheet" href="{{ "/css/syntax/friendly.css" }}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+      <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
       <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
   </head>
 
@@ -31,7 +25,7 @@
       </div>
       <footer id="main-footer">
         <p>Follow me on</p>
-        <ul class="footer-links">
+        <ul id="footer-links">
           <li><a href="http://twitter.com/OliverSherouse" target="_blank"><span class="fa fa-twitter"></span>&nbsp;Twitter</a></li>
           <li><a href="https://www.linkedin.com/pub/oliver-sherouse/24/417/1a2" target="_blank"><span class="fa fa-linkedin"></span>&nbsp;LinkedIn</a></li>
           <li><a href="https://github.com/OliverSherouse" target="_blank"><span class="fa fa-github"></span>&nbsp;Github</a></li>

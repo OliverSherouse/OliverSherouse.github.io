@@ -1,19 +1,15 @@
 ---
 layout: default
 ---
-
-<nav id="navbar" class="pure-menu pure-menu-horizontal">
-    <ul>
-      <li class="pure-menu-item">
-        <div id="namebox"><a href="/">Oliver Sherouse</a><span class="yarrow"></span><span class="xarrow"></span>
-        </div>
-      </li>
-      <li class="pure-menu-item" id="smallnav"><a href="#"><span class="fa fa-bars"></span></a></li>
-      <li class="pure-menu-item fullnav"><a href="{{ "/blog" |  prepend: site.baseurl}}"><span class="fa fa-bullhorn"></span>&nbsp;Blog</a></li>
-      <li class="pure-menu-item fullnav"><a href="{{ "/projects" |  prepend: site.baseurl}}"><span class="fa fa-rocket"></span>&nbsp;Projects</a></li>
-      <li class="pure-menu-item fullnav"><a href="{{ "/consulting" |  prepend: site.baseurl}}"><span class="fa fa-magic"></span>&nbsp;Consulting</a></li>
-      <li class="pure-menu-item fullnav"><a href="{{ "/about" |  prepend: site.baseurl}}"><span class="fa fa-coffee"></span>&nbsp;About</a></li>
-    </ul>
+<nav id="navbar">
+  <a href="/" id="namebox">Oliver Sherouse<span class="yarrow"></span><span class="xarrow"></span></a>
+  <a href="#" id="navexpand"><span class="fa fa-bars"></span></a>
+  <ul id="fullnav">
+    <li><a href="{{ "/blog" }}"><span class="fa fa-bullhorn"></span>&nbsp;Blog</a></li>
+    <li><a href="{{ "/projects" }}"><span class="fa fa-rocket"></span>&nbsp;Projects</a></li>
+    <li><a href="{{ "/consulting" }}"><span class="fa fa-magic"></span>&nbsp;Consulting</a></li>
+    <li><a href="{{ "/about" }}"><span class="fa fa-coffee"></span>&nbsp;About</a></li>
+  </ul>
 </nav>
 <div id="content">
   {{content}}

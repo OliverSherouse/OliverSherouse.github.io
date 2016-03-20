@@ -1,0 +1,10 @@
+<article class="post">
+    <h1 class="title"><a href="{{include.post.url}}">{{include.post.title}}</a></h1>
+    <ul class="sharelinks">
+      <li><a href="http://www.facebook.com/sharer/sharer.php?u={{ include.post.url | prepend: site.url}}&title={{ include.post.title }}" target="_blank"><span class="fa fa-facebook" /></a></li>
+      <li><a href="http://twitter.com/intent/tweet?status={{ include.post.title }}+{{include.post.url | prepend: site.url}}" target="_blank"><span class="fa fa-twitter" /></a></li>
+      <li><a href="mailto:?subject={{ include.post.title }}&body={{ include.post.title }}: {{include.post.url | prepend: site.url}}" target="_blank"><span class="fa fa-envelope" /></a></li>
+    </ul>
+    <p class="date">{{include.post.date | date: "%-d %B %Y"}}</p>
+    {{ include.post.content }}
+</article>

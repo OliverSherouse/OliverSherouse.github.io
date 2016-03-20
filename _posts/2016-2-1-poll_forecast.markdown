@@ -140,7 +140,6 @@ Carly Fiorina  | 2.4%     | 0.7%
 Chris Christie | 2.1%     | 0.6%
 Rick Santorum  | 1.3%     | 0.5%
 Jim Gilmore    | 0.1%     | 0.2%
-{:.pure-table}
 
 In the simulation, Donald Trump won 96 percent of the time, while Ted Cruz won 4 percent.
 
@@ -151,7 +150,6 @@ Candidate       | Estimate | Standard Deviation
 Hillary Clinton | 47.4%    | 2.4%
 Bernie Sanders  | 46.0%    | 2.4%
 Martin O'Malley | 3.6%     | 0.9%
-{:.pure-table}
 
 Seems pretty close, but bad news, Bernie fans! In the simulation, Hillary won 66 percent of the time, while Sanders only won 34 percent.
 
@@ -172,7 +170,6 @@ John Kasich    | 2.8%     | 0.8%
 Carly Fiorina  | 2.5%     | 0.7%
 Chris Christie | 2.0%     | 0.7%
 Rick Santorum  | 1.3%     | 0.5%
-{:.pure-table}
 
 Trump still wins 93.6 percent of simulations, but Cruz is up to 6.4 percent, and Rubio is on the board, although with 0.0%.
 
@@ -184,7 +181,6 @@ Candidate       | Estimate | Standard Deviation
 Hillary Clinton | 47.0%    | 2.7%
 Bernie Sanders  | 46.9%    | 2.7%
 Martin O'Malley | 3.2%     | 1.0%
-{:.pure-table}
 
 In the simulation, O'Malley stuns! Just kidding, Clinton wins 51 percent of the time, and Sanders wins 49 percent. Boy is that going to be fun.
 

@@ -1,0 +1,46 @@
+@mixin media($min-width, $max-width:"") {
+    @if $max-width == "" {
+        @media screen and (min-width: #{$min-width}){
+            @content;
+        }
+    } @else {
+        $just-under: $max-width * .99;
+        @media screen and (min-width: #{$min-width}) and (max-width: #{$just-under}){
+            @content;
+        }
+
+    }
+}
+
+@mixin grid{
+    margin-left: auto;
+    margin-right: auto;
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+}
+
+@mixin grid-columns($cols, $total-cols:12){
+    float: left;
+    width: ($cols / $total-cols) * 100% - 3%;
+    margin-right: 3%;
+
+}
+
+@mixin end-grid-row{
+    margin-right: 0;
+}
+
+@mixin end-row-nth($n){
+    &:nth-child(#{$n}){
+        @include end-grid-row;
+    }
+}
+
+@mixin accent {
+    background-color: $primary;
+    color: $alternate;
+    a, a:hover, a:visited, a:active {color: $alternate;}
+}
