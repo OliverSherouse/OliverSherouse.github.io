@@ -25,7 +25,6 @@ Jeb Bush       | 11.0%    | 1.1%
 Chris Christie | 5.8%     | 0.8%
 Carly Fiorina  | 4.6%     | 0.7%
 Ben Carson     | 2.6%     | 0.6%
-{:.pure-table}
 
 Rubio's bump has gotten him to the top of the second tier, but realistically those guys are all tied, and each of them (except Cruz) really, really wants a second place finish. First place seems utterly out of reach for all of them; in my 10,000-trial simulation, Trump won every single time.
 
@@ -39,7 +38,6 @@ Candidate       | Estimate | Standard Error
 :---------------|---------:|--------------:
 Bernie Sanders  | 55.1%    | 1.9%
 Hillary Clinton | 40.9%    | 1.9%
-{:.pure-table}
 
 As Trump did on the GOP side, Sanders wins every time in a 10,000-trial simulation.
 
