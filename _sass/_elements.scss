@@ -15,7 +15,8 @@ body {
         font-size: 1em;
     }
     @include media($large) {
-        font-size: 1.1em;
+        font-size: 1.05em;
+        text-rendering: optimizeLegibility;
     }
 }
 
@@ -51,8 +52,8 @@ img {
 }
 
 p, ol, ul {
-    line-height: 1.5em;
-    margin-bottom: 1.5em;
+    line-height: 1.7em;
+    margin-bottom: 1.7em;
 }
 pre {
     border-left: $accent-border;
