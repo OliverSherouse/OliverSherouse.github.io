@@ -5,7 +5,7 @@
 html {
     overflow-y: scroll;
     font-size: 100%;
-    font-family: Raleway, sans;
+    font-family: $normal-font;
 }
 
 body {
@@ -44,6 +44,7 @@ blockquote {
 
 h1, h2, h3, h4, h5, h6{
     font-weight: normal;
+    font-family: $header-font;
     a {display: block;}
 }
 
@@ -52,8 +53,8 @@ img {
 }
 
 p, ol, ul {
-    line-height: 1.7em;
-    margin-bottom: 1.7em;
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
 }
 pre {
     border-left: $accent-border;
@@ -62,7 +63,7 @@ pre {
     overflow-x: auto;
 }
 
-code {font-family: Inconsolata, monospace;}
+code {font-family: $fixed-font;}
 
 table{
     width: auto;
