@@ -1,0 +1,33 @@
+---
+title: "Outta Nowhere! 430 Projections for Clinton-Trump"
+tags: politics, 430 model
+---
+
+Back in January, I introduced the [430 Model](http://www.oliversherouse.com/2016/02/01/poll_forecast.html) for using polls to forecast elections. The name comes from the idea that you get 20 percent of your results from 80 percent of your work, and I only wanted to do about 20 percent of what Nate Silver does with FiveThirtyEight.
+
+Since then I've wanted to do a bigger and better version for the general election. But since I'm the kind of guy who only wants to do 20 percent of the work, most of that didn't happen. But I do have a *slightly* bigger and better version! So that's something.
+
+As before, I'm using the poll data from the [Pollster API](http://elections.huffingtonpost.com/pollster/api), combining the results and weighting by age to create a super-poll. Then I'm running 10,000 simulations using the results of the super-poll to figure out how likely each candidate is to win.
+
+The code for this version is in [a Jupyter notebook on GitHub](http://elections.huffingtonpost.com/pollster/api), so you can play with it if you want to pretend Jill Stein matters or something.
+
+Now to the results! Using the super-poll results since July, the race has looked like this:
+
+![Clinton is winning by a lot in the super-poll]({{site.url}}/img/Clinton-Trump.png)
+
+Those lines are the 95% confidence bands. The story here is that, while things were pretty uncertain early in the race, Clinton began to separate after the first debate in September, and Trump has never been able to catch up. The recent revelations about the emails, for all the sturm und drang they caused, don't really show up here. She's just ahead. How ahead? This ahead:
+
+| Candidate       | Mean   | Standard Deviation   |
+|:----------------|-------:|---------------------:|
+| Hillary Clinton | 48.4%  | (0.2)                |
+| Donald Trump    | 42.7%  | (0.2)                |
+| Other           | 8.9%   | (0.1)                |
+
+
+Well, she's not over fifty. But five and a half points is a pretty solid lead with as many polls as we've had. In 10,000 trial simulations, she won every single one. That's as comfortable as you get.
+
+So, any caution? If, as many suspect, there's a weird Trumpian version of the [Bradley Effect](https://en.wikipedia.org/wiki/Bradley_effect), then he has a better chance than the model projects, which is none. But with 0.2 percentage points standard error, he needs to get to swing better than two and a half points if he's drawing them all from Clinton, and More if he's getting them from the "Other" category. In the best case, that's one secret supporter to every public one. That's a tough road to hoe. 
+
+Still, this is a strictly poll-based model. If the polls are *systematically* wrong, then so is the model. We didn't really see systematically wrong polling in the primaries, though we have seen it in votes abroad, such as Brexit. But that has to be the hope, if you're a Trump supporter: that the polls are almost all wrong and in the same way.
+
+My gut says no. Clinton's got this one.
