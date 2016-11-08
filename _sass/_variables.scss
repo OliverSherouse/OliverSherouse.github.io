@@ -7,6 +7,11 @@ $alternate: $white;
 
 $font-color: #222;
 
+// Font
+$header-font: Raleway, sans; 
+$normal-font: Open Sans, sans;
+$fixed-font:  Inconsolata, monospace;
+
 // Media Queries
 
 $small: 0;
@@ -15,4 +20,4 @@ $large: 64em;
 
 // Other
 
-$accent-border: .15em solid $primary;
+$accent-border: 2px solid $primary;

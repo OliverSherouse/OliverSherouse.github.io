@@ -42,5 +42,6 @@
 @mixin accent {
     background-color: $primary;
     color: $alternate;
+    font-family: $header-font;
     a, a:hover, a:visited, a:active {color: $alternate;}
 }
