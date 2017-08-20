@@ -5,7 +5,7 @@ description: >
   Oliver Sherouse writes on Data, Python, and Culture
 baseurl: ""
 url: "http://www.oliversherouse.com"
-gems: 
+plugins: 
   - "jekyll-paginate"
 paginate: 10
 paginate_path: "/blog/page:num/"
