@@ -143,6 +143,10 @@
     }
 }
 
+*:target{
+    padding-top: 4rem;
+}
+
 #wrapper {
     min-height: 100vh;
     position: relative;

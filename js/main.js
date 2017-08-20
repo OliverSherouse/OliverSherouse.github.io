@@ -21,3 +21,9 @@ $(function(){
     site.place_footnotes();
     $('#navexpand').click(site.toggle_menu);
 });
+
+anchors.options = {
+    placement: 'left',
+    // icon: '#',
+};
+anchors.add('.post h2,h3,h4,h5,h6');
