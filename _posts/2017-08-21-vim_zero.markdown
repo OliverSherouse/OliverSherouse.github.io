@@ -1,0 +1,567 @@
+---
+title: Vim Zero
+date: 2017-08-21
+---
+
+## Introduction
+
+I've been using Vim as my editor for over ten years[^1]. That's a long time to
+build up settings and plugins, and generally get a lot of cruft into my
+`vimrc`.  These days, when I go in there, I don't always remember what a
+particular setting or plugin does or why I put it there, and I rarely look to
+see if there are updated versions of anything.
+
+So I thought it would be both advantageous and fun to clear out my settings and
+start again: go Vim Zero, and build up from there. And it was fun! Here's what
+I came up with.
+
+## Requirements
+
+The first question was: what do I really want an editor to do? I use Vim for
+writing and for coding. The former is nearly always in markdown, generally
+Pandoc-flavored but sometimes a different one. I write code most frequently in
+Python, and a decent amount in HTML, JavaScript, CSS and SCSS,
+[Make](http://www.oliversherouse.com/2016/04/07/makefiles.html). That means I
+need good support for multiple languages---including syntax checkers and
+completion---and I need a writing environment that feels comfortable.
+
+I also write both code and text on multiple computers. I use Linux when I can,
+but use Windows at work and occasionally find myself on a Mac. That means I
+need to be able to sync everything using git, and all my plugins and settings
+have to work in the same way. I want my experience in GVim on Windows to be as
+close as possible to my experience in the terminal on my Arch box.
+
+Finally, I want to keep things as simple and elegant as possible. I want this
+to still be Vim when I'm done, which means I don't want a bunch of
+functionality I'm not using or a bunch of nonsense I don't need on my
+screen[^2]. In general, I want to prefer built-in functionality to plugins, and
+simple, tightly focused plugins to wide-ranging and powerful ones. With that in
+mind, I started with the settings that made vanilla vim as pleasant as
+possible.
+
+## Built-in Functionality
+
+Well, that's *almost* true. I knew I was going to be using Tim Pope's
+[vim-sensible](https://github.com/tpope/vim-sensible) plugin simply because it
+sets a goodly number of the things you see in almost every vimrc, like being
+able to backspace over anything and setting incremental search. We'll get back
+to that later.
+
+### General Functionality
+
+First I set the `mapleader` to comma so that it applies for all my mappings. I
+set `hidden` to allow for unsaved background tabs, and `spell` so that I don't
+reveal my horrible spelling to the world. Turns out you can set new splits to
+be on the left, so I turn that on (we live in a world of widescreen monitors,
+how is this not the default?), and I turn on persistent undo files. All that
+looks like this:
+
+``` vim
+" Built-In Functionality
+"" General
+let mapleader = ','
+
+set hidden " Allow background buffers without saving
+set spell spelllang=en_us
+set splitright " Split to right by default
+```
+
+### Text-Wrapping
+
+In general, I want things wrapped at 79 characters---enough, in fact, that it's
+easier for me to turn it off when I don't want it than turn it on when I do. I
+also like having a highlighted column at 80 characters as a visual guide. I
+always want hard wraps, so I turn off soft-wrapping.
+
+``` vim
+"" Text Wrapping
+set textwidth=79
+set colorcolumn=80
+set nowrap
+```
+
+### Search and Substitutions
+
+I find I want the `g` flag in my `s/` commands far more often than I don't, so
+I set it to be on by default. I use highlight searches because that's half the
+point, and use the handy combination of `ignorecase` and `smartcase` to ignore
+case when I type in lowercase, but not when I type in capital letters. I also
+have my first mapping here: comma-space for clearing the highlighted searches.
+It makes a nice slapping noise, which I quite enjoy, as if to say "get that out
+of here."
+
+``` vim
+"" Search and Substitute
+set gdefault " use global flag by default in s: commands
+set hlsearch " highlight searches
+set ignorecase 
+set smartcase " don't ignore capitals in searches
+nnoremap <leader><space> :nohls <enter>
+```
+
+### Tabs
+
+Because I am not a horrible human being who hates joy and love and light, I use
+four spaces instead of tabs whenever I can[^3]. The following combo will do
+that, and should be required by law.
+
+``` vim
+"" Tabs
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+```
+
+### Backup, Swap, and Undo
+
+The next section might be a little controversial. Backup files, swap files, and
+undo files are great features of vim, but I hate having them clutter up my
+actual work directories. This isn't so bad on Linux, where hidden files are
+simple things, but on Windows, which will incomprehensibly ignore leading dots
+when doing file completion, it's awful. So, after I turn on undo files for
+persistent undo across sessions, I set folders inside my vim folder to hold all
+of these (see implementation notes at the end to see how I make empty folders
+with with Git).
+
+``` vim
+"" Backup, Swap and Undo
+set undofile " Persistent Undo
+if has("win32")
+    set directory=$HOME\vimfiles\swap,$TEMP
+    set backupdir=$HOME\vimfiles\backup,$TEMP
+    set undodir=$HOME\vimfiles\undo,$TEMP
+else
+    set directory=~/.vim/swap,/tmp
+    set backupdir=~/.vim/backup,/tmp
+    set undodir=~/.vim/undo,/tmp
+endif
+```
+
+### NetRW
+
+Some folks won't like this section either, because it's about NetRW, vim's file
+explorer. It gets more hate than it deserves, but I find it useful[^4]. I set
+it to have the detail view with human-readable file sizes. The hiding behavior
+is a little odd, so I just tell the explorer to hide dotfiles, and to set them
+as hidden by default (this can be toggled with `a`). Then I turn off the
+banner. I also add a mapping to start the explorer; the exclamation point means
+that if the current buffer has unsaved changes, the Explorer will split
+vertically instead of horizontally.
+
+``` vim
+""" NetRW
+let g:netrw_liststyle = 1 " Detail View
+let g:netrw_sizestyle = "H" " Human-readable file sizes
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+' " hide dotfiles
+let g:netrw_hide = 1 " hide dotfiles by default
+let g:netrw_banner = 0 " Turn off banner
+""" Explore in vertical split
+nnoremap <Leader>e :Explore! <enter>
+```
+
+### General Mappings
+
+To wrap-up the built-in functionality, I have my general mappings. Mapping a
+semicolon to the colon in normal mode is surprisingly useful. I use control-H
+and -L to cycle through my buffers, because that feels like moving left and
+right to me. I use comma-q to quit a buffer and comma-w to save. Finally, I use
+comma x to access the copy buffer, which allows me to copy and paste between
+vim and other programs. That last is the only mapping which I have set to work
+in all modes, and I use it all the time.
+
+``` vim
+"" Mappings
+nnoremap ; :
+nnoremap <C-H> :bp <enter>
+nnoremap <C-L> :bn <enter>
+nnoremap <Leader>w :w <enter>
+nnoremap <Leader>q :bd <enter>
+
+noremap <Leader>x "+
+```
+
+
+### Python Version
+
+I use Python 3 more or less exclusively. Many of the libraries I use most are
+(finally) [moving to require it](http://www.python3statement.org/), and I like
+it better anyway. So I have this little autocommand group to set my
+omnicompletion to Python 3:
+
+```vim
+"" Python Version
+augroup python3
+    au! BufEnter *.py setlocal omnifunc=python3complete#Complete
+augroup END
+```
+
+
+## Plugins
+
+Plugins are a wonderful part of the Vim infrastructure, and they're what let
+you really make the editor your own. That said, folks tend to go overboard; I
+see vimrc files floating around with dozens of plugins, and it's just not
+necessary. When I started this project, I decided to only add plugins I didn't
+want to live without, and I think I've kept it to a reasonable number. A
+fantastic resource has been [Vim-Awesome](http://vimawesome.com/), which makes
+it easy to find plugins by functionality, and also see which are popular, which
+are maintained, and so on. I knew about some of these, but others I didn't, and
+so the site was a huge help.
+
+### Plugin Manager
+
+Once upon a time, I installed plugins manually. Then I used my package manager
+and a script called `vim-plugin-manager`. Then Tim Pope wrote
+[Pathogen](https://github.com/tpope/vim-pathogen), and like the rest of the
+world, I switched to it immediately. Then
+[Vundle](https://github.com/VundleVim/Vundle.vim) came along with its
+Git-driven management, and I happily used that until I started this project.
+
+When I went to see what was out there, I found that Vundle was still a good
+option, but I was charmed by the simplicity of
+[VimPlug](https://github.com/junegunn/vim-plug), which didn't need any `rtp`
+manipulation in my `.vimrc` and could do parallel installations and updates. I
+decided it was worth making the switch.
+
+This breaks my rule a little bit about preferring built-in functionality; Vim 8
+does have a built-in plugin manager of sorts. Unfortunately it would mean
+taking a step back: there's no way to keep your plugins updated and I just
+don't want to go back to doing it manually and fiddling with submodules in my
+vimfiles repository. So VimPlug it is! The entirety of my plugin installation
+section looks like this:
+
+``` vim
+" Plugins 
+
+"" Installation with VimPlug
+call plug#begin('~/.vim/plugged')
+
+""" Basics
+Plug 'tpope/vim-sensible'
+Plug 'sheerun/vim-polyglot'
+Plug 'flazz/vim-colorschemes'
+
+""" General Functionality
+Plug 'lifepillar/vim-mucomplete'
+Plug 'scrooloose/syntastic'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'tpope/vim-commentary'
+Plug 'chiel92/vim-autoformat'
+
+""" Particular Functionality
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'godlygeek/tabular'
+
+call plug#end()
+```
+
+I'll walk through each of those in more detail and give the configuration I
+have for each. As you can see above, I group my plugins into three groups:
+basics, which include simple settings, filetype and syntax, and color schemes;
+general functionality plugins, which add features that are generally useful
+when editing code or writing text, and particular functionality plugins, when
+are only useful in particular situations.
+
+### Basics
+
+I've already mentioned Tim Pope's excellent
+[Vim-Sensible](https://github.com/tpope/vim-sensible) plugin, which there's
+really no downside to installing. It just gives you a lot of sane defaults, and
+the code is perfectly readable if you want the details.
+
+[Vim-Polyglot](https://github.com/sheerun/vim-polyglot) and
+[Vim-Colorschemes](https://github.com/flazz/vim-colorschemes) are both omnibus
+packages. Essentially, they're curated lists. At first this seemed like
+overkill to me---why not just install the ones I want? But then I remembered
+just how many times I've switched to a new language and found that either vim
+didn't have a filetype for it, or that the user community had a few fixes for
+the built-in version of indentation or something. Vim-Polyglot collects all of
+the best of those, and that just saves me having to do it later. Similarly,
+Vim-Colorschemes has at least one color scheme you will like, even if you're as
+picky as I am[^5]. I turn on gui-style colors for the terminal and use the
+Darth style:
+
+``` vim
+"" Colors
+set termguicolors
+colorscheme darth
+```
+
+### General Functionality Plugins
+
+#### Autocompletion
+
+Vim isn't an IDE, and shouldn't be, but autocompletion is really, really nice.
+That said, I lived without it for a long time because I didn't like my options.
+[YouCompleteMe](https://valloric.github.io/YouCompleteMe) is a pain on Windows.
+So is [NeoComplete](https://github.com/Shougo/neocomplete.vim), and while it's
+predecessor [NeoComplCache](https://github.com/Shougo/neocomplcache.vim) is
+more easily cross-platform, it can be slow and frustrating and isn't updated
+any more. [VimCompletesMe](https://github.com/ajh17/VimCompletesMe) isn't bad,
+but has a few quirks I don't like and is entirely tab-driven, when I would
+rather just have my options pop up for me.
+
+[MuComplete](https://github.com/lifepillar/vim-mucomplete) gives me what I
+want. It does omnicompletion, file completion, snippet completion (see
+[below](#snippets)), pops up as I type and doesn't get in my way. And it's
+fast. Here's the configuration to make it work:
+
+``` vim
+"" Autocompletion
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c " Turn off completion messages
+
+inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
+inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
+inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
+
+let g:mucomplete#enable_auto_at_startup = 1 
+```
+
+#### Snippets
+
+I've gone back and forth on snippets for years, but for the moment I'm pro.
+They save a lot of time writing HTML and encourage me to write docstrings[^6].
+Here, [Ultisnips](https://github.com/SirVer/ultisnips) has been around for a
+long time, and while [SnipMate](https://github.com/garbas/vim-snipmate) also
+exists as a venerable option, Ultisnips still feels like the gold standard. A
+solid compilation of snippets is available with the
+[Vim-Snippets](https://github.com/honza/vim-snippets) plugin. You don't need
+any configuration for either as far as I'm concerned, but you can configure
+MuComplete to take advantage of Ultisnips with this line:
+
+``` vim
+call add(g:mucomplete#chains['default'], 'ulti')
+```
+
+#### Commenting
+
+I've used [NerdCommenter](https://github.com/scrooloose/nerdcommenter) for a
+long time, but [Commentary](https://github.com/tpope/vim-commentary), another
+from Tim Pope, gives a minimalist yet powerful implementation. You use `gc` to
+to toggle comments, and that's about it. That's all I want here.
+
+#### Syntax Checking
+
+Everything I write is perfect the first time, obviously, but sometimes I read
+other people's code. [Syntastic](https://github.com/vim-syntastic/syntastic) is
+a truly clever plugin for running syntax checking. Rather than write its own
+rules it uses external checkers, like `flake8` and `tidy`, which is a very Unix
+way of approaching the problem. Hard to beat.
+
+#### Autoformatting
+
+Of course, if I can get a program to *fix* my---er, other people's mistakes
+automatically, so much the better. The aptly named
+[Vim-Autoformat](https://github.com/Chiel92/vim-autoformat) solves this problem
+nicely. Like Syntastic, Autoformat uses external programs to format your code.
+It doesn't have support for as many programs built-in as does Syntastic, but
+it's very easy to define your own. 
+
+I set autoformat to run when I save a file, but not to do the default vim
+sequence of autoindenting, retabbing, and removing trailing spaces.
+Effectively, this means it only does anything if I have a formatter installed.
+
+``` vim
+"" Autoformat
+au! BufWrite * :Autoformat
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+```
+
+One odd corner case I've had to be a bit clever to deal with is markdown.
+Generally when I write, I'm writing in Pandoc's syntax, but for a few
+situations (primarily this blog), I'm using a slightly different form of the
+language. Now, I can use Pandoc to auto-format in either case, but I'll need to
+vary the external call. The way I've solved this is to use an autocommand to
+set a default markdown flavor in a buffer-scoped variable, then setting a
+different flavor for specific matches---in this case when I open a file with a
+full `.markdown` extension that has a directory named "blog" somewhere in its
+path. Then I use the value of the flavor in the call to pandoc. That all looks
+like this:
+
+```vim
+augroup markdown_flavor
+    au! BufNewFile,BufFilePre,BufRead *.md 
+                \ let b:markdown_flavor="markdown"
+    au! BufNewFile,BufFilePre,BufRead *.markdown
+                \ let b:markdown_flavor="markdown"
+    au! BufNewFile,BufFilePre,BufRead */blog/*.markdown
+                \ let b:markdown_flavor="markdown_github".
+                \"+footnotes".
+                \"+yaml_metadata_block".
+                \"-hard_line_blocks"
+augroup END
+
+let g:formatdef_pandoc =
+            \'"pandoc  --standalone --atx-headers --columns=79'.
+            \' -f markdown -t ".b:markdown_flavor'
+let g:formatters_markdown_pandoc = ['pandoc']
+```
+
+### Particular Plugin Functionality
+
+#### Distraction-Free Writing
+
+Distraction-free writing is an interesting concept that has been around for a
+while. The first implementation I remember hearing about was
+[WriteRoom](http://www.hogbaysoftware.com/products/writeroom), and since then
+the concept has even made its way a bit into recent version of Word. I don't
+always use it when I'm writing, but sometimes it's helpful.
+[Goyo](https://github.com/junegunn/goyo.vim) is about as good an implementation
+as you could ask for, especially when combined with the
+[Limelight](https://github.com/junegunn/limelight.vim) plugin to focus on
+individual paragraphs. You only need two lines to make this work together
+nicely:
+
+``` vim
+"" Goyo & Limelight
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+```
+
+#### Pandoc Syntax
+
+Vim doesn't have a built-in Pandoc filetype or syntax file, and Pandoc really
+goes a long way beyond simple markdown. There's a
+[Vim-Pandoc](https://github.com/vim-pandoc/vim-pandoc) plugin, but I found
+myself turning off an awful lot of the functionality because it was either in
+my way or a re-implementation of something I already had. Finally I decided
+just to use the syntax file, which is helpfully separated into its own plugin
+named [Vim-Pandoc-Syntax](https://github.com/vim-pandoc/vim-pandoc-syntax). 
+
+To get files to use the correct syntax, you have to use an autocommand.
+The syntax plugin is also surprisingly powerful; I turn off the "conceal"
+functionality because I don't like the way it looks, but I'm very impressed by
+the ability to use the syntax of the embedded language in fenced code blocks.
+Here's my configuration:
+
+``` vim
+"" Pandoc
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    au! BufNewFile,BufFilePre,BufRead *.markdown set filetype=markdown.pandoc
+augroup END
+
+let g:pandoc#syntax#conceal#use = 0
+let g:pandoc#syntax#codeblocks#embeds#langs = ['python', 'vim', 'make',
+            \  'bash=sh', 'html', 'css', 'scss', 'javascript']
+```
+#### Table Formatting
+
+[Tabular](https://github.com/godlygeek/tabular) is one of those wonderful
+little pieces of code that does one thing extremely well. Tabular makes tables.
+That's it. When you don't need a table, you don't have to think about it. When
+you do, it saves you ten minutes of fiddling around. It plays very well with
+Pandoc.
+
+## Plugins I Didn't Use
+
+Obviously there are lots of plugins I didn't install. Here are a few that I
+know are popular, and why I didn't use them:
+
+* [Fugitive](https://github.com/tpope/vim-fugitive): See, I don't love
+*everything* Tim Pope does. I had this installed for a while, but never found
+myself using it. I'm happy on the command line.
+* [Airline](https://github.com/vim-airline/vim-airline): These kinds of plugins
+just strike me as a way to throw lots of distracting information onto the
+screen. I don't see the attraction.
+* [NerdTree](https://github.com/scrooloose/nerdtree): I'm happy with NetRW the
+way I have it.
+* [Tagbar](https://github.com/majutsushi/tagbar): I don't want to have to
+install ctags, and I can just search.
+* [CtrlP](https://github.com/kien/ctrlp.vim): Apparently people have more
+trouble than I do finding things?
+* [Multiple-Cursors](https://github.com/terryma/vim-multiple-cursors): I almost
+went for this one, but [Christoph Hermann's article on
+it](https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db)
+convinced me that it didn't do anything you can't just do with built-in
+functionality.
+
+## Gvim
+
+My `gvimrc` is simple: I turn everything off, and set my fonts:
+
+``` vim
+set guioptions-=m " Turn off menubar
+set guioptions-=T " Turn off toolbar
+set guioptions-=r " Turn off right-hand scrollbar
+set guioptions-=R " Turn off right-hand scrollbar when split
+set guioptions-=L " Turn off left-hand scrollbar
+set guioptions-=l " Turn off left-hand=scrollbar when split
+set guicursor+=a:blinkon0 " Turn off blinking cursor
+
+if has("win32")
+    set guifont=Consolas:h11
+else
+    set guifont=Inconsolata\ 12
+endif
+```
+
+## Implementation Notes
+
+Vim keeps its files in a `.vim` folder on Linux, and a `vimfiles` folder on
+Windows. Happily, in new versions of vim, the `vimrc` and `gvimrc` can live
+inside this folder, which makes keeping everything in git easier. 
+
+To ensure that my directories for undo, backup, and swap exist but aren't
+versioned, I put a `.gitignore` in each with this content:
+
+``` gitignore
+*
+!.gitignore
+```
+
+I also have a `.gitignore` in the root directory, to ignore both my netrw
+history, my spelling files, and my plugins.
+
+``` gitignore
+.netrwhist
+spell/*
+plugged/*
+```
+
+I leave the autoload directory versioned, which means
+VimPlug itself gets versioned. This saves me a step when I move to a different
+machine and it's not too terrible to update the repositiory when I occasionally
+update VimPlug itself. So here's the gitignore.
+
+With all that done, all I need to do to get set up on a new box (with git
+installed) is clone my vimfiles repository, fire up vim or Gvim, run
+`:PlugInstall` and restart, which take almost no time at all.
+
+
+## Final Thoughts
+
+I should disclose that this post has taken me an absurd amount of time to
+write. I've spent hours now comparing plugins, trying things out, reading
+through documentation, and changing my mind. I know Vim far better than I did
+when I started, no doubt about it. If your `vimrc` has gotten a bit stale, it
+might be a good time for you to do a Vim Zero experiment yourself. Or, feel
+free to build off my setup, which [you can find on GitHub
+here](https://github.com/OliverSherouse/vimfiles). If you decide to give it a
+go, be sure to let me know on [Twitter](https://twitter.com/OliverSherouse).
+
+
+[^1]: Yes, I've heard of Sublime and PyCharm and Atom and all of them. No thank
+    you. Too much noise. You have fun, though.
+
+[^2]: I mean, just look at this website. I like things clean and simple.
+
+[^3]: Makefiles are the exception, which is *infuriating*.
+
+[^4]: The only real problem I have with it is that if you try to edit a
+    directory path, you get a NetRW buffer that doesn't go away. So don't do
+    that.
+
+[^5]: My requirements here include: black background and nothing else, not
+    too much yellow, not too much orange, no neon-type colors (the hot pink
+    completion menu just *ruins* the Ocean family of schemes, and my old
+    vimrc had code to manually replace it), &c, &c.
+
+[^6]: Oh, don't judge, you don't write them either.
