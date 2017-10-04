@@ -4,7 +4,7 @@ email: oliver@oliversherouse.com
 description: >
   Oliver Sherouse writes on Data, Python, and Culture
 baseurl: ""
-url: "http://www.oliversherouse.com"
+url: "https://www.oliversherouse.com"
 plugins: 
   - "jekyll-paginate"
 paginate: 10
