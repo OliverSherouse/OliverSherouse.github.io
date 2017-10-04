@@ -235,7 +235,11 @@ section looks like this:
 " Plugins 
 
 "" Installation with VimPlug
-call plug#begin('~/.vim/plugged')
+if has("win32")
+    call plug#begin('~/vimfiles/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
 
 """ Basics
 Plug 'tpope/vim-sensible'
