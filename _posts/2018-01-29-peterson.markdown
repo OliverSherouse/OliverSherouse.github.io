@@ -1,0 +1,151 @@
+---
+title: Jordan Peterson and the Challenge of Statistics
+---
+
+[This](https://youtu.be/aMcjxSThD54) contentious interview of Jordan Peterson,
+a University of Toronto Psychology Professor, by Cathy Newman of the UK's
+Channel 4, has garnered a huge amount of attention. While the interview was
+nominally to promote Peterson's upcoming book, Newman clearly believed that she
+was going to be able to nail him as an ignorant bigot. Unfortunately for her,
+the general consensus is that Peterson was able to avoid that outcome, and make
+her look pretty silly in the process.
+
+Much of the conversation ([see here, for
+example](https://www.theatlantic.com/politics/archive/2018/01/putting-monsterpaint-onjordan-peterson/550859/)
+has focused on Newman's interrogatory tactics and how Peterson chose to respond
+to them, but I there are lessons to be learned here about communicating with
+statistics.  The first time I watched the video my initial reaction was that
+Peterson clearly understood the statistics he wanted to use to support his
+points, and the interviewer did not. Those statistics are not all that
+controversial, even among those who tend to disagree with Peterson's
+conclusions, but throughout the interview Newman consistently jumps from his
+rather modest claims to extreme (and sometimes bizarre) conclusions that she
+assigns to him.
+
+Even if, as some suggest, Newman's ignorance here was deliberate, her responses
+reflect the kind of intuitive interpretation of statistics that I've seen many
+times. Statistics are not intuitive. They are tricky.  If you need to
+communicate with them to a non-statistician---and you will---it's important to
+help people understand what the statistics you're using do and do not imply.
+
+Let's look at two sections where, with the help of hindsight, we might be able
+to improve on Peterson's presentation. First, let's examine the initial
+conversation about the pay gap.
+
+<iframe src="https://www.youtube.com/embed/aMcjxSThD54?start=317&end=426" width="560" height="315" allowfullscreen></iframe>
+
+Peterson makes two mistakes here. First, in an uncharacteristically imprecise
+use of language, he says that the pay gap "does not exist," when that's not
+what he means. Over a minute later, he clarifies that he actually means "does
+not exist solely due to gender", but by that point a minute of airtime has gone
+to waste.
+
+The more common mistake Peterson makes in the pay gap discussion, though, is
+focusing on the *method*. He starts talking about multi-variate analysis, and
+the interviewer---and most home viewers---have no idea what it
+means.[^multivaried]. When challenged by Newman on why he keeps talking about
+it, he enters into a mostly fine description of why controls are important in
+regression (although he does make it sound like he's doing a series of
+one-to-one comparisons rather than a single composite analysis). He's not
+wrong, but he's also not making his point; the only thing that this part of the
+conversation does for him is make it sound like he knows what he's talking
+about, but the lay audience won't get anything out of it.
+
+Everyone who communicates about regression-type analysis needs to have a stock
+phrase to describe what's important about it and move on, and I was a bit
+surprised Peterson didn't have one ready. Here's how I might have phrased the
+point he was making in a way that could keep the conversation focused on the
+point Peterson was driving at:
+
+"It does seem that way, but what repeated studies have reliably found is that
+when you account for an person's age and their personality and their aptitude
+and their interest, then the difference their gender makes to their salary is
+very small. So a man and a woman who are similar in other ways should expect to
+make about the same amount of money. So we know that the pay gap is not mostly
+due to gender bias."
+
+I timed myself and that took 22 seconds to say, without getting the methodology
+behind the point in the way of the point itself. Peterson and Newman six times
+that on an unfruitful conversation about how statistics work.
+
+The second difficulty that stood out to me about the interview was the way that
+Peterson and Newman talked past each other on the subject of population
+characteristics and individual characteristics.
+
+The best example picks up right where the last stopped:
+
+<iframe src="https://www.youtube.com/embed/aMcjxSThD54?start=426&end=459" width="560" height="315" allowfullscreen></iframe>
+
+Again, Peterson makes an unforced error when he says "Women are less agreeable
+than men," and again, the problem isn't that he's wrong exactly but rather
+that what he's saying will be taken differently by the viewers than he means
+it. The natural implication of "woman are less agreeable than men" is that
+*all* women are less agreeable than *all* men. 
+
+This confusion is nicely demonstrated by the exchange that follows. Newman
+accuses Peterson of "a vast generalization," by which she means that he's
+making a statement about all individual women. He says that "it's not a
+generalization," and what he means is that it's a statement about the
+distribution of that trait among the population of all women.  The disconnect
+is that the same words mean something slightly different to the two because one
+is thinking statistically and the other isn't. And the onus has to be on
+Peterson to make his point clear.
+
+At first I thought the best phrase to do that would be "agreeableness is more
+prevalent among women than men," but I don't think that's quite right, because
+agreeableness is a continuous variable. You could opt for something less
+precise like "more women are highly agreeable than men," but that doesn't
+quite fit right either. I think the best solution here is a small modification: 
+"Women tend to be more agreeable than men." People understand the
+non-universality of *tend*, and that avoids the confusion.
+
+This one isn't so much a question of wasting time as of avoiding confusion. To
+their credit, Newman and Peterson reach consensus of what they mean fairly
+quickly with the final exchange in that clip. They just both get a bit annoyed
+doing it.
+
+Peterson warmed up as the interview went along, and I think he handled a second
+go at much the same argument much better:
+
+<iframe src="https://www.youtube.com/embed/aMcjxSThD54?start=889&end=983" width="560" height="315" allowfullscreen></iframe>
+
+In that exchange, Newman fires off a number of conclusions that she claims are
+implied by Peterson's arguments. All of them are predicated on the idea that
+his population statistics determine what will happen with *every* woman.
+Instead of talking about how statistics work, he goes to the concrete example
+of Newman herself. That allows him to make his point without any confusion:
+she's been successful precisely because she's pursued her career in the way
+that he says matters more than gender. There's no way to confuse "you, as a
+woman, are successful because you have battled for it" with "the need to battle
+for success means women will never succeed." Sometimes when you're talking
+about statistical truths, the best way to do it is to avoid discussing them
+statistically at all.
+
+Now, the point of this isn't that Peterson's dumb and I'm smart; I've had time
+to consider and edit. The point is that communicating statistics is incredibly
+difficult, even if you understand them well yourself. It's a separate skill,
+and takes practice. When you screw it up, it's easy to blame the ignorance of
+our listeners, but that's too easy; it's far better in the long run to focus
+how you can be better at communicating statistical facts. Then people might be
+more interested in what you have to say.
+
+Some stray other thoughts about the interview:
+
+* In general, the interview has been scored as a hands-down win for Peterson.
+If it had ended after the first ten minutes or so, I'm not sure that would have
+been the case. I think Newman and Channel 4 deserve a bit of credit for
+resisting the urge to edit it down to that.
+
+* That said, the utter [blue screen](https://youtu.be/aMcjxSThD54?t=22m11s)
+that happens to Newman is one of the most stunning things I've ever seen on
+television.
+
+* At one point Newman argues against the phrase "the typical woman" because
+"all women are different, to which Peterson replies that "they're different in
+some ways and the same in others." I found her comment utterly bizarre; if all
+women are totally different, what makes them women?
+
+[^multivaried]: As if to prove this point, both Newman and the Channel 4
+     caption-writer who worked on [this
+     clip](https://twitter.com/Channel4News/status/953598649178652672) thought he
+     was saying "multi-varied analysis."
