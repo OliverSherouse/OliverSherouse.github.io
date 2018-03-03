@@ -4,12 +4,6 @@ title: Projects
 permalink: "/projects/"
 ---
 
-## Jump to:
-
-* [Programming Projects](#programming-projects)
-* [Reports and Briefs](#reports-and-briefs)
-* [Op-Eds, Blogs and Charts](#op-eds-blogs-and-charts)
-
 ## Programming Projects
 
 Project                                                         | Description
