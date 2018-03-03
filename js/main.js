@@ -43,6 +43,5 @@ $(function() {
 
 anchors.options = {
     placement: 'left',
-    // icon: '#',
 };
 anchors.add('.prose h2,h3,h4,h5,h6');

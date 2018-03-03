@@ -1,203 +1,81 @@
 ---
 ---
-@charset 'utf-8';
+@charset "utf-8";
 
-@import "normalize";
-@import "variables";
-@import "mixins";
-@import "elements";
+@import "sass/utilities/initial-variables";
+@import "sass/utilities/functions";
 
-#frontnav{
-    max-width: 90%;
-    @include grid;
-    a {
-        margin-top: 1em;
-        padding: 1em;
-        height: 10em;
-        border-bottom: $accent-border;
-        border-left: $accent-border;
+$blue: steelblue;
+$primary: $blue;
+
+$family-sans-serif: "Raleway", "sans-serif";
 
 
-        @include media($small, $medium){
-            @include grid-columns(12);
-            @include end-row-nth(1);
-        }
+@import "bulma";
 
-        @include media($medium, $large){
-            @include grid-columns(6);
-            @include end-row-nth(2);
-        }
-
-        @include media($large){
-            @include grid-columns(3);
-            @include end-row-nth(4);
-        }
-
-        p{
-            color: $font-color;
-        }
-
-    }
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+#not-footer {
+    flex: 1;
+    margin-bottom: 3rem;
+}
+.prose {
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#frontheader {
-  width: 100%;
-  height: 50vh;
-  min-height: 15em;
-  background-color: $blue;
-  color: $white;
+.prose-header{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
 
-  hgroup {
-    width: 50%;
-    min-width: 20em;
+.prose-title{
+    @extend .title;
+    @extend .is-mobile;
+}
+
+.frontnav{
+    padding-top: 1.5rem;
+    .card{height: 100%;}
+}
+
+
+$arrow-size: .33rem;
+.logo{
+    border-left: $white solid 1px;
+    border-bottom: $white solid 1px;
     position: relative;
-    margin: auto;
-    top: 50%;
+    padding: .1em .33em;
 
-    text-align: center;
-
-    -ms-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  h1 {
-    font-size: 3em;
-    margin: 0;
-  }
-
-}
-
-#content {
-    padding: 0 1em 0 1em;
-}
-
-#navbar {
-    @include accent;
-    a{
-        display: inline-block;
-        padding: .5em;
-    }
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: .5em;
-    z-index: 9999;
-}
-
-#navexpand {
-    float: right;
-    @include media($medium){
-        display: none !important;
-    }
-}
-
-#fullnav {
-    display: none;
-    margin: 0;
-    padding: 0;
-    @include media($medium){
-        display: inline;
-        float: right;
-    }
-    li, li a {
-        display: block;
-        @include media($medium){
-            display: inline-block;
-        }
-    }
-}
-
-#namebox{
-    border-left: $white solid .1em;
-    border-bottom: $white solid .1em;
-    margin-left: .25em;
-    margin-right: .25em;
-    position: relative;
-    font-variant: small-caps;
-    
-    .yarrow{
+    &::before {
+        content: "";
         width: 0;
         height: 0;
         margin: 0;
         padding: 0;
         position: absolute;
-        top: 0;
-        left: -5px;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-bottom: 5px solid $white;
+        top: -$arrow-size;
+        left: -$arrow-size;
+        border-left: $arrow-size solid transparent;
+        border-right: $arrow-size solid transparent;
+        border-bottom: $arrow-size solid $white;
     }
 
-    .xarrow{
+    &::after {
+        content: "";
         width: 0;
         height: 0;
         margin: 0;
         padding: 0;
         position: absolute;
-        bottom: -5px;
-        right: 0;
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        border-left: 5px solid $white;
+        right: -$arrow-size;
+        bottom: -$arrow-size;
+        border-top: $arrow-size solid transparent;
+        border-bottom: $arrow-size solid transparent;
+        border-left: $arrow-size solid $white;
     }
-}
-
-*:target{
-    padding-top: 4rem;
-}
-
-#wrapper {
-    min-height: 100vh;
-    position: relative;
-}
-
-// Persistent footer
-#not-footer {padding-bottom: 5em;}
-
-#main-footer {
-    @include accent;
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    padding: .2em auto .2em auto;
-    p {margin: 0};
-}
-
-#footer-links {
-    margin: 0;
-    li {
-        display: inline;
-        margin-right: 1em;
-    }
-}
-
-// Post styles
-@include media($large){
-    div.footnotes li {
-        position: absolute;
-        max-width: 16em;
-        margin-left: 2em;
-        padding-right: 1em;
-        font-size: .9em;
-        
-        p:first-child {
-            margin-top: 0;
-        }
-    }
-    a.reversefootnote {display: none;}
-}
-
-ul.sharelinks{
-    float: right;
-    margin: 0;
-    li {
-        display: inline-block;
-        margin-right: 1em;
-    };
-}
-
-p.date{
-    font-style: italic;
 }
