@@ -5,7 +5,14 @@ title: Blog
 {% for post in paginator.posts %}
 {% include post.html post=post %}
 {% endfor %}
-<nav id="paginator">
-  {% if paginator.next_page %}<p id="older"><a href="{{ paginator.next_page_path }}"> <span class="fa fa-long-arrow-left"></span>&nbsp;Older Posts</a></p>{%endif%}
-  {% if paginator.previous_page %}<p id="newer"><a href="{{ paginator.previous_page_path }}"> <span class="fa fa-long-arrow-right"></span>&nbsp;Newer Posts</a></p>{%endif%}
+<nav class="pagination">
+    <a class="pagination-previous"
+        href="{{ paginator.next_page_path }}"
+        {% unless paginator.next_page %}disabled{% endunless %}
+        >
+        <span class="icon"><i class="fas fa-long-arrow-alt-left"></i></span>&nbsp;Older Posts</a>
+    <a class="pagination-next"
+        href="{{ paginator.previous_page_path }}"
+        {% unless paginator.previous_page %}disabled{% endunless %}
+        > <span class="icon"><i class="fas fa-long-arrow-alt-right"></i></span>&nbsp;Newer Posts</a>
 </nav>

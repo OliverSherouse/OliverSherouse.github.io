@@ -7,49 +7,33 @@
 
 $blue: steelblue;
 $primary: $blue;
+$arrow-size: .33rem;
 
 $family-sans-serif: "Raleway", "sans-serif";
+$family-monospace: "Inconsolata", "monospace";
+$code: $black;
+$background: $white;
 
 
 @import "bulma";
 
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-#not-footer {
-    flex: 1;
-    margin-bottom: 3rem;
-}
-.prose {
-    max-width: 40rem;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-.prose-header{
-    margin-top: 1.5rem;
+#not-footer {
+    flex: 1;
     margin-bottom: 1.5rem;
 }
 
-.prose-title{
-    @extend .title;
-    @extend .is-mobile;
-}
-
-.frontnav{
-    padding-top: 1.5rem;
-    .card{height: 100%;}
-}
-
-
-$arrow-size: .33rem;
 .logo{
     border-left: $white solid 1px;
     border-bottom: $white solid 1px;
     position: relative;
     padding: .1em .33em;
+    display: inline-block;
 
     &::before {
         content: "";
@@ -78,4 +62,51 @@ $arrow-size: .33rem;
         border-bottom: $arrow-size solid transparent;
         border-left: $arrow-size solid $white;
     }
+}
+
+.prose {
+    max-width: 40rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+
+.prose-header{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose-title{
+    @extend .title;
+}
+
+.frontnav{
+    padding-top: 1.5rem;
+    .card{height: 100%;}
+}
+
+
+pre.highlight{
+    border-left: 1px solid $blue;
+}
+
+@media only screen and (min-width: $desktop){
+    .footnotes {
+        &>ol>li{
+            position: absolute;
+            margin-left: 3rem;
+            padding-right: 1rem;
+            width: 15rem;
+            font-size: .9rem;
+            &>p{
+                font-size: .9rem;
+            }
+        }
+    }
+}
+.reversefootnote{
+    @extend .is-hidden-desktop;
 }
