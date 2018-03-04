@@ -13,7 +13,8 @@ $family-sans-serif: "Raleway", "sans-serif";
 $family-monospace: "Inconsolata", "monospace";
 $code: $black;
 $background: $white;
-
+$title-weight: $weight-normal;	
+$title-size: $size-2;	
 
 @import "bulma";
 
@@ -79,15 +80,10 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.prose-title{
-    @extend .title;
-}
-
 .frontnav{
     padding-top: 1.5rem;
     .card{height: 100%;}
 }
-
 
 pre.highlight{
     border-left: 1px solid $blue;
