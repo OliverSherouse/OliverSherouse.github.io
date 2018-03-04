@@ -4,7 +4,7 @@
 let footnotes = {};
 footnotes.place = function() {
     const first_header = $('article>header').first()
-    const gutter = first_header.position().left + first_header.width()
+    const gutter = first_header.width()
 
     $('.footnotes>ol>li').each(function() {
         const note = $(this);
