@@ -2,7 +2,7 @@
 title: "Jupyter Notebooks Can't Fix the Scientific Paper"
 ---
 
-This piece in the Atlantic has been making the rounds, suggesting that Jupyter notebooks are "what comes next" as the scientific paper goes the way of legal vellum and religious papyrus. The argument runs something like this: most of the actual work of science is computational. Notebook environments give an excellent environment for doing replicable computation while also interspersing explanatory text, and Jupyter notebooks are the best ones around. This clears away the need for much of the gobbledygook for which scientific papers are so widely criticized, and puts the work front and center. 
+[This piece](https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/) in the Atlantic has been making the rounds, suggesting that Jupyter notebooks are "what comes next" as the scientific paper goes the way of legal vellum and religious papyrus. The argument runs something like this: most of the actual work of science is computational. Notebook environments give an excellent environment for doing replicable computation while also interspersing explanatory text, and Jupyter notebooks are the best ones around. This clears away the need for much of the gobbledygook for which scientific papers are so widely criticized, and puts the work front and center. 
 
 
 And some of that is right. Jupyter is amazing; my team and I are actually working right now to build a Jupyter-based research platform for our organization. And well-documented Jupyter notebooks are certainly a step up over incomprehensible do files that we see with many papers, especially when they're augmented with simple controls to modify parameters, for example. 
