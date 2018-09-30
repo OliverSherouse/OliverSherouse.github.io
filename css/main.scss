@@ -81,7 +81,8 @@ body {
 
 pre.highlight{
     border-left: 1px solid $blue;
-    padding: 1rem 0 1rem 1rem;
+    padding: 0 0 0 1rem;
+    margin-bottom: 1rem;
 }
 
 @media only screen and (min-width: $desktop){
@@ -100,4 +101,8 @@ pre.highlight{
 }
 .reversefootnote{
     @extend .is-hidden-desktop;
+}
+
+.title>a{
+    color: $text;
 }
