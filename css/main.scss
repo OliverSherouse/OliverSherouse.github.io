@@ -9,7 +9,7 @@ $blue: steelblue;
 $primary: $blue;
 $arrow-size: .33rem;
 
-$family-sans-serif: "Raleway", "sans-serif";
+$family-sans-serif: "Raleway", "serif";
 $family-monospace: "Inconsolata", "monospace";
 $code: $black;
 $background: $white;
@@ -74,12 +74,6 @@ body {
     position: relative;
 }
 
-
-.prose-header{
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
 .frontnav{
     padding-top: 1.5rem;
     .card{height: 100%;}
@@ -87,6 +81,7 @@ body {
 
 pre.highlight{
     border-left: 1px solid $blue;
+    padding: 1rem 0 1rem 1rem;
 }
 
 @media only screen and (min-width: $desktop){

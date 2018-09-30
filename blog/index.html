@@ -3,16 +3,16 @@ layout: main
 title: Blog
 ---
 {% for post in paginator.posts %}
-{% include post.html post=post %}
+  {% include article.html article=post %}
 {% endfor %}
 <nav class="pagination">
-    <a class="pagination-previous"
-        href="{{ paginator.next_page_path }}"
-        {% unless paginator.next_page %}disabled{% endunless %}
-        >
-        <span class="icon"><i class="fas fa-long-arrow-alt-left"></i></span>&nbsp;Older Posts</a>
-    <a class="pagination-next"
-        href="{{ paginator.previous_page_path }}"
-        {% unless paginator.previous_page %}disabled{% endunless %}
-        > <span class="icon"><i class="fas fa-long-arrow-alt-right"></i></span>&nbsp;Newer Posts</a>
+  <a class="pagination-previous"
+     href="{{ paginator.next_page_path }}"
+     {% unless paginator.next_page %}disabled{% endunless %}
+     >
+     <span class="icon"><span class="fas fa-long-arrow-alt-left"></span></span>&nbsp;Older Posts</a>
+  <a class="pagination-next"
+     href="{{ paginator.previous_page_path }}"
+     {% unless paginator.previous_page %}disabled{% endunless %}
+     > <span class="icon"><span class="fas fa-long-arrow-alt-right"></span></span>&nbsp;Newer Posts</a>
 </nav>

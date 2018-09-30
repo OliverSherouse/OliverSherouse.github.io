@@ -1,0 +1,33 @@
+<article>
+  <header class="hero is-medium">
+    <div class="hero-body has-text-centered">
+      <h1 class="title"><a href="{{include.article.url}}">{{include.article.title}}</a></h1>
+    </div>
+  </header>
+  {% unless include.skip_social %}
+    <span class="level is-mobile prose">
+      <span class="level-left">
+        <p class="level-item is-italic">{{include.article.date | date: "%-d %B %Y"}}</p>
+      </span>
+      <span class="level-right">
+        <a class="level-item" href="http://www.facebook.com/sharer/sharer.php?u={{include.article.url | prepend: site.url}}&title={{include.article.title }}" target="_blank">
+          <span class="icon is-medium"><i class="fab fa-lg fa-facebook"></i></span>
+        </a>
+        <a class="level-item" href="http://twitter.com/intent/tweet?status={{ include.article.title }}+{{include.article.url | prepend: site.url}}" target="_blank">
+          <span class="icon is-medium"><i class="fab fa-lg fa-twitter"></i></span>
+        </a>
+        <a class="level-item" href="mailto:?subject={{ include.article.title }}&body={{ include.article.title }}: {{include.article.url | prepend: site.url}}" target="_blank">
+          <span class="icon is-medium"><i class="fas fa-lg fa-envelope"></i></span>
+        </a>
+      </span>
+    </span>
+  {% endunless %}
+  </header>
+  <div class="content prose">
+    {% if include.content %}
+      {{include.content}}
+    {% else %}
+      {{include.article.content}}
+    {% endif %}
+  </div>
+</article>

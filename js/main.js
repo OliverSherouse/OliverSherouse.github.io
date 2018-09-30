@@ -3,7 +3,7 @@
  */
 let footnotes = {};
 footnotes.place = function() {
-    const first_header = $('article>header').first()
+    const first_header = $('article>div.content>p').first()
     const gutter = first_header.width()
 
     $('.footnotes>ol>li').each(function() {

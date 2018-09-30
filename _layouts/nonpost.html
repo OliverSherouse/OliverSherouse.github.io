@@ -1,11 +1,4 @@
 ---
 layout: main
 ---
-<article class="prose">
-    <header class="prose-header">
-        <h1 class="title"><a href="{{page.url}}">{{page.title}}</a></h1>
-    </header>
-    <div class="content">
-        {{ content }}
-    </div>
-</article>
+{% include article.html article=page skip_social=true content=content%}

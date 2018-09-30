@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width initial-scale=1">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-      <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-      <meta name="description" content="{{ site.description }}">
-      <link rel="icon" type="image/png" href="/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400|Inconsolata:400">
-      <link rel="stylesheet" href="/css/main.css">
-      <link rel="stylesheet" href="/css/syntax/friendly.css">
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{{ site.description }}">
+    <link rel="icon" type="image/png" href="/favicon.png">
 
-      <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
-      <script type='text/javascript'>window.q=[];window.$=function(f){q.push(f)}</script>
-      <script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
-      <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'UA-33742217-3');
-      </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400|Inconsolata:400">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/syntax/friendly.css">
+
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+    <script type='text/javascript'>window.q=[];window.$=function(f){q.push(f)}</script>
+    <script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-33742217-3');
+    </script>
   </head>
 
   <body>
-      <div id="not-footer">
-        {{content}}
+    <div id="not-footer">
+      {{content}}
+    </div>
+    <footer id="main-footer" class="hero is-primary">
+      <div class="container hero-foot has-text-centered">
+        <p>Connect with me on</p>
+        <a href="https://twitter.com/OliverSherouse" target="_blank"><i class="fab fa-twitter"></i>&nbsp;Twitter</a>&nbsp;
+        <a href="https://www.linkedin.com/pub/oliver-sherouse/24/417/1a2" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a>&nbsp;
+        <a href="https://github.com/OliverSherouse" target="_blank"><i class="fab fa-github"></i>&nbsp;Github</a>&nbsp;
       </div>
-      <footer id="main-footer" class="hero is-primary">
-          <div class="container hero-foot has-text-centered">
-              <p>Connect with me on</p>
-              <a href="https://twitter.com/OliverSherouse" target="_blank"><i class="fab fa-twitter"></i>&nbsp;Twitter</a>&nbsp;
-              <a href="https://www.linkedin.com/pub/oliver-sherouse/24/417/1a2" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a>&nbsp;
-              <a href="https://github.com/OliverSherouse" target="_blank"><i class="fab fa-github"></i>&nbsp;Github</a>&nbsp;
-        </div>
-      </footer>
+    </footer>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.min.js" async></script>
     <script type="text/javascript">window.MathJax={messageStyle: "none",showMathMenu: false};</script>
