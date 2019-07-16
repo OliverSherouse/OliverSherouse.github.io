@@ -1,0 +1,254 @@
+coding:
+  - name: QuantGov
+    url: "https://github.com/QuantGov/QuantGov"
+    description: >
+      My old day job. A platform for text analysis and machine learning for
+      economics and policy researchers.
+
+  - name: wbdata
+    url: "https://github.com/OliverSherouse/wbdata"
+    description: >
+      A library for searching and retrieving information from the World Bank.
+
+  - name: bls
+    url: "https://github.com/OliverSherouse/bls"
+    description: >
+      A library for searching and retrieving information from the Bureau of
+      Labor Statistics
+
+  - name: yo-runner
+    url: "https://github.com/OliverSherouse/bls"
+    description: A task runner for lazy people
+
+published:
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: "RegData 2.2: a panel dataset on US federal regulations"
+    journal: Public Choice
+    volume: 180
+    issue: 1-2
+    year: 2019
+    pages: 43-55
+    url: "https://doi.org/10.1007/s11127-018-0600-y"
+
+working_papers:
+  - author: McLaughlin, Patrick A., Oliver Sherouse, and Jason Potts
+    title: "RegData: Australia"
+    year: 2019
+    month: June
+    day: 27
+    type: Mercatus Working Paper
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/regulation/regdata-australia"
+
+  - author: Oliver Sherouse
+    title: Reducing Administrative Incomprehensibility with Data Tools and Standardization
+    year: 2018
+    month: July
+    day: 20
+    type: Congressional Testimony
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/regulation/reducing-administrative-incomprehensibility-data-tools-and-standardization"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: Federal Regulation and State Enterprise Index, 2017
+    year: 2017
+    month: December
+    day: 13
+    type: Mercatus Research
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/frase-2017"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: "The Impact of Federal Regulation on the 50 States"
+    year: 2016
+    month: April
+    day: 2
+    type: Mercatus Research
+    institution: Mercatus Center at George Mason University
+    url: "http://dx.doi.org/10.2139/ssrn.2939260"
+
+briefs:
+  - author: McLaughlin, Patrick A., Oliver Sherouse and Stephen Strosko
+    title: "QuantGov: An Overview"
+    year: 2019
+    month: April
+    day: 2
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/regulation/quantgov-overview"
+
+  - author: Broughel, James, Oliver Sherouse and Daniel Francis
+    title: A Snapshot of Illinois Regulation in 2017
+    year: 2017
+    month: March
+    day: 2
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/state-and-local-policy/snapshot-illinois-regulation-2017"
+
+  - author: Broughel, James, Oliver Sherouse and Daniel Francis
+    title: A Snapshot of Missouri Regulation in 2017
+    year: 2017
+    month: July
+    day: 12
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/snapshot-missouri-regulation"
+
+  - author: Broughel, James, Oliver Sherouse and Daniel Francis
+    title: A Snapshot of Arizona Regulation in 2017
+    year: 2017
+    month: June
+    day: 2
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/state-and-local-policy/snapshot-arizona-regulation-2017"
+
+  - author: Broughel, James, Oliver Sherouse and Daniel Francis
+    title: A Snapshot of Oregon Regulation in 2017
+    year: 2017
+    month: May
+    day: 25
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/snapshot-oregon-regulation-2017"
+
+  - author: Broughel, James, Oliver Sherouse and Daniel Francis
+    title: A Snapshot of Pennsylvania Regulation in 2017
+    year: 2017
+    month: April
+    day: 27
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/state-and-local-policy/snapshot-pennsylvania-regulation-2017"
+
+  - author: Broughel, James, and Oliver Sherouse
+    title: A Snapshot of Virginia Regulation in 2016
+    year: 2017
+    month: January
+    day: 19
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publications/state-and-local-policy/snapshot-virginia-regulation-2016"
+
+  - author: Broughel, James, and Oliver Sherouse
+    title: A Snapshot of Kentucky Regulation in 2015
+    year: 2016
+    month: September
+    day: 13
+    type: Mercatus Policy Brief
+    institution: Mercatus Center at George Mason University
+    url: "https://www.mercatus.org/publication/kentucky-regulation-2015"
+
+short:
+  - author: McLaughlin, Patrick A., Jonathan Nelson, Jim Pagels, and Oliver Sherouse
+    title: The Impossibility of Comprehending, or Even Reading, All Federal Regulations
+    year: 2017
+    month: October
+    day: 23
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publications/regulation/impossibility-comprehending-or-even-reading-all-federal-regulations"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: "Did Deregulation Cause the Financial Crisis? An Update Using RegData 3.0"
+    year: 2017
+    month: August
+    day: 31
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publications/regulation/did-deregulation-cause-financial-crisis"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: Regulatory Accumulation since 1970
+    year: 2017
+    month: August
+    day: 31
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publications/regulation/regulatory-accumulation-1970"
+
+  - author: McLaughlin, Patrick A., Oliver Sherouse, and Daniel Francis
+    title: Dodd-Frank Is One of the Biggest Regulatory Events Ever
+    year: 2017
+    month: August
+    day: 31
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publications/regulation/dodd-frank-one-biggest-regulatory-events-ever"
+
+  - author: McLaughlin, Patrick A., Oliver Sherouse, and Stephen Strosko
+    title: Regulatory Accumulation in the Financial Sector
+    year: 2017
+    month: August
+    day: 31
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publications/regulation/regulatory-accumulation-financial-sector"
+
+  - author: McLaughlin, Patrick A., Jim Pagels, and Oliver Sherouse
+    title: "Employee and Restriction Count Outlier Regulatory Agencies"
+    year: 2016
+    month: July
+    day: 13
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publication/employee-and-restriction-count-outlier-regulatory-agencies"
+
+  - author: McLaughlin, Patrick A., Jim Pagels, and Oliver Sherouse
+    title: "The High Correlation between Agency Employment and Agency Regulations"
+    year: 2016
+    month: July
+    day: 6
+    type: Mercatus Chart
+    url: "https://www.mercatus.org/publication/high-correlation-between-agency-employment-and-agency-regulations"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: Why Federal Regulation Hits Red States Harder
+    year: 2016
+    month: April
+    day: 14
+    type: RealClearPolicy
+    url: "https://www.realclearpolicy.com/blog/2016/04/15/why_federal_regulation_hits_red_states_harder_1604.html"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: Are Regulations Created as Responses to New Technology? A Simple Test Using RegData
+    year: 2016
+    month: March
+    day: 2
+    type: Mercatus Charts
+    url: "https://www.mercatus.org/publication/are-regulations-created-responses-new-technology-simple-test-using-regdata"
+
+  - author: McLaughlin, Patrick A., Chad Reese, and Oliver Sherouse
+    title: The Fast and Furious Fed
+    year: 2016
+    month: February
+    day: 8
+    type: U.S. News and World Report
+    url: "https://www.usnews.com/opinion/economic-intelligence/articles/2016-02-08/congress-should-press-janet-yellen-on-federal-reserves-regulatory-role"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: The High Correlation Between Agency Budgets and Agency Regulations
+    year: 2015
+    month: September
+    day: 29
+    type: Mercatus Charts
+    url: "https://www.mercatus.org/publication/high-correlation-between-agency-budgets-and-agency-regulations"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: The delegate-and-forget-about-it doctrine and government's fourth branch
+    year: 2015
+    month: October
+    day: 9
+    type: The Hill
+    url: "https://thehill.com/blogs/pundits-blog/economy-budget/256430-the-delegate-and-forget-about-it-doctrine-and-governments"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: The Accumulation of Regulatory Restrictions Across Presidential Administrations
+    year: 2015
+    month: August
+    day: 3
+    type: Mercatus Charts
+    url: "https://www.mercatus.org/publication/accumulation-regulatory-restrictions-across-presidential-administrations"
+
+  - author: McLaughlin, Patrick A. and Oliver Sherouse
+    title: The Dodd-Frank Wall Street Reform and Consumer Protection Act May Be the Biggest Law Ever
+    year: 2015
+    month: July
+    day: 20
+    type: Mercatus Charts
+    url: "https://www.mercatus.org/publication/dodd-frank-wall-street-reform-and-consumer-protection-act-may-be-biggest-law-ever"
