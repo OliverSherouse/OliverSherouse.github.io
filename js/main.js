@@ -1,3 +1,4 @@
+/* global anchors */
 /*
  * Footnotes
  */
@@ -69,10 +70,10 @@ async function mainInit () {
   footnotes.init()
   document.querySelector('.navbar-burger').addEventListener('click', () => document.querySelector('.navbar-menu').classList.toggle('is-active'))
   addBulmaImages()
-  // anchors.options = {
-  //   placement: 'left'
-  // }
-  // anchors.add('.prose h2,h3,h4,h5,h6')
+  anchors.options = {
+    placement: 'left'
+  }
+  anchors.add('.prose h2,h3,h4,h5,h6')
 }
 
 document.addEventListener('DOMContentLoaded', mainInit)
