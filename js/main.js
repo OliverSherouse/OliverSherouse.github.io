@@ -29,7 +29,7 @@ footnotes.init = function () {
   footnotes.place()
 }
 
-async function addBulmaImages () {
+function addBulmaFigures () {
   const articles = document.getElementsByTagName('article')
   for (const article of articles) {
     const imgs = article.getElementsByTagName('img')
@@ -66,14 +66,17 @@ async function addBulmaImages () {
 /*
  * Main Init
  */
-async function mainInit () {
+function mainInit () {
   footnotes.init()
-  document.querySelector('.navbar-burger').addEventListener('click', () => document.querySelector('.navbar-menu').classList.toggle('is-active'))
-  addBulmaImages()
   anchors.options = {
     placement: 'left'
   }
   anchors.add('.prose h2,h3,h4,h5,h6')
 }
 
+document.querySelector('.navbar-burger')
+  .addEventListener('click', function () {
+    document.querySelector('.navbar-menu').classList.toggle('is-active')
+  })
+addBulmaFigures()
 document.addEventListener('DOMContentLoaded', mainInit)
