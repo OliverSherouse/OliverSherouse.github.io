@@ -126,7 +126,7 @@ virusTracker.drawRegionalLogCasesChart = function () {
     'virus-tracker-log-cases-regional',
     serieses,
     Object.values(virusTracker.statemap),
-    ['Percent Change in Confirmed Cases', 'Countries and Subnational Regions'],
+    'growth_rate',
     [{
       type: 'linear',
       ticks: { precision: 0 },
@@ -159,7 +159,7 @@ virusTracker.drawRegionalPctChangeChart = function () {
     'virus-tracker-pct-change-regional',
     serieses,
     Object.values(virusTracker.statemap),
-    ['Percent Change in Confirmed Cases', 'Countries and Subnational Regions'],
+    'log_cases',
     [{
       type: 'linear',
       ticks: { precision: 0, min: 1 },
@@ -179,7 +179,7 @@ virusTracker.drawRegionalPctChangeChart = function () {
   )
 }
 
-virusTracker.drawChart = function (id, serieses, toColor, title, xAxes, yAxes) {
+virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
   const datasets = []
   const neutralColor = 'rgba(0, 0, 0, 0, 0.5)'
   const colors = ['#4682b4', '#2f4858', '#ef767a', '#6a8d92', '#efb0a1']
@@ -224,7 +224,7 @@ virusTracker.drawChart = function (id, serieses, toColor, title, xAxes, yAxes) {
         display: true,
         fontSize: 10,
         fontStyle: 'normal',
-        text: ['Source: Johns Hopkins CSSE. Produced by Oliver Sherouse, OliverSherouse.com'],
+        text: ['Source: Johns Hopkins CSSE. OliverSherouse.com'],
         position: 'bottom'
       },
       legend: {
@@ -247,8 +247,6 @@ virusTracker.drawChart = function (id, serieses, toColor, title, xAxes, yAxes) {
     console.log(ctx)
     anchor.setAttribute('href', ctx.toDataURL())
     const date = new Date()
-    console.log(title)
-    const name = 'download'
     anchor.setAttribute('download', `${name}_${date.getFullYear()}${date.getMonth() + 1}${date.getDate()[1] ? date.getDate() : '0' + date.getDate()}.png`)
     document.body.appendChild(anchor)
     anchor.click()
