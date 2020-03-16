@@ -256,12 +256,16 @@ virusTracker.loadRaw = async function () {
   const df = (await dfjs.DataFrame.fromCSV(virusTracker.url)).toArray()
   const raw = new virusTracker.DataSet(true)
   for (const array of df) {
+    let country = array[1]
+    if (country === 'Georgia') {
+      country = 'Georgia (country)'
+    }
     const pieces = array[0].split(',')
     let region = pieces[pieces.length - 1].trim()
     if (region in virusTracker.statemap) {
       region = virusTracker.statemap[region]
     }
-    const label = `${array[1]}====${region}`
+    const label = `${country}====${region}`
     raw.add(new virusTracker.Series(label, array.slice(4).map(Number)))
   }
   return raw
