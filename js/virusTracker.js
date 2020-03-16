@@ -92,22 +92,12 @@ virusTracker.Series = class {
   constructor (id, data) {
     this.id = id
     this.data = data
-    if (id.includes('Washington')) {
-      console.log(id)
-      console.log(data)
-      console.log(this.data)
-    }
   }
 
   add (a) {
     if (this.length !== a.length) { throw Error('Cannot add of different length') }
     for (const i in this.data) {
       this.data[i] += a.data[i]
-    }
-    if (this.id.includes('Washington')) {
-      console.log('adding')
-      console.log(a)
-      console.log(this.data)
     }
   }
 
@@ -252,7 +242,6 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
   button.innerHTML = 'Download this Chart'
   button.addEventListener('click', function () {
     const anchor = document.createElement('a')
-    console.log(ctx)
     anchor.setAttribute('href', ctx.toDataURL())
     const date = new Date()
     anchor.setAttribute('download', `${name}_${date.getFullYear()}${date.getMonth() + 1}${date.getDate()[1] ? date.getDate() : '0' + date.getDate()}.png`)
@@ -273,9 +262,6 @@ virusTracker.loadRaw = async function () {
       region = virusTracker.statemap[region]
     }
     const label = `${array[1]}====${region}`
-    if (label.includes('Washington')) {
-      console.log(array)
-    }
     raw.add(new virusTracker.Series(label, array.slice(4).map(Number)))
   }
   return raw
