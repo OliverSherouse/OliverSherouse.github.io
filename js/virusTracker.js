@@ -126,7 +126,7 @@ virusTracker.drawRegionalLogCasesChart = function () {
     'virus-tracker-log-cases-regional',
     serieses,
     Object.values(virusTracker.statemap),
-    'growth_rate',
+    'log_cases',
     [{
       type: 'linear',
       ticks: { precision: 0 },
@@ -159,7 +159,7 @@ virusTracker.drawRegionalPctChangeChart = function () {
     'virus-tracker-pct-change-regional',
     serieses,
     Object.values(virusTracker.statemap),
-    'log_cases',
+    'growth_rate',
     [{
       type: 'linear',
       ticks: { precision: 0, min: 1 },
