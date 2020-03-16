@@ -2,7 +2,6 @@
 
 Chart.plugins.register({
   afterRender: function (c) {
-    console.log('afterRender called')
     const ctx = c.chart.ctx
     ctx.save()
     // This line is apparently essential to getting the
@@ -29,7 +28,7 @@ virusTracker.statemap = {
   CO: 'Colorado',
   CT: 'Connecticut',
   DE: 'Delaware',
-  DC: 'District of Columbia',
+  'D.C.': 'District of Columbia',
   FL: 'Florida',
   GA: 'Georgia',
   HI: 'Hawaii',
@@ -75,18 +74,17 @@ virusTracker.statemap = {
 }
 
 virusTracker.DataSet = class {
-  constructor () {
-    this.data = []
+  constructor (verbose) {
+    this.data = {}
+    this.verbose = verbose
   }
 
   add (series) {
-    for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].id === series.id) {
-        this.data[i].add(series)
-        return
-      }
+    if (series.id in this.data) {
+      this.data[series.id].add(series)
+    } else {
+      this.data[series.id] = series
     }
-    this.data.push(series)
   }
 }
 
@@ -94,12 +92,22 @@ virusTracker.Series = class {
   constructor (id, data) {
     this.id = id
     this.data = data
+    if (id.includes('Washington')) {
+      console.log(id)
+      console.log(data)
+      console.log(this.data)
+    }
   }
 
   add (a) {
     if (this.length !== a.length) { throw Error('Cannot add of different length') }
     for (const i in this.data) {
       this.data[i] += a.data[i]
+    }
+    if (this.id.includes('Washington')) {
+      console.log('adding')
+      console.log(a)
+      console.log(this.data)
     }
   }
 
@@ -117,7 +125,7 @@ virusTracker.Series = class {
 virusTracker.drawRegionalLogCasesChart = function () {
   const threshold = 100
   const serieses = {}
-  for (const series of virusTracker.byRegionOrCountry.data) {
+  for (const series of Object.values(virusTracker.byRegionOrCountry.data)) {
     const obsPastThreshold = series.getObsPastThreshold(threshold)
     if (obsPastThreshold === undefined) { continue }
     serieses[series.id] = obsPastThreshold
@@ -149,7 +157,7 @@ virusTracker.drawRegionalLogCasesChart = function () {
 virusTracker.drawRegionalPctChangeChart = function () {
   const threshold = 100
   const serieses = {}
-  for (const series of virusTracker.byRegionOrCountry.data) {
+  for (const series of Object.values(virusTracker.byRegionOrCountry.data)) {
     const obsPastThreshold = series.getObsPastThreshold(threshold)
     if (obsPastThreshold === undefined) { continue }
     serieses[series.id] = obsPastThreshold
@@ -257,26 +265,27 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
 
 virusTracker.loadRaw = async function () {
   const df = (await dfjs.DataFrame.fromCSV(virusTracker.url)).toArray()
-  const raw = new virusTracker.DataSet()
+  const raw = new virusTracker.DataSet(true)
   for (const array of df) {
     const pieces = array[0].split(',')
     let region = pieces[pieces.length - 1].trim()
     if (region in virusTracker.statemap) {
       region = virusTracker.statemap[region]
     }
-
-    raw.add(new virusTracker.Series(
-      { country: array[1], region: region },
-      array.slice(4).map(o => +o)
-    ))
+    const label = `${array[1]}====${region}`
+    if (label.includes('Washington')) {
+      console.log(array)
+    }
+    raw.add(new virusTracker.Series(label, array.slice(4).map(Number)))
   }
   return raw
 }
 
 virusTracker.createByCountry = function () {
   const byCountry = new virusTracker.DataSet()
-  for (const series of virusTracker.raw.data) {
-    const newseries = new virusTracker.Series(series.id.country, series.data)
+  for (const series of Object.values(virusTracker.raw.data)) {
+    const country = series.id.split('====')[0]
+    const newseries = new virusTracker.Series(country, series.data.map(Number))
     byCountry.add(newseries)
   }
   return byCountry
@@ -284,11 +293,14 @@ virusTracker.createByCountry = function () {
 
 virusTracker.createByRegionOrCountry = function () {
   const byRegionOrCountry = new virusTracker.DataSet()
-  for (const series of virusTracker.raw.data) {
-    if (series.id.country === 'China') { continue }
-    if (series.id.region.startsWith('Diamond')) { continue }
-    const label = series.id.region === '' ? series.id.country : series.id.region
-    byRegionOrCountry.add(new virusTracker.Series(label, series.data))
+  for (const series of Object.values(virusTracker.raw.data)) {
+    const pieces = series.id.split('====')
+    const country = pieces[0]
+    const region = pieces[1]
+    if (country === 'China') { continue }
+    if (region.startsWith('Diamond')) { continue }
+    const label = region === '' ? country : region
+    byRegionOrCountry.add(new virusTracker.Series(label, series.data.map(Number)))
   }
   return byRegionOrCountry
 }
