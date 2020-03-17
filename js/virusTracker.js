@@ -1,4 +1,4 @@
-/* global dfjs Chart */
+/* global Papa Chart */
 
 Chart.plugins.register({
   afterRender: function (c) {
@@ -15,11 +15,15 @@ Chart.plugins.register({
   }
 })
 
-const virusTracker = {}
+const viTrack = {}
 
-virusTracker.url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
+viTrack.urls = {
+  confirmed: 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',
+  deaths: 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',
+  recovered: 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv'
+}
 
-virusTracker.statemap = {
+viTrack.statemap = {
   AL: 'Alabama',
   AK: 'Alaska',
   AZ: 'Arizona',
@@ -73,7 +77,7 @@ virusTracker.statemap = {
   WY: 'Wyoming'
 }
 
-virusTracker.Series = class {
+viTrack.Series = class {
   constructor (id, data) {
     this.id = id
     this.data = data.map(Number)
@@ -93,7 +97,7 @@ virusTracker.Series = class {
     for (let i = 0; i < this.length; i++) {
       newData.push(mapper(this.data[i], isNumber ? other : other.data[i]))
     }
-    return new virusTracker.Series(this.id, newData)
+    return new viTrack.Series(this.id, newData)
   }
 
   get length () {
@@ -119,30 +123,34 @@ virusTracker.Series = class {
   getPastThreshold (threshold) {
     for (const i in this.data) {
       if (this.data[i] >= threshold) {
-        return new virusTracker.Series(this.id, this.data.slice(i))
+        return new viTrack.Series(this.id, this.data.slice(i))
       }
     }
   }
 
   pctChange (lag) {
     if (lag === undefined) { lag = 1 }
-    return new virusTracker.Series(
+    return new viTrack.Series(
       this.id,
       this.data.map((v, i, arr) => i < lag ? undefined : (v / arr[i - lag] - 1))
     )
   }
 
+  slice (idx) {
+    return new viTrack.Series(this.id, this.data.slice(idx))
+  }
+
   round (precision) {
     if (precision === undefined) { precision = 0 }
     const multiplier = Math.pow(10, precision)
-    return new virusTracker.Series(
+    return new viTrack.Series(
       this.id,
       this.data.map((v) => Math.round(v * multiplier) / multiplier)
     )
   }
 }
 
-virusTracker.Dataset = class {
+viTrack.Dataset = class {
   constructor () {
     this.data = new Map()
   }
@@ -170,9 +178,8 @@ virusTracker.Dataset = class {
   }
 
   operation (other, mapper) {
-    const result = new virusTracker.Dataset()
+    const result = new viTrack.Dataset()
     for (const series of this.data.values()) {
-      console.log(series)
       result.addSeries(mapper(series, other))
     }
     return result
@@ -198,23 +205,41 @@ virusTracker.Dataset = class {
     return this.operation(other, mapper)
   }
 
+  map (mapper) {
+    const ds = new viTrack.Dataset()
+    for (const series of this) {
+      ds.addSeries(mapper(series))
+    }
+    return ds
+  }
+
+  filter (condition) {
+    const ds = new viTrack.Dataset()
+    for (const series of this) {
+      if (condition(series)) {
+        ds.addSeries(series)
+      }
+    }
+    return ds
+  }
+
   [Symbol.iterator] () {
     return this.data.values()
   }
 }
 
-virusTracker.drawRegionalLogCasesChart = function () {
+viTrack.drawConfirmedChart = function () {
   const threshold = 100
-  const serieses = new virusTracker.Dataset()
-  for (const series of virusTracker.byRegionOrCountry) {
+  const serieses = new viTrack.Dataset()
+  for (const series of viTrack.byRegionOrCountry.confirmed) {
     const pastThreshold = series.getPastThreshold(threshold)
     if (pastThreshold === undefined || pastThreshold.length < 2) { continue }
     serieses.addSeries(pastThreshold)
   }
-  virusTracker.drawChart(
-    'virus-tracker-log-cases-regional',
+  viTrack.drawChart(
+    'virus-tracker-log-cases',
     serieses,
-    Object.values(virusTracker.statemap),
+    Object.values(viTrack.statemap),
     'log_cases',
     [{
       type: 'linear',
@@ -226,7 +251,10 @@ virusTracker.drawRegionalLogCasesChart = function () {
     }],
     [{
       type: 'logarithmic',
-      ticks: { min: threshold },
+      ticks: {
+        min: threshold,
+        callback: (v) => Math.log10(v) % 1 === 0 ? v.toLocaleString() : null
+      },
       scaleLabel: {
         display: true,
         labelString: `Confirmed Cases (Log Scale)`
@@ -235,18 +263,92 @@ virusTracker.drawRegionalLogCasesChart = function () {
   )
 }
 
-virusTracker.drawRegionalPctChangeChart = function () {
+viTrack.drawDeathsChart = function () {
   const threshold = 100
-  const serieses = new virusTracker.Dataset()
-  for (const series of virusTracker.byRegionOrCountry) {
+  const serieses = viTrack.byRegionOrCountry.deaths
+    .filter(s => viTrack.byRegionOrCountry.confirmed.get(s.id).getPastThreshold(threshold) !== undefined)
+    .map(s => s.slice(viTrack.byRegionOrCountry.confirmed.get(s.id).data
+      .map((v, i) => v >= threshold ? i : undefined)
+      .filter(v => v !== undefined)[0]
+    ))
+    .filter(s => s.length > 1)
+
+  viTrack.drawChart(
+    'virus-tracker-deaths',
+    serieses,
+    Object.values(viTrack.statemap),
+    'deaths',
+    [{
+      type: 'linear',
+      ticks: { precision: 0 },
+      scaleLabel: {
+        display: true,
+        labelString: `Days after reaching ${threshold} cases`
+      }
+    }],
+    [{
+      type: 'logarithmic',
+      ticks: {
+        min: 1,
+        callback: (v) => Math.log10(v) % 1 === 0 ? v.toLocaleString() : null
+      },
+      scaleLabel: {
+        display: true,
+        labelString: `Known Deaths (Log Scale)`
+      }
+    }]
+  )
+}
+
+viTrack.drawUnresolvedChart = function () {
+  const threshold = 100
+  const serieses = viTrack.byRegionOrCountry.unresolved
+    .filter(s => viTrack.byRegionOrCountry.confirmed.get(s.id).getPastThreshold(threshold) !== undefined)
+    .map(s => s.slice(viTrack.byRegionOrCountry.confirmed.get(s.id).data
+      .map((v, i) => v >= threshold ? i : undefined)
+      .filter(v => v !== undefined)[0]
+    ))
+    .filter(s => s.length > 1)
+
+  viTrack.drawChart(
+    'virus-tracker-unresolved',
+    serieses,
+    Object.values(viTrack.statemap),
+    'unresolved',
+    [{
+      type: 'linear',
+      ticks: { precision: 0 },
+      scaleLabel: {
+        display: true,
+        labelString: `Days after reaching ${threshold} cases`
+      }
+    }],
+    [{
+      type: 'logarithmic',
+      ticks: {
+        min: threshold,
+        callback: (v) => Math.log10(v) % 1 === 0 ? v.toLocaleString() : null
+      },
+      scaleLabel: {
+        display: true,
+        labelString: `Unresolved Cases (Log Scale)`
+      }
+    }]
+  )
+}
+
+viTrack.drawPctChangeChart = function () {
+  const threshold = 100
+  const serieses = new viTrack.Dataset()
+  for (const series of viTrack.byRegionOrCountry.confirmed) {
     const pastThreshold = series.getPastThreshold(threshold)
     if (pastThreshold === undefined || pastThreshold.length < 2) { continue }
     serieses.addSeries(pastThreshold.pctChange().mul(100).round(1))
   }
-  virusTracker.drawChart(
-    'virus-tracker-pct-change-regional',
+  viTrack.drawChart(
+    'virus-tracker-pct-change',
     serieses,
-    Object.values(virusTracker.statemap),
+    Object.values(viTrack.statemap),
     'growth_rate',
     [{
       type: 'linear',
@@ -258,7 +360,10 @@ virusTracker.drawRegionalPctChangeChart = function () {
     }],
     [{
       type: 'linear',
-      ticks: { min: 0 },
+      ticks: {
+        min: 0,
+        callback: (v) => v + '%'
+      },
       scaleLabel: {
         display: true,
         labelString: `Percent Change in Confirmed Cases`
@@ -267,10 +372,31 @@ virusTracker.drawRegionalPctChangeChart = function () {
   )
 }
 
-virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
+viTrack.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
   const datasets = []
   const neutralColor = 'rgba(0, 0, 0, 0, 0.5)'
-  const colors = ['#4682b4', '#2f4858', '#ef767a', '#6a8d92', '#efb0a1']
+  const colors = [
+    '#4E79A7',
+    '#8CD17D',
+    '#E15759',
+    '#FABFD2',
+    '#A0CBE8',
+    '#B6992D',
+    '#FF9D9A',
+    '#B07AA1',
+    '#F28E2B',
+    '#F1CE63',
+    '#79706E',
+    '#D4A6C8',
+    '#FFBE7D',
+    '#499894',
+    '#BAB0AC',
+    '#9D7660',
+    '#59A14F',
+    '#86BCB6',
+    '#D38295',
+    '#D7B5A6'
+  ]
   let colored = 0
 
   for (const series of serieses) {
@@ -341,53 +467,82 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
   return myChart
 }
 
-virusTracker.loadRaw = async function () {
-  const df = (await dfjs.DataFrame.fromCSV(virusTracker.url)).toArray()
-  const raw = new virusTracker.Dataset()
-  for (const array of df) {
-    let country = array[1]
-    if (country === 'Georgia') {
-      country = 'Georgia (country)'
-    }
-    const pieces = array[0].split(',')
-    let region = pieces[pieces.length - 1].trim()
-    if (region in virusTracker.statemap) {
-      region = virusTracker.statemap[region]
-    }
-    raw.addSeries(new virusTracker.Series(
-      { country: country, region: region },
-      array.slice(4))
-    )
+viTrack.loadCSV = function (url) {
+  return new Promise((resolve) => {
+    Papa.parse(url, {
+      download: true,
+      complete: function (results) {
+        const ds = new viTrack.Dataset()
+        ds.addSerieses(
+          results.data.slice(1).map(function (row) {
+            let country = row[1]
+            if (country === 'Georgia') {
+              country = 'Georgia (country)'
+            }
+            const pieces = row[0].split(',')
+            let region = pieces[pieces.length - 1].trim()
+            if (region in viTrack.statemap) {
+              region = viTrack.statemap[region]
+            }
+            return new viTrack.Series(
+              { country: country, region: region },
+              row.slice(4))
+          })
+        )
+        resolve(ds)
+      }
+    })
+  })
+}
+
+viTrack.loadRaw = async function () {
+  const raw = {}
+  for (const name in viTrack.urls) {
+    raw[name] = await viTrack.loadCSV(viTrack.urls[name])
   }
   return raw
 }
 
-virusTracker.createByCountry = function () {
-  const byCountry = new virusTracker.Dataset()
-  for (const series of virusTracker.raw) {
-    const newseries = new virusTracker.Series(series.id.country, series.data)// .map(Number))
-    byCountry.addSeries(newseries)
+viTrack.createByCountry = function () {
+  const byCountry = {}
+  for (const name in viTrack.raw) {
+    const ds = new viTrack.Dataset()
+    for (const series of viTrack.raw[name]) {
+      const newseries = new viTrack.Series(series.id.country, series.data)
+      ds.addSeries(newseries)
+    }
+    byCountry[name] = ds
   }
   return byCountry
 }
 
-virusTracker.createByRegionOrCountry = function () {
-  const byRegionOrCountry = new virusTracker.Dataset()
-  for (const series of virusTracker.raw) {
-    if (series.id.country === 'China') { continue }
-    if (series.id.region.startsWith('Diamond')) { continue }
-    const label = series.id.region === '' ? series.id.country : series.id.region
-    byRegionOrCountry.addSeries(new virusTracker.Series(label, series.data)) // .map(Number)))
+viTrack.createByRegionOrCountry = function () {
+  const byRegionOrCountry = {}
+  for (const name in viTrack.raw) {
+    const ds = new viTrack.Dataset()
+    for (const series of viTrack.raw[name]) {
+      if (series.id.country === 'China') { continue }
+      if (series.id.region.startsWith('Diamond')) { continue }
+      if (series.id.region.startsWith('Grand')) { continue }
+      const label = series.id.region === '' ? series.id.country : series.id.region
+      ds.addSeries(new viTrack.Series(label, series.data))
+    }
+    byRegionOrCountry[name] = ds
   }
+
+  byRegionOrCountry.unresolved = byRegionOrCountry.confirmed
+    .subtract(byRegionOrCountry.deaths)
+    .subtract(byRegionOrCountry.recovered)
   return byRegionOrCountry
 }
 
-virusTracker.init = async function () {
-  virusTracker.raw = await virusTracker.loadRaw()
-  virusTracker.byCountry = virusTracker.createByCountry()
-  virusTracker.byRegionOrCountry = virusTracker.createByRegionOrCountry()
-  virusTracker.drawRegionalLogCasesChart()
-  virusTracker.drawRegionalPctChangeChart()
+viTrack.init = async function () {
+  viTrack.raw = await viTrack.loadRaw()
+  viTrack.byRegionOrCountry = viTrack.createByRegionOrCountry()
+  viTrack.drawConfirmedChart()
+  viTrack.drawPctChangeChart()
+  viTrack.drawDeathsChart()
+  viTrack.drawUnresolvedChart()
 }
 
-window.addEventListener('load', virusTracker.init)
+window.addEventListener('load', viTrack.init)

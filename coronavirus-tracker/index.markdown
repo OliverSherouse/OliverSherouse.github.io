@@ -18,16 +18,23 @@ the charts with new features and ways of looking at the data as I think of them
 and have time to implement. Feel free to let me know if you think of any
 features that would be helpful on [Twitter](https://twitter.com/OliverSherouse).
 
-## Confirmed Cases in Country or States with Outbreaks
+## Confirmed Cases in Countries or States with Outbreaks
 
-<canvas id="virus-tracker-log-cases-regional"></canvas>
+<canvas id="virus-tracker-log-cases"></canvas>
 
 ## Growth Rate of Confirmed Cases in Countries or States with Outbreaks.
 
-<canvas id="virus-tracker-pct-change-regional"></canvas>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
-<script src="https://gmousse.github.io/dataframe-js/dist/dataframe.min.js"></script>
-<script src="/js/virusTracker.js"></script>
+<canvas id="virus-tracker-pct-change"></canvas>
+
+## Known Deaths in Countries or States with Outbreaks.
+
+<canvas id="virus-tracker-deaths"></canvas>
+
+## Unresolved Cases in Countries or States with Outbreaks
+
+<canvas id="virus-tracker-unresolved"></canvas>
+
+Unresolved cases are defined as confirmed cases less recoveries and deaths.
 
 ## FAQ
 
@@ -40,3 +47,7 @@ anyone else who would find it interesting.
 
 It's possible, though the patterns at this moment don't seem artificially
 constrained to me. This is the best data I know of, so it's what I'm using.
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js" integrity="sha256-Fh801SO9gqegfUdkDxyzXzIUPWzO/Vatqj8uN+5xcL4=" crossorigin="anonymous"></script>
+<script src="/js/virusTracker.js"></script>
