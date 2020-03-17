@@ -73,52 +73,143 @@ virusTracker.statemap = {
   WY: 'Wyoming'
 }
 
-virusTracker.DataSet = class {
-  constructor (verbose) {
-    this.data = {}
-    this.verbose = verbose
-  }
-
-  add (series) {
-    if (series.id in this.data) {
-      this.data[series.id].add(series)
-    } else {
-      this.data[series.id] = series
-    }
-  }
-}
-
 virusTracker.Series = class {
   constructor (id, data) {
     this.id = id
-    this.data = data
+    this.data = data.map(Number)
   }
 
-  add (a) {
-    if (this.length !== a.length) { throw Error('Cannot add of different length') }
-    for (const i in this.data) {
-      this.data[i] += a.data[i]
-    }
-  }
-
-  get length () { return this.data.length }
-
-  getObsPastThreshold (threshold) {
-    for (const i in this.data) {
-      if (this.data[i] >= threshold) {
-        return this.data.slice(i)
+  operation (other, mapper) {
+    const isNumber = typeof other === 'number'
+    if (!isNumber) {
+      if (this.length !== other.length) {
+        throw Error('Series must be of the same size')
+      }
+      if (this.id !== other.id) {
+        throw Error('Series must have the same id')
       }
     }
+    const newData = []
+    for (let i = 0; i < this.length; i++) {
+      newData.push(mapper(this.data[i], isNumber ? other : other.data[i]))
+    }
+    return new virusTracker.Series(this.id, newData)
+  }
+
+  get length () {
+    return this.data.length
+  }
+
+  add (other) {
+    return this.operation(other, (a, b) => a + b)
+  }
+
+  subtract (other) {
+    return this.operation(other, (a, b) => a - b)
+  }
+
+  mul (other) {
+    return this.operation(other, (a, b) => a * b)
+  }
+
+  divide (other) {
+    return this.operation(other, (a, b) => a / b)
+  }
+
+  getPastThreshold (threshold) {
+    for (const i in this.data) {
+      if (this.data[i] >= threshold) {
+        return new virusTracker.Series(this.id, this.data.slice(i))
+      }
+    }
+  }
+
+  pctChange (lag) {
+    if (lag === undefined) { lag = 1 }
+    return new virusTracker.Series(
+      this.id,
+      this.data.map((v, i, arr) => i < lag ? undefined : (v / arr[i - lag] - 1))
+    )
+  }
+
+  round (precision) {
+    if (precision === undefined) { precision = 0 }
+    const multiplier = Math.pow(10, precision)
+    return new virusTracker.Series(
+      this.id,
+      this.data.map((v) => Math.round(v * multiplier) / multiplier)
+    )
+  }
+}
+
+virusTracker.Dataset = class {
+  constructor () {
+    this.data = new Map()
+  }
+
+  addSeries (series) {
+    if (this.has(series.id)) {
+      this.data.set(series.id, this.get(series.id).add(series))
+    } else {
+      this.data.set(series.id, series)
+    }
+    return this
+  }
+
+  addSerieses (serieses) {
+    for (const series of serieses) { this.addSeries(series) }
+    return this
+  }
+
+  get (key) {
+    return this.data.get(key)
+  }
+
+  has (key) {
+    return this.data.has(key)
+  }
+
+  operation (other, mapper) {
+    const result = new virusTracker.Dataset()
+    for (const series of this.data.values()) {
+      console.log(series)
+      result.addSeries(mapper(series, other))
+    }
+    return result
+  }
+
+  add (other) {
+    const mapper = other.data ? (s, o) => s.add(o.get(s.id)) : (s, o) => s.add(o)
+    return this.operation(other, mapper)
+  }
+
+  subtract (other) {
+    const mapper = other.data ? (s, o) => s.subtract(o.get(s.id)) : (s, o) => s.subtract(o)
+    return this.operation(other, mapper)
+  }
+
+  mul (other) {
+    const mapper = other.data ? (s, o) => s.mul(o.get(s.id)) : (s, o) => s.mul(o)
+    return this.operation(other, mapper)
+  }
+
+  divide (other) {
+    const mapper = other.data ? (s, o) => s.divide(o.get(s.id)) : (s, o) => s.divide(o)
+    return this.operation(other, mapper)
+  }
+
+  [Symbol.iterator] () {
+    return this.data.values()
   }
 }
 
 virusTracker.drawRegionalLogCasesChart = function () {
   const threshold = 100
-  const serieses = {}
-  for (const series of Object.values(virusTracker.byRegionOrCountry.data)) {
-    const obsPastThreshold = series.getObsPastThreshold(threshold)
-    if (obsPastThreshold === undefined) { continue }
-    serieses[series.id] = obsPastThreshold
+  const serieses = new virusTracker.Dataset()
+  for (const series of virusTracker.byRegionOrCountry) {
+    const pastThreshold = series.getPastThreshold(threshold)
+    if (pastThreshold === undefined || pastThreshold.length < 2) { continue }
+    serieses.addSeries(pastThreshold)
   }
   virusTracker.drawChart(
     'virus-tracker-log-cases-regional',
@@ -146,12 +237,11 @@ virusTracker.drawRegionalLogCasesChart = function () {
 
 virusTracker.drawRegionalPctChangeChart = function () {
   const threshold = 100
-  const serieses = {}
-  for (const series of Object.values(virusTracker.byRegionOrCountry.data)) {
-    const obsPastThreshold = series.getObsPastThreshold(threshold)
-    if (obsPastThreshold === undefined) { continue }
-    serieses[series.id] = obsPastThreshold
-      .map((v, i, arr) => i < 1 ? undefined : Math.round(100 * (v / arr[i - 1] - 1), 1))
+  const serieses = new virusTracker.Dataset()
+  for (const series of virusTracker.byRegionOrCountry) {
+    const pastThreshold = series.getPastThreshold(threshold)
+    if (pastThreshold === undefined || pastThreshold.length < 2) { continue }
+    serieses.addSeries(pastThreshold.pctChange().mul(100).round(1))
   }
   virusTracker.drawChart(
     'virus-tracker-pct-change-regional',
@@ -183,11 +273,10 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
   const colors = ['#4682b4', '#2f4858', '#ef767a', '#6a8d92', '#efb0a1']
   let colored = 0
 
-  for (const name in serieses) {
-    const data = serieses[name]
+  for (const series of serieses) {
     const dataset = {
-      label: name,
-      data: data.map(function (v, j) { return { x: j, y: v } }),
+      label: series.id,
+      data: series.data.map(function (v, j) { return { x: j, y: v } }),
       borderColor: neutralColor,
       backgroundColor: neutralColor,
       hoverBorderColor: neutralColor,
@@ -200,7 +289,7 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
       order: 1,
       fill: false
     }
-    if (toColor.includes(name)) {
+    if (toColor.includes(series.id)) {
       const color = colors[colored % colors.length]
       dataset.borderColor = color
       dataset.backgroundColor = color
@@ -254,7 +343,7 @@ virusTracker.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
 
 virusTracker.loadRaw = async function () {
   const df = (await dfjs.DataFrame.fromCSV(virusTracker.url)).toArray()
-  const raw = new virusTracker.DataSet(true)
+  const raw = new virusTracker.Dataset()
   for (const array of df) {
     let country = array[1]
     if (country === 'Georgia') {
@@ -265,32 +354,30 @@ virusTracker.loadRaw = async function () {
     if (region in virusTracker.statemap) {
       region = virusTracker.statemap[region]
     }
-    const label = `${country}====${region}`
-    raw.add(new virusTracker.Series(label, array.slice(4).map(Number)))
+    raw.addSeries(new virusTracker.Series(
+      { country: country, region: region },
+      array.slice(4))
+    )
   }
   return raw
 }
 
 virusTracker.createByCountry = function () {
-  const byCountry = new virusTracker.DataSet()
-  for (const series of Object.values(virusTracker.raw.data)) {
-    const country = series.id.split('====')[0]
-    const newseries = new virusTracker.Series(country, series.data.map(Number))
-    byCountry.add(newseries)
+  const byCountry = new virusTracker.Dataset()
+  for (const series of virusTracker.raw) {
+    const newseries = new virusTracker.Series(series.id.country, series.data)// .map(Number))
+    byCountry.addSeries(newseries)
   }
   return byCountry
 }
 
 virusTracker.createByRegionOrCountry = function () {
-  const byRegionOrCountry = new virusTracker.DataSet()
-  for (const series of Object.values(virusTracker.raw.data)) {
-    const pieces = series.id.split('====')
-    const country = pieces[0]
-    const region = pieces[1]
-    if (country === 'China') { continue }
-    if (region.startsWith('Diamond')) { continue }
-    const label = region === '' ? country : region
-    byRegionOrCountry.add(new virusTracker.Series(label, series.data.map(Number)))
+  const byRegionOrCountry = new virusTracker.Dataset()
+  for (const series of virusTracker.raw) {
+    if (series.id.country === 'China') { continue }
+    if (series.id.region.startsWith('Diamond')) { continue }
+    const label = series.id.region === '' ? series.id.country : series.id.region
+    byRegionOrCountry.addSeries(new virusTracker.Series(label, series.data)) // .map(Number)))
   }
   return byRegionOrCountry
 }
