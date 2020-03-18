@@ -1,20 +1,5 @@
 /* global Papa Chart */
 
-Chart.plugins.register({
-  afterRender: function (c) {
-    const ctx = c.chart.ctx
-    ctx.save()
-    // This line is apparently essential to getting the
-    // fill to go behind the drawn graph, not on top of it.
-    // Technique is taken from:
-    // https://stackoverflow.com/a/50126796/165164
-    ctx.globalCompositeOperation = 'destination-over'
-    ctx.fillStyle = 'white'
-    ctx.fillRect(0, 0, c.chart.width, c.chart.height)
-    ctx.restore()
-  }
-})
-
 const viTrack = {}
 
 viTrack.urls = {
@@ -240,7 +225,8 @@ viTrack.drawConfirmedChart = function () {
     'virus-tracker-log-cases',
     serieses,
     Object.values(viTrack.statemap),
-    'log_cases',
+    'Confirmed Cases',
+    'Johns Hopkins CSSE',
     [{
       type: 'linear',
       ticks: { precision: 0 },
@@ -277,7 +263,8 @@ viTrack.drawDeathsChart = function () {
     'virus-tracker-deaths',
     serieses,
     Object.values(viTrack.statemap),
-    'deaths',
+    'Known Deaths',
+    'Johns Hopkins CSSE',
     [{
       type: 'linear',
       ticks: { precision: 0 },
@@ -314,7 +301,8 @@ viTrack.drawUnresolvedChart = function () {
     'virus-tracker-unresolved',
     serieses,
     Object.values(viTrack.statemap),
-    'unresolved',
+    'Unresolved Cases',
+    'Johns Hopkins CSSE',
     [{
       type: 'linear',
       ticks: { precision: 0 },
@@ -349,7 +337,8 @@ viTrack.drawPctChangeChart = function () {
     'virus-tracker-pct-change',
     serieses,
     Object.values(viTrack.statemap),
-    'growth_rate',
+    'Growth Rate of Cases',
+    'Johns Hopkins CSSE',
     [{
       type: 'linear',
       ticks: { precision: 0, min: 1 },
@@ -372,30 +361,14 @@ viTrack.drawPctChangeChart = function () {
   )
 }
 
-viTrack.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
+viTrack.drawChart = function (id, serieses, toColor, title, source, xAxes, yAxes) {
+  const name = title.toLowerCase().replace(' ', '_')
   const datasets = []
   const neutralColor = 'rgba(0, 0, 0, 0, 0.5)'
   const colors = [
-    '#4E79A7',
-    '#8CD17D',
-    '#E15759',
-    '#FABFD2',
-    '#A0CBE8',
-    '#B6992D',
-    '#FF9D9A',
-    '#B07AA1',
-    '#F28E2B',
-    '#F1CE63',
-    '#79706E',
-    '#D4A6C8',
-    '#FFBE7D',
-    '#499894',
-    '#BAB0AC',
-    '#9D7660',
-    '#59A14F',
-    '#86BCB6',
-    '#D38295',
-    '#D7B5A6'
+    '#4E79A7', '#8CD17D', '#E15759', '#FABFD2', '#A0CBE8', '#B6992D', '#FF9D9A',
+    '#B07AA1', '#F28E2B', '#F1CE63', '#79706E', '#D4A6C8', '#FFBE7D', '#499894',
+    '#BAB0AC', '#9D7660', '#59A14F', '#86BCB6', '#D38295', '#D7B5A6'
   ]
   let colored = 0
 
@@ -426,22 +399,32 @@ viTrack.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
     }
     datasets.push(dataset)
   }
-  const ctx = document.getElementById(id)
+  const canvas = document.getElementById(id)
+  const ctx = canvas.getContext('2d')
+  xAxes[0].scaleLabel = xAxes[0].scaleLabel || {}
+  xAxes[0].scaleLabel.padding = { top: 4, bottom: 32 }
+  // xAxes[0].gridLines = xAxes[0].gridLines || {}
+  // xAxes[0].gridLines.display = false
+  // yAxes[0].gridLines = yAxes[0].gridLines || {}
+  // yAxes[0].gridLines.display = false
   const myChart = new Chart(ctx, {
     type: 'line',
+    devicePixelRatio: 2,
     data: {
       datasets: datasets
     },
     options: {
+      aspectRatio: 1.5,
       title: {
         display: true,
-        fontSize: 10,
+        fontSize: 24,
         fontStyle: 'normal',
-        text: ['Source: Johns Hopkins CSSE. OliverSherouse.com'],
-        position: 'bottom'
+        fontColor: '#4a4a4a',
+        fontFamily: 'Raleway, sans',
+        text: title
       },
       legend: {
-        position: 'right',
+        position: window.innerWidth < 500 ? 'top' : 'right',
         labels: {
           filter: (item) => toColor.includes(item.text)
         }
@@ -449,21 +432,57 @@ viTrack.drawChart = function (id, serieses, toColor, name, xAxes, yAxes) {
       scales: {
         xAxes: xAxes,
         yAxes: yAxes
+      },
+
+      onResize: (chart, size) => {
+        const newpos = window.innerWidth < 500 ? 'top' : 'right'
+        if (newpos !== chart.options.legend.position) {
+          chart.options.legend.position = newpos
+          chart.update()
+        }
       }
-    }
+    },
+    plugins: [{
+      afterRender: function (c) {
+        const ctx = c.chart.ctx
+        ctx.save()
+        // This line is apparently essential to getting the
+        // fill to go behind the drawn graph, not on top of it.
+        // Technique is taken from:
+        // https://stackoverflow.com/a/50126796/165164
+        ctx.globalCompositeOperation = 'destination-over'
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, c.chart.width, c.chart.height)
+        ctx.restore()
+      },
+      afterDraw: function (c) {
+        const ctx = c.ctx
+        ctx.font = `11px ${c.config.options.defaultFontFamily}`
+        ctx.textAlign = 'right'
+        ctx.fillStyle = c.config.options.defaultFontColor
+        ctx.fillText(`Source: ${source}. OliverSherouse.com`, c.width - 1, c.height - 24)
+      }
+    }]
   })
+
+  const buttons = document.createElement('div')
+  buttons.classList.add('buttons')
+  buttons.classList.add('is-centered')
+
   const button = document.createElement('a')
   button.classList.add('button')
-  button.innerHTML = 'Download this Chart'
+  button.classList.add('is-primary')
+  button.innerHTML = '<span class="icon"><span class="fas fa-download"></span></span><span>Download this Chart</span>'
   button.addEventListener('click', function () {
     const anchor = document.createElement('a')
-    anchor.setAttribute('href', ctx.toDataURL())
+    anchor.setAttribute('href', canvas.toDataURL())
     const date = new Date()
     anchor.setAttribute('download', `${name}_${date.getFullYear()}${date.getMonth() + 1}${date.getDate()[1] ? date.getDate() : '0' + date.getDate()}.png`)
     document.body.appendChild(anchor)
     anchor.click()
   })
-  ctx.after(button)
+  buttons.appendChild(button)
+  canvas.after(buttons)
   return myChart
 }
 
