@@ -22,7 +22,7 @@ title: Coronavirus Tracker
   </span>
 </div>
 
-<div class="columns">
+<div class="columns is-desktop">
   <div class="column">
     <div class="box">
       <canvas id="virus-tracker-log-cases"></canvas>
@@ -30,19 +30,34 @@ title: Coronavirus Tracker
   </div>
   <div class="column">
     <div class="box">
-      <canvas id="virus-tracker-pct-change"></canvas>
+      <canvas id="virus-tracker-cases-per-k"></canvas>
     </div>
   </div>
 </div>
-<div class="columns">
+<div class="columns is-desktop">
+  <div class="column">
+    <div class="box">
+      <canvas id="virus-tracker-pct-change"></canvas>
+    </div>
+  </div>
   <div class="column">
     <div class="box">
       <canvas id="virus-tracker-deaths"></canvas>
     </div>
   </div>
+</div>
+<div class="columns is-desktop">
   <div class="column">
     <div class="box">
       <canvas id="virus-tracker-unresolved"></canvas>
+      <div class="message is-info">
+        <p class="message-body">Unresolved cases are defined as confirmed cases less recoveries and deaths.</p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="box">
+      <canvas id="virus-tracker-unresolved-per-bed"></canvas>
       <div class="message is-info">
         <p class="message-body">Unresolved cases are defined as confirmed cases less recoveries and deaths.</p>
       </div>
