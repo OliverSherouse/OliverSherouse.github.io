@@ -377,7 +377,7 @@ viTrack.drawPctChangeChart = function () {
 }
 
 viTrack.drawChart = function (id, serieses, toColor, title, source, xAxes, yAxes) {
-  const name = title.toLowerCase().replace(' ', '_')
+  const name = title.toLowerCase().replace(/ /g, '_')
   const datasets = []
   const neutralColor = 'rgba(0, 0, 0, 0, 0.5)'
   const colors = [
