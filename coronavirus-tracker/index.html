@@ -22,21 +22,26 @@ title: Coronavirus Tracker
   </span>
 </div>
 
-<div class="tile is-ancestor is-vertical">
-  <div class="tile is-parent">
-    <div class="tile is-child box">
+<div class="columns">
+  <div class="column">
+    <div class="box">
       <canvas id="virus-tracker-log-cases"></canvas>
     </div>
-
-    <div class="tile is-child box">
+  </div>
+  <div class="column">
+    <div class="box">
       <canvas id="virus-tracker-pct-change"></canvas>
     </div>
   </div>
-  <div class="tile is-parent">
-    <div class="tile is-child box">
+</div>
+<div class="columns">
+  <div class="column">
+    <div class="box">
       <canvas id="virus-tracker-deaths"></canvas>
     </div>
-    <div class="tile is-child box">
+  </div>
+  <div class="column">
+    <div class="box">
       <canvas id="virus-tracker-unresolved"></canvas>
       <div class="message is-info">
         <p class="message-body">Unresolved cases are defined as confirmed cases less recoveries and deaths.</p>

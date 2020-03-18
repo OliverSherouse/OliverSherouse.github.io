@@ -415,6 +415,7 @@ viTrack.drawChart = function (id, serieses, toColor, title, source, xAxes, yAxes
     },
     options: {
       aspectRatio: 1.5,
+      maintainAspectRatio: true,
       title: {
         display: true,
         fontSize: 24,
@@ -424,7 +425,8 @@ viTrack.drawChart = function (id, serieses, toColor, title, source, xAxes, yAxes
         text: title
       },
       legend: {
-        position: window.innerWidth < 500 ? 'top' : 'right',
+        display: window.innerWidth > 500,
+        position: 'right',
         labels: {
           filter: (item) => toColor.includes(item.text)
         }
@@ -435,9 +437,9 @@ viTrack.drawChart = function (id, serieses, toColor, title, source, xAxes, yAxes
       },
 
       onResize: (chart, size) => {
-        const newpos = window.innerWidth < 500 ? 'top' : 'right'
-        if (newpos !== chart.options.legend.position) {
-          chart.options.legend.position = newpos
+        const newdisplay = window.innerWidth > 500
+        if (newdisplay !== chart.options.legend.display) {
+          chart.options.legend.display = newdisplay
           chart.update()
         }
       }
