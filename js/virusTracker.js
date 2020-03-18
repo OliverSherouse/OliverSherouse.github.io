@@ -502,7 +502,11 @@ viTrack.loadCSV = function (url) {
             let region = pieces[pieces.length - 1].trim()
             if (region in viTrack.statemap) {
               region = viTrack.statemap[region]
+            } else if (region === 'Hong Kong') {
+              country = 'Hong Kong'
+              region = ''
             }
+
             return new viTrack.Series(
               { country: country, region: region },
               row.slice(4))
