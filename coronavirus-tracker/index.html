@@ -30,7 +30,7 @@ title: Coronavirus Tracker
   </div>
   <div class="column">
     <div class="box">
-      <canvas id="virus-tracker-cases-per-k"></canvas>
+      <canvas id="virus-tracker-cases-per-m"></canvas>
     </div>
   </div>
 </div>
@@ -49,21 +49,45 @@ title: Coronavirus Tracker
 <div class="columns is-desktop">
   <div class="column">
     <div class="box">
-      <canvas id="virus-tracker-unresolved"></canvas>
+      <canvas id="virus-tracker-recent"></canvas>
       <div class="message is-info">
-        <p class="message-body">Unresolved cases are defined as confirmed cases less recoveries and deaths.</p>
+        <p class="message-body">Recent Cases are defined as Cases in the last 3 weeks</p>
       </div>
     </div>
   </div>
   <div class="column">
     <div class="box">
-      <canvas id="virus-tracker-unresolved-per-bed"></canvas>
+      <canvas id="virus-tracker-recent-per-bed"></canvas>
       <div class="message is-info">
-        <p class="message-body">Unresolved cases are defined as confirmed cases less recoveries and deaths.</p>
+        <p class="message-body">Recent Cases are defined as Cases in the last 3 weeks</p>
       </div>
     </div>
   </div>
 </div>
+
+<aside class="box">
+  <div class="prose">
+    <header>
+      <h1 class="subtitle is-size-4">Options</h1>
+      <header>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="to-highlight">Areas to Highlight:</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <div class="select is-multiple is-fullwidth">
+                  <select multiple size="4" name="to-highlight" id="virus-tracker-highlight-select">
+                    <option>Loading...</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</aside >
 
 <div class="prose content">
   <h2>About</h2>
