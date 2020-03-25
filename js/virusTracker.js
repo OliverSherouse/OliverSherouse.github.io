@@ -21,15 +21,6 @@ viTrack.urls = {
   testing: []
 }
 
-viTrack.getDateParts = function (date) {
-  const year = date.getFullYear().toString()
-  let month = (date.getMonth() + 1).toString()
-  month = month.length === 1 ? '0' + month : month
-  let day = date.getDate().toString()
-  day = day.length === 1 ? '0' + day : day
-  return [year, month, day]
-}
-
 viTrack.Series = class {
   constructor (id, data) {
     this.id = id
@@ -81,6 +72,14 @@ viTrack.Series = class {
     }
   }
 
+  change (periods) {
+    if (this.length < periods + 1) { return undefined }
+    return new viTrack.Series(
+      this.id,
+      this.data.map((v, i, arr) => i < periods ? undefined : v - arr[i - periods])
+    )
+  }
+
   growthRate (periods, threshold) {
     periods = periods || 1
     threshold = threshold || 1
@@ -90,7 +89,6 @@ viTrack.Series = class {
       this.id,
       pastThreshold.data
         .map((v, i, arr) => i < periods ? undefined : Math.pow(v / arr[i - periods], 1 / periods) - 1)
-        .slice(periods)
     )
   }
 
@@ -196,18 +194,84 @@ viTrack.Dataset = class {
     return this.map(s => s.round(precision))
   }
 
+  change (periods) {
+    return this.map(s => s.change(periods))
+  }
+
   [Symbol.iterator] () {
     return this.data.values()
   }
 }
 
-viTrack.buildChart = function (id, title, source, yAxis) {
-  const name = title.toLowerCase().replace(/ /g, '_')
+viTrack.getDateParts = function (date) {
+  const year = date.getFullYear().toString()
+  let month = (date.getMonth() + 1).toString()
+  month = month.length === 1 ? '0' + month : month
+  let day = date.getDate().toString()
+  day = day.length === 1 ? '0' + day : day
+  return [year, month, day]
+}
 
-  const canvas = document.getElementById(id)
-  const ctx = canvas.getContext('2d')
+viTrack.createElement = function (name, ...classes) {
+  const e = document.createElement(name)
+  e.classList.add(...classes)
+  return e
+}
 
-  const chart = new Chart(ctx, {
+viTrack.Box = class {
+  constructor (id) {
+    const container = document.getElementById(id)
+    // container.classList.add('column')
+    const box = viTrack.createElement('div', 'box')
+    this.canvas = document.createElement('canvas')
+    this.controls = document.createElement('aside')
+    const buttons = viTrack.createElement('aside', 'buttons', 'is-centered')
+    this.downloadButton = viTrack.createElement('a', 'button', 'is-primary')
+    this.downloadButton.innerHTML = '<span class="icon"><span class="fas fa-download"></span></span><span>Download this Chart</span>'
+    buttons.appendChild(this.downloadButton)
+    this.messages = document.createElement('aside')
+    box.appendChild(this.canvas)
+    box.appendChild(this.controls)
+    box.appendChild(buttons)
+    box.appendChild(this.messages)
+    container.appendChild(box)
+  }
+
+  addField (type, labelText, value) {
+    const outerField = viTrack.createElement('div', 'field', 'is-horizontal')
+    const fieldLabel = viTrack.createElement('div', 'field-label', 'is-normal')
+    const label = viTrack.createElement('label', 'label')
+    label.innerHTML = labelText
+    fieldLabel.appendChild(label)
+    const fieldBody = viTrack.createElement('div', 'field-body')
+    fieldLabel.appendChild(label)
+    const innerField = viTrack.createElement('div', 'field')
+    const control = viTrack.createElement('div', 'control')
+    const input = viTrack.createElement('input', 'input')
+    input.type = type
+    input.value = value
+    const help = viTrack.createElement('p', 'help', 'is-danger')
+    control.appendChild(input)
+    control.appendChild(help)
+    innerField.appendChild(control)
+    fieldBody.appendChild(innerField)
+    outerField.appendChild(fieldLabel)
+    outerField.appendChild(fieldBody)
+    this.controls.appendChild(outerField)
+    return { input: input, help: help }
+  }
+
+  addMessage (text) {
+    const container = viTrack.createElement('div', 'message is-info')
+    const par = viTrack.createElement('p', 'message-body')
+    par.innerHTML = text
+    container.appendChild(par)
+    this.messages.append(container)
+  }
+}
+
+viTrack.buildChart = function (canvas, title, source) {
+  const chart = new Chart(canvas, {
     type: 'line',
     devicePixelRatio: 2,
     options: {
@@ -237,7 +301,10 @@ viTrack.buildChart = function (id, title, source, yAxis) {
             }
           }
         }],
-        yAxes: [yAxis]
+        yAxes: [{
+          scaleLabel: { display: true },
+          ticks: { callback: v => v.toLocaleString() }
+        }]
       },
 
       onResize: (chart, size) => {
@@ -271,31 +338,10 @@ viTrack.buildChart = function (id, title, source, yAxis) {
     }]
   })
 
-  const buttons = document.createElement('div')
-  buttons.classList.add('buttons')
-  buttons.classList.add('is-centered')
-
-  const button = document.createElement('a')
-  button.classList.add('button')
-  button.classList.add('is-primary')
-  button.innerHTML = '<span class="icon"><span class="fas fa-download"></span></span><span>Download this Chart</span>'
-  button.addEventListener('click', function () {
-    const anchor = document.createElement('a')
-    anchor.setAttribute('href', canvas.toDataURL())
-    const [year, month, day] = viTrack.getDateParts(new Date())
-    anchor.setAttribute('download', `${name}_${year}-${month}-${day}.png`)
-    document.body.appendChild(anchor)
-    anchor.click()
-  })
-  buttons.appendChild(button)
-  canvas.after(buttons)
-
-  return [canvas, chart]
+  return chart
 }
 
-viTrack.getTopAreasAndStates = function (data, number) {
-  number = number || 10
-
+viTrack.getToColor = function (data) {
   const sortedLastObs = []
   for (const series of data) {
     sortedLastObs.push({ id: series.id, lastObs: series.data[series.length - 1] })
@@ -309,7 +355,22 @@ viTrack.getTopAreasAndStates = function (data, number) {
     .map(x => x.id)
     .filter(x => states.includes(x))
     .slice(0, 10)
-  return [topAreas, topStates]
+  const toColor = []
+  for (let i = 0; i < viTrack.highlightSelect.selectedOptions.length; i++) {
+    const value = viTrack.highlightSelect.selectedOptions[i].value
+    if (value === 'top-states') {
+      for (let j = 0; j <= topStates.length; j++) {
+        toColor.push(topStates[j])
+      }
+    } else if (value === 'top-areas') {
+      for (let j = 0; j <= topAreas.length; j++) {
+        toColor.push(topAreas[j])
+      }
+    } else {
+      toColor.push(value)
+    }
+  }
+  return toColor
 }
 
 viTrack.getChartDatasets = function (data, toColor) {
@@ -346,197 +407,185 @@ viTrack.getChartDatasets = function (data, toColor) {
   return datasets
 }
 
-viTrack.initThresholdChart = function (id, data, initialThreshold, units, yscale, title, source) {
-  const yAxis = {
-    type: yscale,
-    scaleLabel: {
-      display: true
-    }
-  }
-  if (yscale === 'logarithmic') {
-    yAxis.ticks = {
-      callback: (v) => Math.log10(v) % 1 === 0 ? v.toLocaleString() : null
-    }
-    yAxis.scaleLabel.labelString = `${units} (Log Scale)`
-  } else {
-    yAxis.scaleLabel.labelString = units
+viTrack.initChart = function (id, title, source, fieldspecs, update) {
+  const box = new viTrack.Box(id)
+  const chart = viTrack.buildChart(box.canvas, title, source)
+
+  const fields = {}
+  for (const fieldname in fieldspecs) {
+    const fs = fieldspecs[fieldname]
+    fields[fieldname] = box.addField(fs.type || 'text', fs.label, fs.value)
   }
 
-  const [canvas, chart] = viTrack.buildChart(id, title, source, yAxis)
-  const [topAreas, topStates] = viTrack.getTopAreasAndStates(data)
-  const parent = canvas.parentElement
-  canvas.insertAdjacentHTML(
-    'afterEnd',
-    `<div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Threshold:</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input class="input threshold" value=${initialThreshold}></input>
-          </div>
-          <p class="help is-danger is-hidden threshold-help">Threshold must be a number</p>
-        </div>
-      </div>
-    </div>
-    `
-  )
-
-  const thresholdInput = parent.querySelector('.threshold')
-
-  const update = function () {
-    const threshold = thresholdInput.value
-    const preppedData = data
-      .getPastThreshold(threshold)
-      .filter(s => s.length > 1)
-    const toColor = []
-    for (let i = 0; i < viTrack.highlightSelect.selectedOptions.length; i++) {
-      const value = viTrack.highlightSelect.selectedOptions[i].value
-      if (value === 'top-states') {
-        for (let j = 0; j <= topStates.length; j++) {
-          toColor.push(topStates[j])
-        }
-      } else if (value === 'top-areas') {
-        for (let j = 0; j <= topAreas.length; j++) {
-          toColor.push(topAreas[j])
-        }
-      } else {
-        toColor.push(value)
-      }
-    }
-
-    chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
-    chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-    if (chart.options.scales.yAxes[0].type === 'logarithmic') {
-      chart.options.scales.yAxes[0].ticks.min = Math.pow(10, Math.trunc(Math.log10(threshold)))
-    } else {
-      chart.options.scales.yAxes[0].ticks.min = 0
-    }
-    chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Passing ${threshold} ${title}`
+  function wrappedUpdate () {
+    update(chart, fields)
     chart.update({ duration: 0 })
   }
 
-  viTrack.highlightSelect.addEventListener('change', update)
-  thresholdInput.addEventListener('input', () => {
-    if (thresholdInput.value.match(/^\d+(\.\d+)?$/)) {
-      parent.querySelector('.threshold-help').classList.add('is-hidden')
-      update()
-    } else {
-      parent.querySelector('.threshold-help').classList.remove('is-hidden')
-    }
+  for (const fieldname in fields) {
+    const field = fields[fieldname]
+    field.input.addEventListener('input', function () {
+      const fs = fieldspecs[fieldname]
+      const value = field.input.value
+      if (fs.validator.test(value)) {
+        field.help.innerHTML = ''
+        wrappedUpdate()
+      } else {
+        field.help.innerHTML = fs.validator.help
+      }
+    })
+  }
+
+  const name = title.toLowerCase().replace(/ /g, '_')
+  box.downloadButton.addEventListener('click', function () {
+    const anchor = document.createElement('a')
+    anchor.setAttribute('href', box.canvas.toDataURL())
+    const [year, month, day] = viTrack.getDateParts(new Date())
+    anchor.setAttribute('download', `${name}_${year}-${month}-${day}.png`)
+    document.body.appendChild(anchor)
+    anchor.click()
   })
-  update()
+
+  viTrack.highlightSelect.addEventListener('change', wrappedUpdate)
+  wrappedUpdate()
 }
 
-viTrack.initGrowthRateChart = function (id, data, initialPeriods, units, title, source) {
-  const initialThreshold = 100
-  const yAxis = {
-    type: 'linear',
-    ticks: {
-      callback: (v) => v + '%'
-    },
-    scaleLabel: {
-      display: true
-    }
+viTrack.validators = {
+  float: {
+    test: v => v.match(/^\d+(\.\d+)?$/),
+    help: 'Must be a number'
+  },
+  int: {
+    test: v => v.match(/^\d+$/),
+    help: 'Must be an integer'
   }
-  const [canvas, chart] = viTrack.buildChart(id, title, source, yAxis)
-  const parent = canvas.parentElement
-  const [topAreas, topStates] = viTrack.getTopAreasAndStates(data)
-  canvas.insertAdjacentHTML(
-    'afterEnd',
-    `<div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Periods:</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input class="input periods" value=${initialPeriods}></input>
-          </div>
-          <p class="help is-danger is-hidden periods-help">Periods must be an integer</p>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Threshold:</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input class="input threshold" value=${initialThreshold}></input>
-          </div>
-          <p class="help is-danger is-hidden threshold-help">Threshold must be a number</p>
-        </div>
-      </div>
-    </div>
+}
 
-    `
-  )
+viTrack.setLogTicks = function (chart) {
+  chart.options.scales.yAxes[0].type = 'logarithmic'
+  chart.options.scales.yAxes[0].ticks.callback = (v) => Math.log10(v) % 1 === 0 ? v.toLocaleString() : null
+}
 
-  const periodInput = parent.querySelector('.periods')
-  const thresholdInput = parent.querySelector('.threshold')
-
-  function update () {
-    const periods = periodInput.value
-    const threshold = thresholdInput.value
-    const preppedData = data
-      .growthRate(periods, threshold)
-      .filter(s => s.length > 1)
-      .mul(100)
-      .round(1)
-    const toColor = []
-    for (let i = 0; i < viTrack.highlightSelect.selectedOptions.length; i++) {
-      const value = viTrack.highlightSelect.selectedOptions[i].value
-      if (value === 'top-states') {
-        for (let j = 0; j <= topStates.length; j++) {
-          toColor.push(topStates[j])
-        }
-      } else if (value === 'top-areas') {
-        for (let j = 0; j <= topAreas.length; j++) {
-          toColor.push(topAreas[j])
-        }
-      } else {
-        toColor.push(value)
+viTrack.initRecentPerBedChart = function () {
+  const length = 21
+  viTrack.initChart(
+    'virus-tracker-recent-per-bed',
+    'Recent Cases per Hospital Bed',
+    'Johns Hopkins CSSE, World Bank, Census, Kaiser Family Foundation',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 0.01,
+        validator: viTrack.validators.float
       }
-    }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
 
-    chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
-    chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-    chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Passing ${threshold} ${units}`
-    chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of ${units}`
-    chart.update({ duration: 0 })
-  }
-  viTrack.highlightSelect.addEventListener('change', update)
-  periodInput.addEventListener('input', () => {
-    if (periodInput.value.match(/^\d+$/)) {
-      parent.querySelector('.periods-help').classList.add('is-hidden')
-      update()
-    } else {
-      parent.querySelector('.periods-help').classList.remove('is-hidden')
+      const preppedData = viTrack.byRegionOrCountry.confirmed
+        .map(s => new viTrack.Series(s.id, s.data.map((v, i, arr) => i - length < 0 ? v : v - arr[i - length])))
+        .filter(s => viTrack.scalars.population[s.id] > 5000000)
+        .map(s => s.divide(viTrack.scalars.beds[s.id]).round(3))
+        .getPastThreshold(threshold)
+
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `Cases Confirmed in the Last ${length} Days per Bed (Log Scale)`
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases per Bed`
     }
-  })
-  thresholdInput.addEventListener('input', () => {
-    if (thresholdInput.value.match(/^\d+(\.\d+)?$/)) {
-      parent.querySelector('.threshold-help').classList.add('is-hidden')
-      update()
-    } else {
-      parent.querySelector('.threshold-help').classList.remove('is-hidden')
-    }
-  })
-  update()
+  )
 }
 
 viTrack.initConfirmedChart = function () {
-  viTrack.initThresholdChart(
-    'virus-tracker-log-cases',
-    viTrack.byRegionOrCountry.confirmed,
-    100,
+  const data = viTrack.byRegionOrCountry.confirmed
+  viTrack.initChart(
+    'virus-tracker-cases',
     'Confirmed Cases',
-    'logarithmic',
-    'Confirmed Cases',
-    'Johns Hopkins CSSE'
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
+      const preppedData = data
+        .getPastThreshold(threshold)
+        .filter(s => s.length > 1)
+      const toColor = viTrack.getToColor(data)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Confirmed Cases (Log Scale)'
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Confirmed Cases`
+    }
+  )
+}
+
+viTrack.initDeathsChart = function () {
+  const data = viTrack.byRegionOrCountry.deaths
+  viTrack.initChart(
+    'virus-tracker-deaths',
+    'Known Deaths',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 10,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
+      const preppedData = data
+        .getPastThreshold(threshold)
+        .filter(s => s.length > 1)
+      const toColor = viTrack.getToColor(data)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Deaths (Log Scale)'
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Deaths`
+    }
+  )
+}
+
+viTrack.getRecent = function () {
+  const length = 21
+  const recent = viTrack.byRegionOrCountry.confirmed.change(length)
+  return [length, recent]
+}
+
+viTrack.initRecentChart = function () {
+  viTrack.initChart(
+    'virus-tracker-recent',
+    'Recent Cases',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
+      const [length, recent] = viTrack.getRecent()
+
+      const preppedData = recent
+        .getPastThreshold(threshold)
+
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `Cases Confirmed in the Last ${length} Days (Log Scale)`
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases`
+    }
   )
 }
 
@@ -544,74 +593,310 @@ viTrack.initConfirmedPerMChart = function () {
   const data = viTrack.byRegionOrCountry.confirmed
     .filter(s => viTrack.scalars.population[s.id] > 5000000)
     .map(s => s.divide(viTrack.scalars.population[s.id] / 1000000).round())
-  viTrack.initThresholdChart(
+  viTrack.initChart(
     'virus-tracker-cases-per-m',
-    data,
-    25,
     'Confirmed Cases per Million People',
-    'logarithmic',
-    'Confirmed Cases per Million',
-    'Johns Hopkins CSSE, World Bank, Census'
+    'Johns Hopkins CSSE, World Bank, Census',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 10,
+        validator: viTrack.validators.float
+      }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
+      const preppedData = data
+        .getPastThreshold(threshold)
+        .filter(s => s.length > 1)
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Confirmed Cases per Million People (Log Scale)'
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Confirmed Cases per Million People`
+    }
   )
 }
 
-viTrack.initDeathsChart = function () {
-  viTrack.initThresholdChart(
-    'virus-tracker-deaths',
-    viTrack.byRegionOrCountry.deaths,
-    10,
-    'Known Deaths',
-    'logarithmic',
-    'Known Deaths',
-    'Johns Hopkins CSSE'
-  )
-}
-
-viTrack.initRecentChart = function () {
-  const length = 21
-  const recent = viTrack.byRegionOrCountry.confirmed
-    .filter(s => s.length > length)
-    .map(s => new viTrack.Series(s.id, s.data.map((v, i, arr) => v - arr[i - length]).slice(length)))
-
-  viTrack.initThresholdChart(
-    'virus-tracker-recent',
-    recent,
-    100,
-    'Confirmed Cases',
-    'logarithmic',
-    'Recent Cases',
-    'Johns Hopkins CSSE'
-  )
-}
-
-viTrack.initRecentPerBedChart = function () {
-  const length = 21
-  const serieses = viTrack.byRegionOrCountry.confirmed
-    .filter(s => s.length > length)
-    .map(s => new viTrack.Series(s.id, s.data.map((v, i, arr) => v - arr[i - length]).slice(length)))
-    .filter(s => s.id in viTrack.scalars.beds)
+viTrack.initDeathsPerMChart = function () {
+  const data = viTrack.byRegionOrCountry.deaths
     .filter(s => viTrack.scalars.population[s.id] > 5000000)
-    .map(s => s.divide(viTrack.scalars.beds[s.id]).round(3))
+    .map(s => s.divide(viTrack.scalars.population[s.id] / 1000000).round())
+  viTrack.initChart(
+    'virus-tracker-deaths-per-m',
+    'Known Deaths per Million People',
+    'Johns Hopkins CSSE, World Bank, Census',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 1,
+        validator: viTrack.validators.float
+      }
+    },
+    function (chart, fields) {
+      const threshold = Number(fields.threshold.input.value)
+      const preppedData = data
+        .getPastThreshold(threshold)
+        .filter(s => s.length > 1)
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Known Deaths per Million People (Log Scale)'
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Death per Million People`
+    }
+  )
+}
 
-  viTrack.initThresholdChart(
-    'virus-tracker-recent-per-bed',
-    serieses,
-    0.01,
-    'Recent Cases per Hospital Bed',
-    'logarithmic',
-    'Recent Cases per Hospital Bed',
-    'Johns Hopkins CSSE, World Bank, Kaiser Family Foundation'
+viTrack.initRecentPerMChart = function () {
+  viTrack.initChart(
+    'virus-tracker-recent-per-m',
+    'Recent Cases per Million People',
+    'Johns Hopkins CSSE, World Bank, Census',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 10,
+        validator: viTrack.validators.float
+      }
+    },
+    function (chart, fields) {
+      const [length, data] = viTrack.getRecent()
+      const threshold = Number(fields.threshold.input.value)
+      const preppedData = data
+        .filter(s => viTrack.scalars.population[s.id] > 5000000)
+        .map(s => s.divide(viTrack.scalars.population[s.id] / 1000000).round())
+        .getPastThreshold(threshold)
+        .filter(s => s.length > 1)
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `Cases Confirmed in Last ${length} Days per Million People (Log Scale)`
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Confirmed Cases per Million People`
+    }
+  )
+}
+
+viTrack.initChangeConfirmedChart = function () {
+  viTrack.initChart(
+    'virus-tracker-cases-delta',
+    'Change in Confirmed Cases',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 3,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+
+      const data = viTrack.byRegionOrCountry.confirmed
+        .getPastThreshold(threshold)
+        .change(periods)
+        .filter(s => s.length > periods + 1)
+
+      const toColor = viTrack.getToColor(data)
+      chart.data.datasets = viTrack.getChartDatasets(data, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      // viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Confirmed Cases`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
+    }
+  )
+}
+
+viTrack.initChangeDeathsChart = function () {
+  viTrack.initChart(
+    'virus-tracker-deaths-delta',
+    'Change in Known Deaths',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 10,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 3,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+
+      const data = viTrack.byRegionOrCountry.deaths
+        .getPastThreshold(threshold)
+        .change(periods)
+        .filter(s => s.length > periods + 1)
+
+      const toColor = viTrack.getToColor(data)
+      chart.data.datasets = viTrack.getChartDatasets(data, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      // viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Known Deaths`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Deaths`
+    }
+  )
+}
+
+viTrack.initChangeRecentChart = function () {
+  viTrack.initChart(
+    'virus-tracker-recent-delta',
+    'Change in Recent Cases',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 3,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+      const [length, recent] = viTrack.getRecent()
+
+      const data = recent
+        .getPastThreshold(threshold)
+        .change(periods)
+        .filter(s => s.length > periods + 1)
+
+      const toColor = viTrack.getToColor(data)
+      chart.data.datasets = viTrack.getChartDatasets(data, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      // viTrack.setLogTicks(chart)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Cases Confirmed in the Previous ${length} Days`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases`
+    }
   )
 }
 
 viTrack.initGrowthRateConfirmedChart = function () {
-  viTrack.initGrowthRateChart(
-    'virus-tracker-pct-change',
-    viTrack.byRegionOrCountry.confirmed,
-    5,
-    'Confirmed Cases',
+  viTrack.initChart(
+    'virus-tracker-cases-growth',
     'Growth Rate of Confirmed Cases',
-    'Johns Hopkins CSSE'
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 5,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+
+      const preppedData = viTrack.byRegionOrCountry.confirmed
+        .growthRate(periods, threshold)
+        .mul(100)
+        .round()
+
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Confirmed Cases`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
+    }
+  )
+}
+
+viTrack.initGrowthRateDeathsChart = function () {
+  viTrack.initChart(
+    'virus-tracker-deaths-growth',
+    'Growth Rate of Known Deaths',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 10,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 5,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+
+      const preppedData = viTrack.byRegionOrCountry.deaths
+        .growthRate(periods, threshold)
+        .mul(100)
+        .round()
+
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Known Deaths`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
+    }
+  )
+}
+
+viTrack.initGrowthRateRecentChart = function () {
+  viTrack.initChart(
+    'virus-tracker-recent-growth',
+    'Growth Rate of Recent Cases',
+    'Johns Hopkins CSSE',
+    {
+      threshold: {
+        label: 'Threshold:',
+        value: 100,
+        validator: viTrack.validators.int
+      },
+      periods: {
+        label: 'Periods:',
+        value: 5,
+        validator: viTrack.validators.int
+      }
+    },
+    function (chart, fields) {
+      const periods = Number(fields.periods.input.value)
+      const threshold = Number(fields.threshold.input.value)
+      const [length, data] = viTrack.getRecent()
+
+      const preppedData = data
+        .growthRate(periods, threshold)
+        .mul(100)
+        .round()
+
+      const toColor = viTrack.getToColor(preppedData)
+      chart.data.datasets = viTrack.getChartDatasets(preppedData, toColor)
+      chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Cases Confirmed in Previous ${length} days`
+      chart.options.scales.xAxes[0].ticks.min = periods
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases`
+    }
   )
 }
 
@@ -625,9 +910,8 @@ viTrack.loadCSV = async function (url) {
     country = (country === 'Korea, South') ? 'South Korea' : country
     const pieces = row[0].split(',')
     let region = pieces[pieces.length - 1].trim()
-    if (region in viTrack.statemap) {
-      region = viTrack.statemap[region]
-    } else if (region === 'Hong Kong') {
+    region = viTrack.statemap[region] || region
+    if (region === 'Hong Kong') {
       country = 'Hong Kong'
       region = ''
     }
@@ -655,6 +939,7 @@ viTrack.createByRegionOrCountry = function () {
       const [country, region] = series.id.split('----')
       if (country.includes('China')) { continue }
       if (region.includes('Diamond Princess')) { continue }
+      if (country.includes('Diamond Princess')) { continue }
       // if (region.startsWith('Grand')) { continue }
       const label = region === '' ? country : region
       ds.addSeries(new viTrack.Series(label, series.data))
@@ -669,7 +954,7 @@ viTrack.highlightSelectInit = function () {
   viTrack.highlightSelect = document.getElementById('virus-tracker-highlight-select')
   viTrack.highlightSelect.innerHTML = `
     <option value="top-areas">Top States or Countries</option>
-  `
+ `
   // <option value="top-states">Top US States</option>
   const areas = Array.from(viTrack.byRegionOrCountry.confirmed.data.keys())
   areas.sort()
@@ -686,12 +971,19 @@ viTrack.init = async function () {
   viTrack.raw = await viTrack.loadRaw()
   viTrack.byRegionOrCountry = viTrack.createByRegionOrCountry()
   viTrack.highlightSelectInit()
+  viTrack.initRecentPerBedChart()
   viTrack.initConfirmedChart()
-  viTrack.initConfirmedPerMChart()
-  viTrack.initGrowthRateConfirmedChart()
   viTrack.initDeathsChart()
   viTrack.initRecentChart()
-  viTrack.initRecentPerBedChart()
+  viTrack.initConfirmedPerMChart()
+  viTrack.initDeathsPerMChart()
+  viTrack.initRecentPerMChart()
+  viTrack.initChangeConfirmedChart()
+  viTrack.initChangeDeathsChart()
+  viTrack.initChangeRecentChart()
+  viTrack.initGrowthRateConfirmedChart()
+  viTrack.initGrowthRateDeathsChart()
+  viTrack.initGrowthRateRecentChart()
 }
 
 window.addEventListener('load', viTrack.init)

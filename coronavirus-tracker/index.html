@@ -3,66 +3,84 @@ layout: manual
 permalink: '/coronavirus-tracker/'
 title: Coronavirus Tracker
 ---
+<header class="hero is-medium">
+  <div class="hero-body has-text-centered">
+    <h1 class="title"><a href="{{page.url}}">{{page.title}}</a></h1>
+    <span class="has-text-centered">
+      <p class="level-item">Share this page:
+        <a class="level-item" href="http://www.facebook.com/sharer/sharer.php?u={{page.url | prepend: site.url}}&title={{page.title }}" target="_blank">
+          <span class="icon is-medium"><i class="fab fa-lg fa-facebook"></i></span>
+        </a>
+        <a class="level-item" href="http://twitter.com/intent/tweet?status={{ page.title }}+{{page.url | prepend: site.url}}" target="_blank">
+          <span class="icon is-medium"><i class="fab fa-lg fa-twitter"></i></span>
+        </a>
+        <a class="level-item" href="mailto:?subject={{ page.title }}&body={{ page.title }}: {{page.url | prepend: site.url}}" target="_blank">
+          <span class="icon is-medium"><i class="fas fa-lg fa-envelope"></i></span>
+        </a></p>
+    </span>
+  </div>
+</header>
 <div class='prose'>
-  <span class="level is-mobile ">
-    <span class="level-left">
-    </span>
-    <span class="level-right">
-      <p class="level-item">Share this page:</p>
-      <a class="level-item" href="http://www.facebook.com/sharer/sharer.php?u={{page.url | prepend: site.url}}&title={{page.title }}" target="_blank">
-        <span class="icon is-medium"><i class="fab fa-lg fa-facebook"></i></span>
-      </a>
-      <a class="level-item" href="http://twitter.com/intent/tweet?status={{ page.title }}+{{page.url | prepend: site.url}}" target="_blank">
-        <span class="icon is-medium"><i class="fab fa-lg fa-twitter"></i></span>
-      </a>
-      <a class="level-item" href="mailto:?subject={{ page.title }}&body={{ page.title }}: {{page.url | prepend: site.url}}" target="_blank">
-        <span class="icon is-medium"><i class="fas fa-lg fa-envelope"></i></span>
-      </a>
-    </span>
-  </span>
 </div>
 
-<div class="columns is-desktop">
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-log-cases"></canvas>
-    </div>
-  </div>
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-cases-per-m"></canvas>
-    </div>
+<div class="hero">
+  <div class="hero-body">
+    <h2 class="title is-size-3">Featured Chart</h2>
   </div>
 </div>
 <div class="columns is-desktop">
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-pct-change"></canvas>
-    </div>
-  </div>
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-deaths"></canvas>
-    </div>
+  <div id="virus-tracker-recent-per-bed" class="column is-three-fifths is-offset-one-fifth"></div>
+</div>
+<div class="hero">
+  <div class="hero-body">
+    <h2 class="title is-size-3">Raw Counts</h2>
   </div>
 </div>
 <div class="columns is-desktop">
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-recent"></canvas>
-      <div class="message is-info">
-        <p class="message-body">Recent Cases are defined as Cases in the last 3 weeks</p>
-      </div>
-    </div>
+  <div id="virus-tracker-cases" class="column is-half"></div>
+  <div id="virus-tracker-deaths" class="column is-half"></div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-recent" class="column is-half is-offset-one-quarter"></div>
+</div>
+<div class="hero">
+  <div class="hero-body">
+    <h2 class="title is-size-3">Per Million Population</h2>
   </div>
-  <div class="column">
-    <div class="box">
-      <canvas id="virus-tracker-recent-per-bed"></canvas>
-      <div class="message is-info">
-        <p class="message-body">Recent Cases are defined as Cases in the last 3 weeks</p>
-      </div>
-    </div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-cases-per-m" class="column"></div>
+  <div id="virus-tracker-deaths-per-m" class="column"></div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-recent-per-m" class="column is-half is-offset-one-quarter"></div>
+</div>
+<div class="hero">
+  <div class="hero-body">
+    <h2 class="title is-size-3">Raw Changes</h2>
   </div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-cases-delta" class="column"></div>
+  <div id="virus-tracker-deaths-delta" class="column"></div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-recent-delta" class="column is-half is-offset-one-quarter"></div>
+</div>
+<div class="hero">
+  <div class="hero-body">
+    <h2 class="title is-size-3">Growth Rate</h2>
+  </div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-cases-growth" class="column"></div>
+  <div id="virus-tracker-deaths-growth" class="column"></div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-recent-growth" class="column is-half is-offset-one-quarter"></div>
+</div>
+<div class="columns is-desktop">
+  <div id="virus-tracker-recent-growth" class="column is-half is-offset-one-quarter"></div>
 </div>
 
 <aside class="box">
@@ -123,10 +141,15 @@ title: Coronavirus Tracker
   <p>No. I'm a data guy, and I'm just visualizing the data we have for myself and
     anyone else who would find it interesting.</p>
 
+  <h3>What happened to the State Data?</h3>
+
+  <p>Johns Hopkins is changing its data format. As soon as the new state-level datasets are updated, I will add them here.</p>
+
   <h3>Isn't this data worthless because tests are unavailable?</h3>
 
   <p>It's possible, though the patterns at this moment don't seem artificially
     constrained to me. This is the best data I know of, so it's what I'm using.</p>
+
 
 </div>
 
