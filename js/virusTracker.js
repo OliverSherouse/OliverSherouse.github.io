@@ -546,8 +546,8 @@ viTrack.initDeathsChart = function () {
       chart.data.datasets = viTrack.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
       viTrack.setLogTicks(chart)
-      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Deaths (Log Scale)'
-      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Deaths`
+      chart.options.scales.yAxes[0].scaleLabel.labelString = 'Known Deaths (Log Scale)'
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
     }
   )
 }
@@ -746,7 +746,7 @@ viTrack.initChangeDeathsChart = function () {
       viTrack.setLogTicks(chart)
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Known Deaths`
       chart.options.scales.xAxes[0].ticks.min = periods
-      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Deaths`
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
     }
   )
 }
