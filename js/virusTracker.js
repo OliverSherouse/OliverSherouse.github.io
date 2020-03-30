@@ -256,9 +256,9 @@ viTrack.Box = class {
 viTrack.buildChart = function (canvas, title, source) {
   const chart = new Chart(canvas, {
     type: 'line',
-    devicePixelRatio: 2,
+    devicePixelRatio: 5,
     options: {
-      aspectRatio: 1.25,
+      aspectRatio: 1,
       title: {
         display: true,
         fontSize: 24,
@@ -314,7 +314,7 @@ viTrack.buildChart = function (canvas, title, source) {
         ctx.textAlign = 'right'
         ctx.fillStyle = c.config.options.defaultFontColor
         const sourcetext = viTrack.meta[viTrack.getCurrentLevel()][source].source
-        ctx.fillText(`Source: ${sourcetext}.`, c.width - 1, c.height - 36)
+        ctx.fillText(`Source: ${sourcetext}`, c.width - 1, c.height - 36)
         ctx.fillText(`OliverSherouse.com`, c.width - 1, c.height - 24)
       }
     }]

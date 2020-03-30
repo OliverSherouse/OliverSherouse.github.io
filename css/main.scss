@@ -24,16 +24,6 @@ $content-heading-weight: $weight-normal;
 @import 'bulma';
 
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-#not-footer { // sass-lint:disable-line no-ids 
-  flex: 1;
-  margin-bottom: 1.5rem;
-}
 
 .logo {
   border-bottom: $white solid 1px;
@@ -93,6 +83,12 @@ pre {
   }
 }
 
+article {
+  .chartbox {
+    min-width: 500px;
+  }
+}
+
 @media only screen and (min-width: $desktop) {
   .footnotes {
     &>ol>li {
@@ -107,6 +103,12 @@ pre {
       }
     }
   }
+
+  article {
+    .chartbox {
+      min-width: 0;
+    }
+  }
 }
 
 .reversefootnote {
@@ -115,10 +117,4 @@ pre {
 
 .title>a {
   color: $text;
-}
-
-article {
-  .chartbox {
-    min-width: 35rem;
-  }
 }
