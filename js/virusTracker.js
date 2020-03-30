@@ -971,7 +971,7 @@ viTrack.getNYTCounties = async function () {
   const data = await viTrack.loadCSV(viTrack.urls.nytCounties, true)
   const [confirmed, deaths] = [new viTrack.Dataset(), new viTrack.Dataset()]
   for (const obs of data) {
-    const id = `${obs.county}, ${obs.state}----${obs.fips}`
+    const id = `${obs.county}, ${obs.state}----${Number(obs.fips)}`
     if (!confirmed.has(id)) {
       confirmed.addSeries(new viTrack.Series(id, []))
       deaths.addSeries(new viTrack.Series(id, []))
