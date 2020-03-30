@@ -5,6 +5,7 @@
 const footnotes = {}
 footnotes.place = function () {
   const firstHeader = document.querySelector('article>div.content>p')
+  if (firstHeader === null) { return }
   const gutter = firstHeader.offsetWidth
   const footnotes = document.querySelectorAll('.footnotes>ol>li')
   for (const note of footnotes) {
@@ -72,6 +73,7 @@ function mainInit () {
     placement: 'left'
   }
   anchors.add('.prose h2,h3,h4,h5,h6')
+  anchors.add('.chartsection h2')
 }
 
 document.querySelector('.navbar-burger')

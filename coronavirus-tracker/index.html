@@ -20,12 +20,51 @@ title: Coronavirus Tracker
     </span>
   </div>
 </header>
-<div class='prose'>
-</div>
-
-<div class="hero">
+<div class="hero chartsection">
   <div class="hero-body">
-    <h2 class="title is-size-3">Featured Chart</h2>
+    <h2 class="title is-size-3" id="global-options">Global Options</h2>
+  </div>
+</div>
+<aside class="box">
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label">Aggregation</label>
+        <control>
+        <div class="select is-fullwidth">
+          <select id="virus-tracker-data-select"></select>
+        </div>
+        </control>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label" for="to-highlight">Areas to Highlight:</label>
+        <div class="control">
+          <div class="select is-multiple is-fullwidth">
+            <select multiple size="4" name="to-highlight" id="virus-tracker-highlight-select">
+              <option>Loading...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label">Show Un-Highlighted Areas</label>
+        <control>
+        <div class="checkbox">
+          <input id="virus-tracker-show-unhighlighted" type="checkbox" checked></input>
+        </div>
+        </control>
+      </div>
+    </div>
+  </div>
+</aside >
+
+<div class="hero chartsection">
+  <div class="hero-body">
+    <h2 class="title is-size-3" id="featured">Featured Chart</h2>
   </div>
 </div>
 <div class="columns is-desktop">
@@ -33,7 +72,7 @@ title: Coronavirus Tracker
     <article id="virus-tracker-recent-per-bed"></article>
   </div>
 </div>
-<div class="hero">
+<div class="hero chartsection">
   <div class="hero-body">
     <h2 class="title is-size-3">Raw Counts</h2>
   </div>
@@ -51,7 +90,7 @@ title: Coronavirus Tracker
     <article id="virus-tracker-recent" ></article>
   </div>
 </div>
-<div class="hero">
+<div class="hero chartsection">
   <div class="hero-body">
     <h2 class="title is-size-3">Per Million Population</h2>
   </div>
@@ -69,7 +108,7 @@ title: Coronavirus Tracker
     <article id="virus-tracker-recent-per-m" ></article>
   </div>
 </div>
-<div class="hero">
+<div class="hero chartsection">
   <div class="hero-body">
     <h2 class="title is-size-3">Raw Changes</h2>
   </div>
@@ -82,7 +121,7 @@ title: Coronavirus Tracker
     <article id="virus-tracker-deaths-delta" ></article>
   </div>
 </div>
-<div class="hero">
+<div class="hero chartsection">
   <div class="hero-body">
     <h2 class="title is-size-3">Growth Rate</h2>
   </div>
@@ -100,53 +139,33 @@ title: Coronavirus Tracker
     <article id="virus-tracker-recent-growth" ></article>
   </div>
 </div>
-<aside class="box">
-  <div class="prose">
-    <header>
-      <h1 class="subtitle is-size-4">Options</h1>
-      <header>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="to-highlight">Areas to Highlight:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <div class="select is-multiple is-fullwidth">
-                  <select multiple size="4" name="to-highlight" id="virus-tracker-highlight-select">
-                    <option>Loading...</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  </div>
-</aside >
 
 <div class="prose content">
   <h2>About</h2>
 
   <p>
-
     This page shows a number of ways to track the spread of the COVID-19 virus,
-    primarily in the United States. Because the US is larger than most
-    countries both in population and geographically, it seems to me to make the
-    most sense to compare US states to other countries. The source data also
-    breaks out provinces in Australia and Canada; so those are included in
-    these charts as well. China is excluded from these charts because its
-    experience of the pandemic was somewhat unique and I don't think it makes a
-    good comparison.
-
+    primarily in the United States. Originally I wanted to compare US states to
+    other countries because that seemed more reasonable than comparing the US as
+    a country to other countries that are much smaller and less spread out. It's,
+    uh, grown since then.
   </p>
 
   <p>
-    Data updates daily from the
+
+    Data loads live from the
+
     <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins
-      University Center for Systems Science and Engineering</a>.
+      University Center for Systems Science and Engineering</a>
+
+    and the
+
+    <a href="https://github.com/nytimes/covid-19-data">New York Times</a>.
+
     I'll be updating the charts with new features and ways of looking at the
     data as I think of them and have time to implement. Feel free to let me
     know if you think of any features that would be helpful on
+
     <a href="https://twitter.com/OliverSherouse">Twitter</a>.
   </p>
 
@@ -158,14 +177,15 @@ title: Coronavirus Tracker
   <p>No. I'm a data guy, and I'm just visualizing the data we have for myself and
     anyone else who would find it interesting.</p>
 
-  <h3>What happened to the State Data?</h3>
+  <h3>Why isn't China on these graphs.</h3>
 
-  <p>Johns Hopkins is changing its data format. As soon as the new state-level datasets are updated, I will add them here.</p>
+  <p>Because its numbers are fake.</p>
 
   <h3>Isn't this data worthless because tests are unavailable?</h3>
 
-  <p>It's possible, though the patterns at this moment don't seem artificially
-    constrained to me. This is the best data I know of, so it's what I'm using.</p>
+  <p>That should be a caution when interpreting it. Several states have seen spikes as
+    testing has become more widely available.
+  </p>
 
 
 </div>

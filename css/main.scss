@@ -1,109 +1,124 @@
 ---
 ---
-@charset "utf-8";
+@charset 'utf-8';
 
-@import "sass/utilities/initial-variables";
-@import "sass/utilities/functions";
+@import 'sass/utilities/initial-variables';
+@import 'sass/utilities/functions';
 
-$blue: steelblue;
+$blue: hsl(207, 44%, 49%); // steel blue
 $primary: $blue;
+
 $arrow-size: .33rem;
 
-$family-sans-serif: "Raleway", "serif";
-$family-monospace: "Inconsolata", "monospace";
-$code: $black;
 $background: $white;
-$title-weight: $weight-normal;	
-$content-heading-weight: $weight-normal;	
-$title-size: $size-2;	
+$code: $black;
 
-@import "bulma";
+$family-sans-serif: 'Raleway', 'serif';
+$family-monospace: 'Inconsolata', 'monospace';
+
+$title-size: $size-2;
+$title-weight: $weight-normal;
+
+$content-heading-weight: $weight-normal;
+
+@import 'bulma';
+
 
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-#not-footer {
-    flex: 1;
-    margin-bottom: 1.5rem;
+#not-footer { // sass-lint:disable-line no-ids 
+  flex: 1;
+  margin-bottom: 1.5rem;
 }
 
-.logo{
-    border-left: $white solid 1px;
-    border-bottom: $white solid 1px;
-    position: relative;
-    padding: .1em .33em;
-    display: inline-block;
+.logo {
+  border-bottom: $white solid 1px;
+  border-left: $white solid 1px;
+  display: inline-block;
+  padding: .1em .33em;
+  position: relative;
 
-    &::before {
-        content: "";
-        width: 0;
-        height: 0;
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        top: -$arrow-size;
-        left: -$arrow-size;
-        border-left: $arrow-size solid transparent;
-        border-right: $arrow-size solid transparent;
-        border-bottom: $arrow-size solid $white;
-    }
+  &::before {
+    border-bottom: $arrow-size solid $white;
+    border-left: $arrow-size solid transparent;
+    border-right: $arrow-size solid transparent;
+    content: '';
+    height: 0;
+    left: -$arrow-size;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -$arrow-size;
+    width: 0;
+  }
 
-    &::after {
-        content: "";
-        width: 0;
-        height: 0;
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        right: -$arrow-size;
-        bottom: -$arrow-size;
-        border-top: $arrow-size solid transparent;
-        border-bottom: $arrow-size solid transparent;
-        border-left: $arrow-size solid $white;
-    }
+  &::after {
+    border-bottom: $arrow-size solid transparent;
+    border-left: $arrow-size solid $white;
+    border-top: $arrow-size solid transparent;
+    bottom: -$arrow-size;
+    content: '';
+    height: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: -$arrow-size;
+    width: 0;
+  }
 }
 
 .prose {
-    max-width: 40rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 40rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
 }
 
-.frontnav{
-    padding-top: 1.5rem;
-    .card{height: 100%;}
+.frontnav {
+  padding-top: 1.5rem;
+  .card {height: 100%;}
 }
 
-pre.highlight{
+pre {
+  .highlight {
     border-left: 1px solid $blue;
-    padding: 0 0 0 1rem;
     margin-bottom: 1rem;
+    padding: 0 0 0 1rem;
+  }
 }
 
-@media only screen and (min-width: $desktop){
-    .footnotes {
-        &>ol>li{
-            position: absolute;
-            margin-left: 3rem;
-            padding-right: 1rem;
-            width: 15rem;
-            font-size: .9rem;
-            &>p{
-                font-size: .9rem;
-            }
-        }
+@media only screen and (min-width: $desktop) {
+  .footnotes {
+    &>ol>li {
+      font-size: .9rem;
+      margin-left: 3rem;
+      padding-right: 1rem;
+      position: absolute;
+      width: 15rem;
+
+      &>p {
+        font-size: .9rem;
+      }
     }
-}
-.reversefootnote{
-    @extend .is-hidden-desktop;
+  }
 }
 
-.title>a{
-    color: $text;
+.reversefootnote {
+  @extend .is-hidden-desktop; //  sass-lint:disable-line placeholder-in-extend 
+}
+
+.title>a {
+  color: $text;
+}
+
+article {
+  .chartbox {
+    min-width: 35rem;
+  }
 }
