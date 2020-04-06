@@ -7,60 +7,19 @@ title: Coronavirus Tracker
   <div class="hero-body has-text-centered">
     <h1 class="title"><a href="{{page.url}}">{{page.title}}</a></h1>
     <span class="has-text-centered">
-      <p class="level-item">Share this page:
-        <a class="level-item" href="http://www.facebook.com/sharer/sharer.php?u={{page.url | prepend: site.url}}&title={{page.title }}" target="_blank">
+      <p>Share this page:
+        <a href="http://www.facebook.com/sharer/sharer.php?u={{page.url | prepend: site.url}}&title={{page.title }}" target="_blank">
           <span class="icon is-medium"><i class="fab fa-lg fa-facebook"></i></span>
         </a>
-        <a class="level-item" href="http://twitter.com/intent/tweet?status={{ page.title }}+{{page.url | prepend: site.url}}" target="_blank">
+        <a href="http://twitter.com/intent/tweet?status={{ page.title }}+{{page.url | prepend: site.url}}" target="_blank">
           <span class="icon is-medium"><i class="fab fa-lg fa-twitter"></i></span>
         </a>
-        <a class="level-item" href="mailto:?subject={{ page.title }}&body={{ page.title }}: {{page.url | prepend: site.url}}" target="_blank">
+        <a href="mailto:?subject={{ page.title }}&body={{ page.title }}: {{page.url | prepend: site.url}}" target="_blank">
           <span class="icon is-medium"><i class="fas fa-lg fa-envelope"></i></span>
         </a></p>
     </span>
   </div>
 </header>
-<div class="hero chartsection">
-  <div class="hero-body">
-    <h2 class="title is-size-3" id="global-options">Global Options</h2>
-  </div>
-</div>
-<aside class="box">
-  <div class="columns">
-    <div class="column">
-      <div class="field">
-        <label class="label">Aggregation</label>
-        <control>
-        <div class="select is-fullwidth">
-          <select id="virus-tracker-data-select"></select>
-        </div>
-        </control>
-      </div>
-    </div>
-    <div class="column">
-      <div class="field">
-        <label class="label" for="to-highlight">Areas to Highlight:</label>
-        <div class="control">
-          <div class="select is-multiple is-fullwidth">
-            <select multiple size="4" name="to-highlight" id="virus-tracker-highlight-select">
-              <option>Loading...</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="field">
-        <label class="label">Show Un-Highlighted Areas</label>
-        <control>
-        <div class="checkbox">
-          <input id="virus-tracker-show-unhighlighted" type="checkbox" checked></input>
-        </div>
-        </control>
-      </div>
-    </div>
-  </div>
-</aside >
 
 <div class="hero chartsection">
   <div class="hero-body">
@@ -121,6 +80,11 @@ title: Coronavirus Tracker
     <article id="virus-tracker-deaths-delta" ></article>
   </div>
 </div>
+<div class="columns is-desktop">
+  <div class="column is-half-desktop is-offset-one-quarter-desktop">
+    <article id="virus-tracker-recent-delta" ></article>
+  </div>
+</div>
 <div class="hero chartsection">
   <div class="hero-body">
     <h2 class="title is-size-3">Growth Rate</h2>
@@ -139,6 +103,102 @@ title: Coronavirus Tracker
     <article id="virus-tracker-recent-growth" ></article>
   </div>
 </div>
+
+<div class="hero chartsection">
+  <div class="hero-body">
+    <h2 class="title is-size-3" id="options">Options</h2>
+  </div>
+</div>
+<aside class="box">
+  <div class="columns">
+    <div class="column">
+      <h3 class="subtitle is-size-5">Geography</h3>
+      <div class="field">
+        <label class="label">Aggregation</label>
+        <control>
+        <div class="select is-fullwidth">
+          <select id="virus-tracker-data-select">
+            <option value="byRegionOrCountry">Country or Region</option>
+            <option value="byCountry">Country</option>
+            <option value="byState">US States</option>
+            <option value="byCounty">US County</option>
+            <option value="byCBSA">US Cities</option>
+          </select>
+        </div>
+        </control>
+      </div>
+      <div class="field">
+        <label class="label" for="to-highlight">Areas to Highlight:</label>
+        <div class="control">
+          <div class="select is-multiple is-fullwidth">
+            <select multiple size="4" name="to-highlight" id="virus-tracker-highlight-select">
+              <option>Loading...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <div class="checkbox">
+            <label class="checkbox">
+              <input id="virus-tracker-show-unhighlighted" type="checkbox" checked>
+              Show Un-Highlighted Areas
+              </input>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <h3 class="subtitle is-size-5">Outbreak Thresholds</h3>
+      <div class="field">
+        <label class="label">Threshold for Confirmed Cases</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-cases-threshold" value=100></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+      <div class="field">
+        <label class="label">Threshold for Known Deaths</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-deaths-threshold" value=10></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+      <div class="field">
+        <label class="label">Threshold for Recent Cases</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-recent-threshold" value=100></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+    </div>
+    <div class="column">
+      <h3 class="subtitle is-size-5">Chart Options</h3>
+      <div class="field">
+        <label class="label">Number of Periods for Change and Growth Rate</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-periods" value=3></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+      <div class="field">
+        <label class="label">Minimum Population for Per-Million and Per-Bed Charts</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-minpop" value=1000000></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+      <div class="field">
+        <label class="label">Days to Consider Case Recent</label>
+        <div class="control">
+          <input class="input" type="number" id="virus-tracker-recent-days" value=21></input>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+    </div>
+  </div>
+</aside>
 
 <div class="prose content">
   <h2>About</h2>
