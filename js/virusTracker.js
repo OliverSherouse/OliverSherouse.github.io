@@ -923,7 +923,6 @@ viT.State = class {
     const options = select.options
     if (checkurl && this.params.has('highlighted')) {
       const toload = this.params.get('highlighted').split(';')
-      debugger // eslint-disable-line
       for (let i = 0; i < options.length; i++) {
         const option = options[i]
         if (toload.includes(option.value)) {
