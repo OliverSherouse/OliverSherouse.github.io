@@ -668,6 +668,7 @@ viT.initGrowthRateConfirmedChart = function () {
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Confirmed Cases`
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
@@ -693,6 +694,7 @@ viT.initGrowthRateDeathsChart = function () {
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].ticks.min = 0
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Known Deaths`
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
@@ -718,6 +720,7 @@ viT.initGrowthRateRecentChart = function () {
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
+      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Cases Confirmed in Previous ${length} days`
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases`
