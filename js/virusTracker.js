@@ -590,12 +590,14 @@ viT.initChangeConfirmedChart = function () {
       const data = viT.state.data.confirmed
         .getPastThreshold(threshold)
         .change(periods)
+        .divide(periods)
+        .round()
         .filter(s => s.length > periods + 1)
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-      viT.setLogTicks(chart)
-      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Confirmed Cases`
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Mean Change in Confirmed Cases`
+      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
     }
@@ -613,13 +615,15 @@ viT.initChangeDeathsChart = function () {
       const data = viT.state.data.deaths
         .getPastThreshold(threshold)
         .change(periods)
+        .divide(periods)
+        .round()
         .filter(s => s.length > periods + 1)
 
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-      viT.setLogTicks(chart)
-      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Known Deaths`
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Mean Change in Known Deaths`
+      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
     }
@@ -638,12 +642,14 @@ viT.initChangeRecentChart = function () {
       const data = recent
         .getPastThreshold(threshold)
         .change(periods)
+        .divide(periods)
+        .round()
         .filter(s => s.length > periods + 1)
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-      viT.setLogTicks(chart)
-      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Change in Cases Confirmed in the Previous ${length} Days`
+      chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Mean Change in Cases Confirmed in the Previous ${length} Days`
+      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Cases`
     }
@@ -668,7 +674,7 @@ viT.initGrowthRateConfirmedChart = function () {
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
-      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
+      chart.options.scales.yAxes[0].ticks.min = 0
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Compound Growth Rate of Confirmed Cases`
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
@@ -1001,7 +1007,7 @@ viT.init = async function () {
   viT.initRecentPerMChart()
   viT.initChangeConfirmedChart()
   viT.initChangeDeathsChart()
-  // viT.initChangeRecentChart()
+  viT.initChangeRecentChart()
   viT.initGrowthRateConfirmedChart()
   viT.initGrowthRateDeathsChart()
   viT.initGrowthRateRecentChart()
