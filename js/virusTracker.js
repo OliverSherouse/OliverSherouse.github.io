@@ -597,7 +597,7 @@ viT.initChangeConfirmedChart = function () {
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Mean Change in Confirmed Cases`
-      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
+      chart.options.scales.yAxes[0].ticks.min = 0
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Cases`
     }
@@ -623,7 +623,7 @@ viT.initChangeDeathsChart = function () {
       chart.data.datasets = viT.getChartDatasets(data, toColor)
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
       chart.options.scales.yAxes[0].scaleLabel.labelString = `${periods}-day Mean Change in Known Deaths`
-      chart.options.scales.yAxes[0].ticks.suggestedMin = 0
+      chart.options.scales.yAxes[0].ticks.min = 0
       chart.options.scales.xAxes[0].ticks.min = periods
       chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Known Deaths`
     }
