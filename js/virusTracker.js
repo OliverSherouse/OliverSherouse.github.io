@@ -421,7 +421,6 @@ viT.initRecentPerBedChart = function () {
       const threshold = 1
       const [length, recent] = viT.getRecent()
       const data = recent
-        .map(s => new viT.Series(s.id, s.data.map((v, i, arr) => i - length < 0 ? v : v - arr[i - length])))
         .filter(s => viT.scalars.population[s.id] > viT.state.minpop)
         .filter(s => s.id in viT.scalars.beds)
         .map(s => s.divide(viT.scalars.beds[s.id]))
