@@ -432,7 +432,7 @@ viT.initRecentPerBedChart = function () {
       chart.options.legend.labels.filter = (item) => toColor.includes(item.text)
       viT.setLogTicks(chart)
       chart.options.scales.yAxes[0].scaleLabel.labelString = `Cases Confirmed in the Last ${length} Days per 100 Beds (Log Scale)`
-      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Case per Bed`
+      chart.options.scales.xAxes[0].scaleLabel.labelString = `Days Since Reaching ${threshold} Recent Case per 100 Beds`
       box.clearMessages()
       const message = viT.meta[viT.state.level].perbed.message
       if (message !== undefined) { box.addMessage(message) }
@@ -590,7 +590,7 @@ viT.initChangeConfirmedChart = function () {
         .getPastThreshold(threshold)
         .change(periods)
         .divide(periods)
-        .round()
+        .round(1)
         .filter(s => s.length > periods + 1)
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
@@ -615,7 +615,7 @@ viT.initChangeDeathsChart = function () {
         .getPastThreshold(threshold)
         .change(periods)
         .divide(periods)
-        .round()
+        .round(1)
         .filter(s => s.length > periods + 1)
 
       const toColor = viT.getToColor(data)
@@ -642,7 +642,7 @@ viT.initChangeRecentChart = function () {
         .getPastThreshold(threshold)
         .change(periods)
         .divide(periods)
-        .round()
+        .round(1)
         .filter(s => s.length > periods + 1)
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
@@ -668,7 +668,7 @@ viT.initGrowthRateConfirmedChart = function () {
         .growthRate(periods, threshold)
         .filter(s => s.length > periods + 1)
         .mul(100)
-        .round()
+        .round(1)
 
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
@@ -694,7 +694,7 @@ viT.initGrowthRateDeathsChart = function () {
         .growthRate(periods, threshold)
         .filter(s => s.length > periods + 1)
         .mul(100)
-        .round()
+        .round(1)
 
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
@@ -720,7 +720,7 @@ viT.initGrowthRateRecentChart = function () {
         .growthRate(periods, threshold)
         .filter(s => s.length > periods + 1)
         .mul(100)
-        .round()
+        .round(1)
 
       const toColor = viT.getToColor(data)
       chart.data.datasets = viT.getChartDatasets(data, toColor)
